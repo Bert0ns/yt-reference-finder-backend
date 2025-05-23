@@ -1,0 +1,7 @@
+PyPDF2~=3.0.1
+Pillow~=9.3.0
+google-api-python-client~=2.160.0
+Flask~=3.1.0
+sentence-transformers~=3.3.1
+scikit-learn~=1.6.1
+keybert
