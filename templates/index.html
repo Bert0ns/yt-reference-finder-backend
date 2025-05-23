@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTube - Trova Video per i tuoi Appunti</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .video-card {
+            margin-bottom: 20px;
+        }
+        .video-thumbnail {
+            width: 100%;
+            height: auto;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">StudyTube</h1>
+        <p class="text-center mb-4">Carica i tuoi appunti di studio e trova video YouTube rilevanti</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="textInput" class="form-label">Incolla i tuoi appunti qui:</label>
+                                <textarea class="form-control" id="textInput" rows="6" name="text"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fileInput" class="form-label">Oppure carica un file:</label>
+                                <input class="form-control" type="file" id="fileInput" name="file" accept=".pdf,.jpg,.jpeg,.png,.txt">
+                                <div class="form-text">Formati supportati: PDF, JPG, PNG, TXT</div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Analizza e Trova Video</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="mt-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Caricamento...</span>
+            </div>
+            <p class="mt-2">Analisi in corso, attendi per favore...</p>
+        </div>
+
+        <div id="results" class="mt-5" style="display: none;">
+            <h3>Parole chiave identificate:</h3>
+            <div id="keywordsList" class="mb-4"></div>
+
+            <h3>Video consigliati:</h3>
+            <div id="videoResults" class="row"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const textInput = document.getElementById('textInput').value;
+            const fileInput = document.getElementById('fileInput').files[0];
+
+            if (!textInput && !fileInput) {
+                alert('Inserisci del testo o carica un file');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+
+            fetch('/process', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                // Mostra parole chiave
+                const keywordsHTML = data.keywords.map(kw => `<span class="badge bg-secondary me-2 mb-2">${kw}</span>`).join('');
+                document.getElementById('keywordsList').innerHTML = keywordsHTML;
+
+                // Mostra video
+                const videosHTML = data.videos.map(video => `
+                    <div class="col-md-6 video-card">
+                        <div class="card h-100">
+                            <img src="${video.thumbnail}" class="video-thumbnail" alt="${video.title}">
+                            <div class="card-body">
+                                <h5 class="card-title">${video.title}</h5>
+                                <p class="card-text">${video.description.substring(0, 150)}...</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="${video.url}" class="btn btn-sm btn-primary" target="_blank">Guarda</a>
+                                    <span class="badge bg-success">Score: ${(video.relevance_score * 100).toFixed(1)}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.getElementById('videoResults').innerHTML = videosHTML;
+                document.getElementById('results').style.display = 'block';
+            })
+            .catch(error => {
+                document.getElementById('loading').style.display = 'none';
+                alert('Si è verificato un errore: ' + error);
+            });
+        });
+    </script>
+</body>
+</html>
