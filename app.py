@@ -1,9 +1,10 @@
+from typing import List
 from flask import Flask, request, jsonify, render_template
 from keybert import KeyBERT
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from lib.word_extraction import extract_text_from_pdf, extract_text_from_image
-from lib.youtube_interactions import search_youtube_videos
+from lib.youtube_interactions import search_youtube_videos, Video
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])  # Allow requests only from http://localhost:3000
@@ -30,19 +31,19 @@ def generate_search_queries(keywords, text_sample=" ", num_queries=3):
     return queries
 
 
-def rank_videos(notes_text, videos):
+def rank_videos(notes_text, videos: List[Video]):
     # Genera embedding per gli appunti
     notes_embedding = similarity_model.encode([notes_text])[0]
 
     # Calcola similarità per ogni video
     for video in videos:
-        video_text = video['title'] + " " + video['description']
+        video_text = video.title + " " + video.description
         video_embedding = similarity_model.encode([video_text])[0]
         similarity = cosine_similarity([notes_embedding], [video_embedding])[0][0]
-        video['relevance_score'] = float(similarity)
+        video.relevance_score = float(similarity)
 
     # Ordina i video per punteggio di rilevanza
-    ranked_videos = sorted(videos, key=lambda x: x['relevance_score'], reverse=True)
+    ranked_videos = sorted(videos, key=lambda x: x.relevance_score, reverse=True)
 
     return ranked_videos
 
@@ -91,9 +92,9 @@ def process():
     unique_videos = []
     seen_ids = set()
     for video in all_videos:
-        if video['video_id'] not in seen_ids:
+        if video.video_id not in seen_ids:
             unique_videos.append(video)
-            seen_ids.add(video['video_id'])
+            seen_ids.add(video.video_id)
 
     # Classifica i video
     ranked_videos = rank_videos(text, unique_videos)
