@@ -25,7 +25,7 @@ def search_youtube_videos(query, max_results=5):
     response = yt_request.execute()
 
     # Crea un file di log per la risposta
-    with open('youtube_responses.log', 'a') as log_file:
+    with open('youtube_responses.log', 'a', encoding="utf-8") as log_file:
         log_file.write("----------------------------------\n")
         log_file.write(f"Query: {query}\n")
         log_file.write(f"Response: \n")
