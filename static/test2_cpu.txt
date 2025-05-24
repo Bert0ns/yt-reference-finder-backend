@@ -1,0 +1,27 @@
+La CPU, o Central Processing Unit, è il cervello di ogni computer. È il componente hardware responsabile dell'esecuzione delle istruzioni di un programma, svolgendo le operazioni aritmetiche, logiche, di input/output e altre operazioni fondamentali che permettono al computer di funzionare.
+
+Architettura di Base:
+
+Una CPU moderna è un chip complesso che integra milioni, se non miliardi, di transistor. Al suo interno, troviamo diverse unità funzionali che lavorano in sinergia:
+
+Unità di Controllo (CU): È il direttore d'orchestra. Interpreta le istruzioni del programma, genera i segnali di controllo necessari per coordinare le altre unità e gestisce il flusso di dati all'interno della CPU.
+Unità Logico-Aritmetica (ALU): È il "calcolatore" della CPU. Esegue tutte le operazioni aritmetiche (addizione, sottrazione, moltiplicazione, divisione) e logiche (AND, OR, NOT, XOR, ecc.) sui dati.
+Registri: Sono piccole aree di memoria estremamente veloci all'interno della CPU. Vengono utilizzati per memorizzare temporaneamente i dati e le istruzioni su cui la CPU sta lavorando in quel momento. Esistono registri generici, registri indice, registri di stato, e il Program Counter (PC) che tiene traccia dell'indirizzo della prossima istruzione da eseguire.
+Cache: È una memoria ad alta velocità che memorizza le istruzioni e i dati più frequentemente utilizzati, riducendo il tempo necessario per accedervi dalla memoria principale (RAM), molto più lenta. Le CPU moderne hanno più livelli di cache (L1, L2, L3) per ottimizzare ulteriormente le prestazioni.
+Bus: Sono i canali di comunicazione interni che permettono lo scambio di dati tra le diverse unità della CPU e con i componenti esterni del sistema (RAM, schede madri, ecc.).
+Ciclo di Funzionamento (Fetch-Decode-Execute Cycle):
+
+Il funzionamento della CPU è basato su un ciclo ripetitivo fondamentale, noto come ciclo Fetch-Decode-Execute (FDE):
+
+Fetch (Recupero): La CU recupera la prossima istruzione dalla memoria principale (RAM) all'indirizzo indicato dal Program Counter (PC). L'istruzione viene caricata in un registro specifico.
+Decode (Decodifica): La CU decodifica l'istruzione, cioè la interpreta per capire quale operazione deve essere eseguita e quali dati sono coinvolti. Se l'istruzione richiede dati dalla memoria, vengono recuperati.
+Execute (Esecuzione): L'ALU esegue l'operazione specificata dall'istruzione utilizzando i dati forniti. Il risultato dell'operazione viene scritto in un registro o in memoria.
+Writeback (Scrittura): Il risultato dell'operazione viene scritto nella posizione di memoria o nel registro designato.
+Aggiornamento del Program Counter: Il Program Counter (PC) viene aggiornato per puntare all'indirizzo della prossima istruzione da eseguire, e il ciclo ricomincia.
+Questo ciclo si ripete milioni o miliardi di volte al secondo, a seconda della velocità di clock della CPU (misurata in Hertz). Ogni ciclo di clock permette alla CPU di compiere un'operazione elementare.
+
+Processori Multicore:
+
+Oggi la maggior parte delle CPU sono "multicore", il che significa che contengono più di un'unità di elaborazione completa (core) sullo stesso chip. Ogni core può eseguire le proprie istruzioni indipendentemente, permettendo al computer di svolgere più compiti contemporaneamente o di accelerare l'esecuzione di programmi progettati per il parallelismo.
+
+In sintesi, la CPU è un componente straordinariamente complesso ma il suo funzionamento di base è una sequenza logica e ripetitiva di recupero, decodifica ed esecuzione di istruzioni, che permette al software di prendere vita e al computer di funzionare.
