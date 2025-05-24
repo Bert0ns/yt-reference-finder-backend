@@ -4,8 +4,9 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from lib.word_extraction import extract_text_from_pdf, extract_text_from_image
 from lib.youtube_interactions import search_youtube_videos
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"])  # Allow requests only from http://localhost:3000
 
 # Modelli NLP
 keyword_model = KeyBERT()
@@ -96,6 +97,9 @@ def process():
 
     # Classifica i video
     ranked_videos = rank_videos(text, unique_videos)
+
+    print("-------------------------------------------------------------------------------------")
+    print("Ranked Videos:", ranked_videos)
 
     return jsonify({
         'keywords': [kw for kw, _ in keywords],
