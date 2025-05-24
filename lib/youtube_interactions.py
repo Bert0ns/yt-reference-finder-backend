@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import List, Set, Dict
 import os
+
+from flask import jsonify
 from googleapiclient.discovery import build
 
 @dataclass
@@ -140,7 +142,7 @@ def search_youtube_videos(query, max_results=50, min_subscribers=30000, min_like
     with open('youtube_responses.log', 'a', encoding="utf-8") as log_file:
         log_file.write("----------------------------------\n")
         log_file.write(f"Query: {query}\n")
-        log_file.write(f"Response: \n")
-        log_file.write(str(filtered_videos))
+        log_file.write(f"Processed Response: \n")
+        log_file.write(jsonify(filtered_videos).json)
 
     return filtered_videos
