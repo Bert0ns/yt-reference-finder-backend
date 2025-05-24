@@ -143,6 +143,6 @@ def search_youtube_videos(query, max_results=50, min_subscribers=30000, min_like
         log_file.write("----------------------------------\n")
         log_file.write(f"Query: {query}\n")
         log_file.write(f"Processed Response: \n")
-        log_file.write(jsonify(filtered_videos).json)
+        log_file.write(str(jsonify(filtered_videos).json))
 
     return filtered_videos

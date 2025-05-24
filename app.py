@@ -98,7 +98,7 @@ def process():
     })
 
     print("-------------------------------------------------------------------------------------")
-    print(response.json)
+    print(str(response.json))
 
     return response
 

@@ -12,7 +12,11 @@ except LookupError:
 
 # Aggiungi altre stopwords specifiche al contesto
 italian_stopwords = set(stopwords.words('italian'))
-italian_stopwords.update(['cioè', 'ad esempio', 'inoltre', 'quindi', 'però', 'perché'])
+compound_stopwords = ['cioè', 'ad esempio', 'inoltre', 'quindi', 'però', 'perché']
+italian_stopwords.update(compound_stopwords)
+# Aggiungi anche i token singoli delle frasi composte
+for compound in compound_stopwords:
+    italian_stopwords.update(compound.split())
 
 kw_model = KeyBERT(model="paraphrase-multilingual-MiniLM-L12-v2")
 
@@ -29,10 +33,12 @@ def preprocess_text(text):
 def extract_keywords(text, top_n=10, n_word_range=(1, 4)):
     # Pre-elabora il testo
     clean_text = preprocess_text(text)
+    # Lista delle stopwords per garantire consistenza
+    stopwords_list = list(italian_stopwords)
 
     # Configura il vectorizer personalizzato con stopwords italiane
     vectorizer = CountVectorizer(
-        stop_words=list(italian_stopwords),
+        stop_words=stopwords_list,
         lowercase=True,
         ngram_range=n_word_range,
     )
