@@ -1,0 +1,13 @@
+.git
+.gitignore
+.idea
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+README.md
+.venv/
+
+static/
+youtube_responses.log
