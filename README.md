@@ -8,8 +8,17 @@ Installing dependencies:
 Updating dependency list in `requirements.txt`:
 `pip freeze > requirements.txt`
 
+Build and start the docker image:
+```bash
+docker-compose up -d --build
+```
+
 Build the Docker image:
-`docker-compose build`
+```bash
+docker-compose build
+```
 
 Start docker container:
-`docker-compose up -d`
+```bash
+docker-compose up -d
+```
