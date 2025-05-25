@@ -19,6 +19,7 @@ services:
       - OLLAMA_API_URL=http://ollama:11434
       - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma3:1b}
       - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+      - PRODUCTION_ENVIROMENT=True
     volumes:
       - ./static:/static
       - ./templates:/templates

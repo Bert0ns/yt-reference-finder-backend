@@ -1,3 +1,4 @@
+import os
 from typing import List
 from flask import Flask, request, jsonify, render_template
 from sentence_transformers import SentenceTransformer
@@ -96,4 +97,8 @@ def process():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    prod_env = os.environ.get("PRODUCTION_ENVIROMENT", "False")  # Set to True in production
+    if prod_env.lower() == "true":
+        app.run(host='0.0.0.0', port=5000, debug=True)
+    else:
+        app.run(debug=False, port=5000, host='0.0.0.0')
