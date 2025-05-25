@@ -8,7 +8,7 @@ from lib.word_extraction import extract_text_from_pdf, extract_text_from_image
 from lib.youtube_interactions import search_youtube_videos, Video
 from flask_cors import CORS
 app = Flask(__name__)
-CORS(app )  #origins=["http://localhost:3000", "http://127.0.0.1:3000"] Allow requests only from http://localhost:3000
+CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000"])  # Allow requests only from http://localhost:3000
 # Modelli NLP
 similarity_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
@@ -95,4 +95,4 @@ def process():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(host='0.0.0.0', debug=False)
