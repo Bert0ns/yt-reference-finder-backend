@@ -8,7 +8,7 @@ from lib.word_extraction import extract_text_from_pdf, extract_text_from_image
 from lib.youtube_interactions import search_youtube_videos, Video
 from flask_cors import CORS
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000"])  # Allow requests only from http://localhost:3000
+CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000"])  # Allow requests only from http://localhost:3000
 # Modelli NLP
 similarity_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
@@ -31,6 +31,10 @@ def rank_videos(notes_text, videos: List[Video]):
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/about')
+def about():
+    return jsonify({'about': 'This is a simple API to extract keywords from a text and search YouTube videos based on them.'})
 
 
 @app.route('/process', methods=['POST'])
@@ -95,4 +99,4 @@ def process():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=False)
