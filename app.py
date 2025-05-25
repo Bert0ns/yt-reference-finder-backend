@@ -32,6 +32,10 @@ def rank_videos(notes_text, videos: List[Video]):
 def home():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return jsonify({'about': 'This is a simple API to extract keywords from a text and search YouTube videos based on them.'})
+
 
 @app.route('/process', methods=['POST'])
 def process():
