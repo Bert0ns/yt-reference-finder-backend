@@ -2,7 +2,10 @@
   "builds": [
     {
       "src": "app.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "installCommand": "pip install --no-deps -r requirements.txt"
+      }
     }
   ],
   "routes": [
