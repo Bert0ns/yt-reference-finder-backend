@@ -7,3 +7,6 @@ Installing dependencies:
 
 Updating dependency list in `requirements.txt`:
 `pip freeze > requirements.txt`
+
+Start docker container:
+`docker-compose up -d`
