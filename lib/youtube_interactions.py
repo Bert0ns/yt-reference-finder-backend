@@ -116,7 +116,7 @@ def search_youtube_videos(query, max_results=50, min_subscribers=30000, min_like
         # Calcola un punteggio di engagement
         engagement_score = 0.0
         if video_stats.view_count > 0:
-            engagement_score = (video_stats.like_count / video_stats.view_count) * 100
+            engagement_score = (video_stats.like_count / video_stats.view_count)
 
         # Verifica tutti i criteri di filtro
         if (channel_info.subscriber_count >= min_subscribers and
@@ -134,9 +134,15 @@ def search_youtube_videos(query, max_results=50, min_subscribers=30000, min_like
                 channel_subscribers=channel_info.subscriber_count,
                 like_count=video_stats.like_count,
                 view_count=video_stats.view_count,
-                engagement_score=round(engagement_score, 5)
+                engagement_score=round(engagement_score, 10)
             )
             filtered_videos.append(video)
+
+    # Normalize engagement scores to a scale of 0-1
+    if filtered_videos:
+        max_engagement = max(video.engagement_score for video in filtered_videos)
+        for video in filtered_videos:
+            video.engagement_score = round(video.engagement_score / max_engagement, 5)
 
     # Crea un file di log per la risposta
     with open('youtube_responses.log', 'a', encoding="utf-8") as log_file:

@@ -1,8 +1,6 @@
 import os
 from typing import List
-from flask import Flask, request, jsonify, render_template
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
+from flask import Flask, request, jsonify
 from lib.query_generation import generate_search_queries
 from lib.text_processing import extract_keywords
 from lib.word_extraction import extract_text_from_pdf, extract_text_from_image
@@ -10,22 +8,10 @@ from lib.youtube_interactions import search_youtube_videos, Video
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000"])  # Allow requests only from http://localhost:3000
-# Modelli NLP
-similarity_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
 
 def rank_videos(notes_text, videos: List[Video]):
-    # Genera embedding per gli appunti
-    notes_embedding = similarity_model.encode([notes_text])[0]
-
-    # Calcola similarità per ogni video
-    for video in videos:
-        video_text = video.title + " " + video.description
-        video_embedding = similarity_model.encode([video_text])[0]
-        similarity = cosine_similarity([notes_embedding], [video_embedding])[0][0]
-        video.relevance_score = float(similarity)
-
-    # Ordina i video per punteggio di rilevanza
-    ranked_videos = sorted(videos, key=lambda x: x.relevance_score, reverse=True)
+    # Ordina i video per punteggio di engagement
+    ranked_videos = sorted(videos, key=lambda x: x.engagement_score, reverse=True)
     return ranked_videos
 
 
