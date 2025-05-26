@@ -59,8 +59,10 @@ def process():
 
     # Analizza il testo
     keywords = extract_keywords(text=text, top_n=10, n_word_range=(1, 6))
-    queries = generate_search_queries(keywords=keywords, num_queries=5)
     print("Extracted Keywords:", keywords)
+    print("------------------------------------------------------------------------------------")
+
+    queries = generate_search_queries(keywords=keywords, num_queries=5)
     print("Generated Queries:", queries)
     print("------------------------------------------------------------------------------------")
 
