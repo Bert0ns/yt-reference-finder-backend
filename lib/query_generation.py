@@ -1,8 +1,8 @@
 import os
-import requests
+import ollama
+from ollama import GenerateResponse
 
-OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL")
-ollama_model = os.environ.get("OLLAMA_MODEL", "gemma3:4b")
+ollama_model_name = os.environ.get("OLLAMA_MODEL", "gemma3:4b")
 
 def generate_search_queries(keywords, num_queries=3):
     """
@@ -32,24 +32,19 @@ def generate_search_queries(keywords, num_queries=3):
     - Mantenere una lunghezza ragionevole (3-7 parole)
     
     Restituisci SOLO le query generate, una per riga, senza numerazione o altro testo.
+    NON numerare le query.
     """
-
-    payload = {
-        "model": ollama_model,
-        "prompt": prompt,
-        "stream": False
-    }
-
     try:
-        response = requests.post(f"{OLLAMA_API_URL}/api/generate", json=payload)
-        response.raise_for_status()
+        print(f"Using Ollama model '{ollama_model_name}' to generate queries with prompt:\n{prompt}")
+        generated_response: GenerateResponse= ollama.generate(prompt=prompt, model=ollama_model_name, stream=False, keep_alive=60 * 10)
+        generated_text = generated_response.response
 
-        # Estrai le query dalla risposta
-        result = response.json()
-        generated_text = result.get("response", "")
+        print(f"Generated response from Ollama: {generated_response}")
 
         # Dividi il testo in righe e pulisci
         queries = [line.strip() for line in generated_text.split('\n') if line.strip()]
+        # Se la query inizia con (numero.) rimuovilo
+        queries = [q[2:].strip() if q and len(q) > 1 and q[0].isdigit() and q[1] == '.' else q for q in queries]
 
         # Gestisci il numero di query
         if len(queries) < num_queries:
