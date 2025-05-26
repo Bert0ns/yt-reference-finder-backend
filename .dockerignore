@@ -8,6 +8,7 @@ __pycache__/
 .env
 README.md
 .venv/
+venv/
 
 static/
 youtube_responses.log
