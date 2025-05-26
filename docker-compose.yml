@@ -2,7 +2,7 @@ services:
   ollama:
     image: ollama/ollama
     ports:
-      - "11434:11434"
+      - "11434:11434" # Expose Ollama API
     volumes:
       - ollama_data:/root/.ollama
     environment:
@@ -12,7 +12,7 @@ services:
   flask-app:
     build: .
     ports:
-      - "5000:5000"
+      - "5000:5000" # Expose Flask app
     depends_on:
       - ollama
     environment:
