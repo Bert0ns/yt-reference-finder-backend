@@ -1,24 +1,16 @@
 import re
-import nltk
-from nltk.corpus import stopwords
 from keybert import KeyBERT
 from sklearn.feature_extraction.text import CountVectorizer
 
-# Scarica stopwords se non sono già presenti
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords')
-
 # Aggiungi altre stopwords specifiche al contesto
-italian_stopwords = set(stopwords.words('italian'))
+italian_stopwords = set()
 compound_stopwords = ['cioè', 'ad esempio', 'inoltre', 'quindi', 'però', 'perché']
 italian_stopwords.update(compound_stopwords)
 # Aggiungi anche i token singoli delle frasi composte
 for compound in compound_stopwords:
     italian_stopwords.update(compound.split())
 
-kw_model = KeyBERT(model="paraphrase-multilingual-MiniLM-L12-v2")
+kw_model = KeyBERT(model="paraphrase-albert-small-v2")
 
 def preprocess_text(text):
     # Rimuovi caratteri speciali e numeri
@@ -49,7 +41,7 @@ def extract_keywords(text, top_n=10, n_word_range=(1, 4)):
         use_mmr=True,
         diversity=0.7,
         top_n=top_n,
-        vectorizer=vectorizer  # Usa il vectorizer personalizzato
+        vectorizer=vectorizer
     )
 
     # Estrai parole chiave con MaxSum
@@ -58,7 +50,7 @@ def extract_keywords(text, top_n=10, n_word_range=(1, 4)):
         use_maxsum=True,
         nr_candidates=20,
         top_n=top_n,
-        vectorizer=vectorizer  # Usa il vectorizer personalizzato
+        vectorizer=vectorizer
     )
 
     # Resto del codice invariato

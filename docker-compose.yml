@@ -1,6 +1,7 @@
 services:
   ollama:
-    image: ollama/ollama:latest
+    # image: ollama/ollama:latest # Uncomment this line if you want to use the official Ollama image
+    image: alpine/ollama:latest # Use the Alpine-based Ollama image for a smaller footprint
     ports:
       - "11434:11434" # Expose Ollama API
     volumes:
