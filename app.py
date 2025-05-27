@@ -7,7 +7,7 @@ from lib.word_extraction import extract_text_from_pdf, extract_text_from_image
 from lib.youtube_interactions import search_youtube_videos, Video
 from flask_cors import CORS
 app = Flask(__name__)
-CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app/"])  # Allow requests only from http://localhost:3000
+CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
 
 MAX_QUERIES_TO_GENERATE = 1 # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
 
