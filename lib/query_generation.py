@@ -2,7 +2,11 @@ import os
 import ollama
 from ollama import GenerateResponse
 
-ollama_model_name = os.environ.get("OLLAMA_MODEL", "gemma3:4b")
+ollama_model_name = os.environ.get("OLLAMA_MODEL", "gemma3:1b")
+OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434")
+
+ollama_client = ollama.Client(host=OLLAMA_API_URL)
+#ollama_client.pull(ollama_model_name) # Pull the model if not already available (docker compose should automatically pull it)
 
 def generate_search_queries(keywords, num_queries=3):
     """
@@ -35,11 +39,8 @@ def generate_search_queries(keywords, num_queries=3):
     NON numerare le query.
     """
     try:
-        print(f"Using Ollama model '{ollama_model_name}' to generate queries with prompt:\n{prompt}")
-        generated_response: GenerateResponse= ollama.generate(prompt=prompt, model=ollama_model_name, stream=False, keep_alive=60 * 10)
+        generated_response: GenerateResponse= ollama_client.generate(prompt=prompt, model=ollama_model_name, stream=False, keep_alive=60 * 10)
         generated_text = generated_response.response
-
-        print(f"Generated response from Ollama: {generated_response}")
 
         # Dividi il testo in righe e pulisci
         queries = [line.strip() for line in generated_text.split('\n') if line.strip()]

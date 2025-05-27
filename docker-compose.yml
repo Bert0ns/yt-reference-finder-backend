@@ -1,26 +1,46 @@
 services:
   ollama:
-    # image: ollama/ollama:latest # Uncomment this line if you want to use the official Ollama image
-    image: alpine/ollama:latest # Use the Alpine-based Ollama image for a smaller footprint
+    image: ollama/ollama:latest # Uncomment this line if you want to use the official Ollama image
+    # image: alpine/ollama:latest # Use the Alpine-based Ollama image for a smaller footprint
     ports:
       - "11434:11434" # Expose Ollama API
     volumes:
       - ollama_data:/root/.ollama
     environment:
       - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma3:1b}
     restart: unless-stopped
+    container_name: ollama
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        set -e
+        echo "Avvio server ollama..." 
+        ollama serve & OLLAMA_PID=$!
+        echo "Avvio pull del modello: $OLLAMA_MODEL" 
+        sleep 1
+        ollama pull "$OLLAMA_MODEL"
+        echo 'Pull del modello completato.' 
+
+        # kill "$OLLAMA_PID"
+        pkill -e ollama
+        echo 'Avvio del server Ollama in foreground.' 
+        exec ollama serve
+        
 
   flask-app:
     build: .
     ports:
       - "5000:5000" # Expose Flask app
     depends_on:
-        - ollama
+      - ollama
     environment:
       - OLLAMA_API_URL=http://ollama:11434
       - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma3:1b}
       - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
-      - PRODUCTION_ENVIROMENT=True
+      - PRODUCTION_ENVIROMENT=${PRODUCTION_ENVIROMENT:-True}
+    container_name: flask-app
     volumes:
       - ./static:/static
       - ./templates:/templates
