@@ -9,7 +9,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
 
-MAX_QUERIES_TO_GENERATE = 1 # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
+MAX_QUERIES_TO_GENERATE = 5 # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
 
 def rank_videos(notes_text, videos: List[Video]):
     # Ordina i video per punteggio di engagement
@@ -91,4 +91,4 @@ if __name__ == '__main__':
     if prod_env.lower() == "true":
         app.run(host='0.0.0.0', port=5000, debug=True)
     else:
-        app.run(debug=False, port=5000, host='0.0.0.0')
+        app.run(host='0.0.0.0', port=5000, debug=False)
