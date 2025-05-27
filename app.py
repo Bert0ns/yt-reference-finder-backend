@@ -9,6 +9,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000"])  # Allow requests only from http://localhost:3000
 
+MAX_QUERIES_TO_GENERATE = 1 # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
+
 def rank_videos(notes_text, videos: List[Video]):
     # Ordina i video per punteggio di engagement
     ranked_videos = sorted(videos, key=lambda x: x.engagement_score, reverse=True)
@@ -48,7 +50,7 @@ def process():
     print("Extracted Keywords:", keywords)
     print("------------------------------------------------------------------------------------")
 
-    queries = generate_search_queries(keywords=keywords, num_queries=5)
+    queries = generate_search_queries(keywords=keywords, num_queries=MAX_QUERIES_TO_GENERATE)
     print("Generated Queries:", queries)
     print("------------------------------------------------------------------------------------")
 
