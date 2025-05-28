@@ -11,7 +11,7 @@ from lib.youtube_interactions import search_youtube_videos, Video
 app = Flask(__name__)
 CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
 
-MAX_QUERIES_TO_GENERATE = 4 # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
+MAX_QUERIES_TO_GENERATE = 0 # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
 
 
 def rank_videos(notes_text, videos: List[Video]):
@@ -49,8 +49,6 @@ def process():
 
         if filename.endswith('.pdf'):
             text = extract_text_from_pdf(file)
-        elif filename.endswith(('.jpg', '.jpeg', '.png')):
-            text = extract_text_from_image(file)
         elif filename.endswith('.txt'):
             text = extract_text_from_txt(file)
         elif filename.endswith('.md'):
@@ -59,6 +57,8 @@ def process():
             text = extract_text_from_docx(file)
         elif filename.endswith('.doc'):
             text = extract_text_from_doc(file)
+        # elif filename.endswith(('.jpg', '.jpeg', '.png')):
+            # text = extract_text_from_image(file)
         else:
             logger.warning(f"Unsupported file format: {filename}")
             return jsonify({'error': 'Formato file non supportato'})

@@ -2,6 +2,8 @@ import PyPDF2
 import pytesseract
 from PIL import Image
 from docx import Document
+from lib.app_logger import logger
+
 
 def extract_text_from_txt(txt_file):
     with open(txt_file, 'r', encoding='utf-8') as f:
@@ -17,8 +19,13 @@ def extract_text_from_pdf(pdf_file):
 
 
 def extract_text_from_image(image_file):
-    img = Image.open(image_file)
-    text = pytesseract.image_to_string(img, lang='ita')
+    try:
+        img = Image.open(image_file)
+        text = pytesseract.image_to_string(img, lang='ita')
+    except Exception as e:
+        logger.error(f"Error extracting text from image: {e}")
+        text = ""
+
     return text
 
 def extract_text_from_docx(docx_file):
