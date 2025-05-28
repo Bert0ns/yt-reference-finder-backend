@@ -62,6 +62,10 @@ You will need to manually download the desired Ollama model (e.g., `ollama pull 
 
 <hr/>
 
+`GET /logs`
+
+`GET /health`
+
 `GET /`
 
 `GET /about`

@@ -1,6 +1,7 @@
 import os
 import ollama
 from ollama import GenerateResponse
+from lib.app_logger import logger
 
 ollama_model_name = os.environ.get("OLLAMA_MODEL", "gemma3:1b")
 OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434")
@@ -57,7 +58,7 @@ def generate_search_queries(keywords, num_queries=3):
         return queries
 
     except Exception as e:
-        print(f"Errore durante l'utilizzo di Ollama: {e}")
+        logger.error(f"Error generating search queries: {e}, ollama_url: {OLLAMA_API_URL}, model: {ollama_model_name}")
         # Fallback all'approccio semplice in caso di errore
         fallback_queries = []
         for keyword, _ in keywords[:num_queries]:

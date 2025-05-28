@@ -1,18 +1,13 @@
 import os
-import logging
 from typing import List
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+from lib.app_logger import logger
 from lib.query_generation import generate_search_queries
 from lib.text_processing import extract_keywords
 from lib.word_extraction import extract_text_from_pdf, extract_text_from_image, extract_text_from_docx, extract_text_from_doc, extract_text_from_txt, extract_text_from_md
 from lib.youtube_interactions import search_youtube_videos, Video
-from flask_cors import CORS
 
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s %(levelname)s %(name)s %(module)s %(funcName)s : %(message)s',
-                    handlers=[logging.FileHandler("app.log", encoding='utf-8'),
-                              logging.StreamHandler()])
-logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app , origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
 
