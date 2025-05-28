@@ -6,7 +6,7 @@ ollama_model_name = os.environ.get("OLLAMA_MODEL", "gemma3:1b")
 OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434")
 
 ollama_client = ollama.Client(host=OLLAMA_API_URL)
-#ollama_client.pull(ollama_model_name) # Pull the model if not already available (docker compose should automatically pull it)
+# ollama_client.pull(ollama_model_name) # Pull the model if not already available (docker compose should automatically pull it)
 
 def generate_search_queries(keywords, num_queries=3):
     """
