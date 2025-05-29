@@ -1,5 +1,10 @@
 FROM python:3.9-slim
 
+RUN apt-get update && \
+    apt-get -y install tesseract-ocr tesseract-ocr-ita
+
+RUN apt-get clean
+
 WORKDIR /app
 
 COPY requirements.txt .
