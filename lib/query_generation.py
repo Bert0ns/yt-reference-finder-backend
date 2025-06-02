@@ -9,6 +9,21 @@ OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434")
 ollama_client = ollama.Client(host=OLLAMA_API_URL)
 # ollama_client.pull(ollama_model_name) # Pull the model if not already available (docker compose should automatically pull it)
 
+def check_ollama_connection_health():
+    """
+    Checks connection health between the Flask and Ollama services.
+
+    Returns:
+        bool: True if is healthy, False otherwise.
+    """
+    try:
+        ollama_client.show(ollama_model_name)
+        logger.info(f"Ollama connection health check successful, ollama_url: {OLLAMA_API_URL}, model: {ollama_model_name}")
+        return True
+    except Exception as e:
+        logger.error(f"Error checking Ollama connection health: {e}, ollama_url: {OLLAMA_API_URL}, model: {ollama_model_name}")
+        return False
+
 def generate_search_queries(keywords, num_queries=3):
     """
     Genera query di ricerca usando un modello AI locale di Ollama basate su keywords estratte.

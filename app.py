@@ -2,8 +2,8 @@ import os
 from typing import List
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from lib.app_logger import logger
-from lib.query_generation import generate_search_queries
+from lib.app_logger import logger, trim_log_file
+from lib.query_generation import generate_search_queries, check_ollama_connection_health
 from lib.text_processing import extract_keywords
 from lib.word_extraction import extract_text_from_pdf, extract_text_from_image, extract_text_from_docx, extract_text_from_doc, extract_text_from_txt, extract_text_from_md
 from lib.youtube_interactions import search_youtube_videos, Video
@@ -27,7 +27,8 @@ def about():
 
 @app.route('/health', methods=['GET'])
 def health_check():
-    return jsonify({'status': 'ok', 'message': 'API is running'})
+    is_ollama_connection_healthy = check_ollama_connection_health()
+    return jsonify({'status': 'ok', 'message': 'API is running', 'ollama_connection_healthy': is_ollama_connection_healthy})
 
 @app.route('/logs', methods=['GET'])
 def get_api_logs():
@@ -114,6 +115,7 @@ def process():
     except Exception as e:
         logger.error(f"Error creating and getting JSON from response: {e}")
 
+    trim_log_file()
     return response
 
 
