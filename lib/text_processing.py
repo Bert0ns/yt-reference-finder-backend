@@ -45,11 +45,27 @@ def extract_keywords(text, top_n=10, n_word_range=(1, 4)):
 
 
 def extract_keywords_rake(text, top_n=10, n_word_range=(1, 4), language='italian'):
-    r = Rake(language=language, min_length=n_word_range[0], max_length=n_word_range[1])
-    r.extract_keywords_from_text(text)
-    ranked_phrases_with_scores = r.get_ranked_phrases_with_scores()
+    from lib.app_logger import logger
 
-    # Formato: (score, phrase)
-    # Convertiamo in (phrase, score) e prendiamo top_n
-    keywords = [(phrase, score) for score, phrase in ranked_phrases_with_scores[:top_n]]
-    return keywords
+    try:
+        # Inizializza RAKE
+        r = Rake(language=language, min_length=n_word_range[0], max_length=n_word_range[1])
+
+        # Per usare stopwords personalizzate, modifica manualmente
+        r.stopwords = set(nltk.corpus.stopwords.words(language)).union(italian_stopwords)
+
+        r.extract_keywords_from_text(text)
+        ranked_phrases_with_scores = r.get_ranked_phrases_with_scores()
+
+        if not ranked_phrases_with_scores:
+            logger.warning("Nessuna parola chiave estratta dal testo")
+            return []
+
+        # Converti il formato e filtra parole chiave troppo brevi o con punteggio basso
+        keywords = [(phrase, score) for score, phrase in ranked_phrases_with_scores]
+        keywords.sort(key=lambda x: x[1], reverse=True)
+
+        return keywords[:top_n]
+    except Exception as e:
+        logger.error(f"Errore nell'estrazione delle parole chiave: {e}")
+        return []

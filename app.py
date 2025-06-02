@@ -73,7 +73,7 @@ def process():
     logger.info(f"Processing text: {text[:100]}\n...\n{text[-100:]}")  # Logga solo una parte del testo per brevità
 
     # Analizza il testo
-    keywords = extract_keywords(text=text, top_n=10, n_word_range=(1, 6))
+    keywords = extract_keywords(text=text, top_n=15, n_word_range=(1, 6))
     logger.info(f"Extracted Keywords: {keywords}")
 
     queries = generate_search_queries(keywords=keywords, num_queries=MAX_QUERIES_TO_GENERATE)
