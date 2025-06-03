@@ -1,16 +1,37 @@
 import re
 import nltk
 from rake_nltk import Rake
+from yake import KeywordExtractor
+from langdetect import detect
+from lib.app_logger import logger
 
 nltk.download('punkt_tab')
 nltk.download('stopwords')
-
-italian_stopwords = set()
-compound_stopwords = ['cioè', 'ad esempio', 'inoltre', 'quindi', 'però', 'perché']
-italian_stopwords.update(compound_stopwords)
-# Aggiungi anche i token singoli delle frasi composte
-for compound in compound_stopwords:
-    italian_stopwords.update(compound.split())
+nltk_stopwords_languages = {
+    'ar': 'arabic',
+    'az': 'azerbaijani',
+    'da': 'danish',
+    'nl': 'dutch',
+    'en': 'english',
+    'fi': 'finnish',
+    'fr': 'french',
+    'de': 'german',
+    'el': 'greek',
+    'hu': 'hungarian',
+    'id': 'indonesian',
+    'it': 'italian',
+    'kk': 'kazakh',
+    'ne': 'nepali',
+    'no': 'norwegian',
+    'pt': 'portuguese',
+    'ro': 'romanian',
+    'ru': 'russian',
+    'sl': 'slovene',
+    'es': 'spanish',
+    'sv': 'swedish',
+    'tg': 'tajik',
+    'tr': 'turkish'
+}
 
 
 def preprocess_text(text):
@@ -23,49 +44,60 @@ def preprocess_text(text):
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 
-def extract_keywords(text, top_n=10, n_word_range=(1, 4)):
-    # Pre-elabora il testo
-    clean_text = preprocess_text(text)
-    # Lista delle stopwords per garantire consistenza
-    # stopwords_list = list(italian_stopwords)
 
-    keywords = extract_keywords_rake(clean_text, top_n=top_n, n_word_range=n_word_range)
-
-    # Resto del codice invariato
-    combined_keywords = []
-    seen = set()
-    for keyword, score in keywords:
-        if keyword not in seen:
-            combined_keywords.append((keyword, score))
-            seen.add(keyword)
-
-    # Ordina per punteggio e prendi i migliori
-    sorted_keywords = sorted(combined_keywords, key=lambda x: x[1], reverse=True)
-    return sorted_keywords[:top_n]
-
-
-def extract_keywords_rake(text, top_n=10, n_word_range=(1, 4), language='italian'):
-    from lib.app_logger import logger
-
+def extract_keywords_rake(text, top_n=10, n_word_range=(1, 4), language='italian', stopwords_set=None):
     try:
-        # Inizializza RAKE
-        r = Rake(language=language, min_length=n_word_range[0], max_length=n_word_range[1])
-
-        # Per usare stopwords personalizzate, modifica manualmente
-        r.stopwords = set(nltk.corpus.stopwords.words(language)).union(italian_stopwords)
-
+        r = Rake(language=language, min_length=n_word_range[0], max_length=n_word_range[1], stopwords=stopwords_set)
         r.extract_keywords_from_text(text)
         ranked_phrases_with_scores = r.get_ranked_phrases_with_scores()
 
-        if not ranked_phrases_with_scores:
-            logger.warning("Nessuna parola chiave estratta dal testo")
-            return []
-
-        # Converti il formato e filtra parole chiave troppo brevi o con punteggio basso
+        # format
         keywords = [(phrase, score) for score, phrase in ranked_phrases_with_scores]
         keywords.sort(key=lambda x: x[1], reverse=True)
-
         return keywords[:top_n]
     except Exception as e:
-        logger.error(f"Errore nell'estrazione delle parole chiave: {e}")
+        logger.error(f"Error extracting keywords: {e}")
         return []
+
+
+def extract_keywords_yake(text, top_n=10, max_ngram_size=4, language='it', stopword_set=None):
+    if stopword_set is None:
+        stopword_set = {}
+    try:
+        extractor = KeywordExtractor(lan=language, n=max_ngram_size, top=top_n, stopwords=stopword_set)
+        keywords = extractor.extract_keywords(text)
+        return keywords[:top_n]
+    except Exception as e:
+        logger.error(f"Error extracting keywords: {e}")
+        return []
+
+
+def extract_keywords(text, top_n=10, n_word_range=(1, 4), algorithm='rake', language=None):
+    if language is None:
+        try:
+            detected_lang : str = detect(text)
+            logger.info(f"Automated language detection: {detected_lang}")
+
+        except Exception as e:
+            logger.warning(f"Automated language detection failed: {e}. Defaulting to english.")
+            detected_lang = 'en'
+    else:
+        detected_lang = language
+
+    try:
+        nltk_stopwords = nltk.corpus.stopwords.words(nltk_stopwords_languages.get(detected_lang))
+        stopwords_set = set(nltk_stopwords)
+    except Exception as e:
+        logger.error(f"Did not find stopword set for language {detected_lang} : {e}")
+        stopwords_set = None
+
+
+    if algorithm == 'rake':
+        keywords = extract_keywords_rake(text, top_n=top_n, n_word_range=n_word_range, language=detected_lang, stopwords_set=stopwords_set)
+    elif algorithm == 'yake':
+        keywords = extract_keywords_yake(text, top_n=top_n, max_ngram_size=n_word_range[1], language=detected_lang, stopword_set=stopwords_set)
+    else:
+        logger.error(f"Keyword extraction algorithm unknown: {algorithm}")
+        return []
+
+    return keywords[:top_n]
