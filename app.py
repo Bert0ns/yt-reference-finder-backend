@@ -12,7 +12,7 @@ from lib.youtube_interactions import search_youtube_videos, Video
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
 
-MAX_QUERIES_TO_GENERATE = 4  # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
+MAX_QUERIES_TO_GENERATE = 2  # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
 
 
 def rank_videos(notes_text, videos: List[Video]):

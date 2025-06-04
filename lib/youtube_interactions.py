@@ -1,33 +1,43 @@
-from dataclasses import dataclass
 import os
+import json
 from flask import jsonify
 from googleapiclient.discovery import build
+from lib.app_logger import logger
+from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video
 
 
-@dataclass
-class VideoStatistics:
-    like_count: int = 0
-    view_count: int = 0
+def get_all_youtube_topic() -> dict[str, str]:
+    """
+    Carica i topic di YouTube da un file JSON e restituisce un dizionario
 
-@dataclass
-class ChannelInfo:
-    subscriber_count: int = 0
-    language: str = ""
+    ref: https://gist.github.com/stpe/2951130dfc8f1d0d1a2ad736bef3b703
+    """
+    try:
+        with open('static/youtube_topics.json', 'r') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        logger.error('File youtube_topics.json not found. Please ensure it exists in the static directory.')
+        return {}
+    logger.info('YouTube topics loaded successfully.')
+    return {i['topic']: i['id'] for i in data}
 
-@dataclass
-class Video:
-    title: str
-    description: str
-    thumbnail: str
-    video_id: str
-    url: str
-    channel_id: str
-    channel_subscribers: int = 0
-    like_count: int = 0
-    view_count: int = 0
-    engagement_score: float = 0.0
-    relevance_score: float = 0.0
+def get_all_youtube_categories() -> dict[str, str]:
+    """
+    Carica le categorie di YouTube da un file JSON e restituisce un dizionario
 
+    ref: https://gist.github.com/stpe/2951130dfc8f1d0d1a2ad736bef3b703
+    """
+    try:
+        with open('static/youtube_categories.json', 'r') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        logger.error('File youtube_categories.json not found. Please ensure it exists in the static directory.')
+        return {}
+    logger.info('YouTube categories loaded successfully.')
+    return data
+
+youtube_topics = get_all_youtube_topic()
+youtube_categories = get_all_youtube_categories()
 
 def initialize_youtube_api():
     """Inizializza e restituisce l'oggetto API di YouTube"""
@@ -38,8 +48,13 @@ def initialize_youtube_api():
 
     return build('youtube', 'v3', developerKey=youtube_api_key)
 
-def search_videos(youtube, query, max_results, language='it'):
-    """Esegue la ricerca dei video su YouTube e restituisce i risultati grezzi"""
+def search_videos(youtube, query, max_results=10, language='it', youtube_topic_key='Knowledge'):
+    """
+    Esegue la ricerca dei video su YouTube e restituisce i risultati grezzi
+
+    docs: https://developers.google.com/youtube/v3/docs/search/list
+    """
+
     yt_request = youtube.search().list(
         q=query,
         part='snippet',
@@ -48,9 +63,12 @@ def search_videos(youtube, query, max_results, language='it'):
         relevanceLanguage=language,
         order='relevance',
         videoDimension='2d',
+        videoDuration='any',
         videoCaption='closedCaption',
         videoCategoryId='27',
-        videoDefinition='high'
+        videoDefinition='high',
+        safeSearch='none',
+        topicId=youtube_topics.get(youtube_topic_key, youtube_topics.get('Knowledge', '')),
     )
 
     return yt_request.execute()
