@@ -24,13 +24,13 @@ def check_ollama_connection_health():
         logger.error(f"Error checking Ollama connection health: {e}, ollama_url: {OLLAMA_API_URL}, model: {ollama_model_name}")
         return False
 
-def generate_search_queries(keywords, num_queries=3):
+def generate_search_queries(keywords, num_queries=3, query_language='it'):
     """
     Genera query di ricerca usando un modello AI locale di Ollama basate su keywords estratte.
 
-    Args:
-        keywords: Lista di tuple (keyword, score)
-        num_queries: Numero di query da generare
+    :param keywords: Lista di tuple (keyword, score)
+    :param num_queries: Numero di query da generare
+    :param query_language: Lingua della query (default 'it' per italiano)
 
     Returns:
         Lista di query ottimizzate per la ricerca YouTube
@@ -50,6 +50,7 @@ def generate_search_queries(keywords, num_queries=3):
     - Essere comprensibile anche senza contesto
     - Essere in italiano oppure in inglese
     - Mantenere una lunghezza ragionevole (3-7 parole)
+    - Essere scritta nella lingua definita dall' iso-code {query_language}
     
     Restituisci SOLO le query generate, una per riga, senza numerazione o altro testo.
     NON numerare le query.

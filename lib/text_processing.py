@@ -71,16 +71,19 @@ def extract_keywords_yake(text, top_n=10, max_ngram_size=4, language='it', stopw
         logger.error(f"Error extracting keywords: {e}")
         return []
 
+def detect_language(text):
+    """Detect the language of the given text."""
+    try:
+        lang = detect(text)
+        logger.info(f"Detected language: {lang}")
+        return lang
+    except Exception as e:
+        logger.error(f"Language detection failed: {e}")
+        return 'en'
 
 def extract_keywords(text, top_n=10, n_word_range=(1, 4), algorithm='rake', language=None):
     if language is None:
-        try:
-            detected_lang : str = detect(text)
-            logger.info(f"Automated language detection: {detected_lang}")
-
-        except Exception as e:
-            logger.warning(f"Automated language detection failed: {e}. Defaulting to english.")
-            detected_lang = 'en'
+        detected_lang = detect_language(text)
     else:
         detected_lang = language
 

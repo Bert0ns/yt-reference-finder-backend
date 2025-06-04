@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from lib.app_logger import logger, trim_log_file
 from lib.query_generation import generate_search_queries, check_ollama_connection_health
-from lib.text_processing import extract_keywords
+from lib.text_processing import extract_keywords, detect_language
 from lib.types.StreamResponse import StreamResponse, StreamProcessStatus
 from lib.word_extraction import read_file_from_bytes
 from lib.youtube_interactions import search_youtube_videos, Video
@@ -90,12 +90,14 @@ def generate_process_stream(file_bytes_arg: Optional[bytes], original_filename_a
         logger.info(f"Processing text: {text[:100]}\n...\n{text[-100:]}")
         yield StreamResponse(status=StreamProcessStatus.EXTRACTING_KEYWORDS).to_json()
 
-        keywords_data = extract_keywords(text=text, top_n=15, n_word_range=(1, 5), algorithm='yake')
+        detected_language = detect_language(text)
+
+        keywords_data = extract_keywords(text=text, top_n=15, n_word_range=(1, 5), algorithm='yake', language=detected_language)
         logger.info(f"Extracted Keywords: {keywords_data}")
         yield StreamResponse(status=StreamProcessStatus.KEYWORDS_EXTRACTED, keywords=keywords_data).to_json()
 
         yield StreamResponse(status=StreamProcessStatus.GENERATING_QUERIES).to_json()
-        queries = generate_search_queries(keywords=keywords_data, num_queries=MAX_QUERIES_TO_GENERATE)
+        queries = generate_search_queries(keywords=keywords_data, num_queries=MAX_QUERIES_TO_GENERATE, query_language=detected_language)
         logger.info(f"Generated Queries: {queries}")
 
         if not queries or len(queries) == 0:
@@ -108,7 +110,7 @@ def generate_process_stream(file_bytes_arg: Optional[bytes], original_filename_a
         with app.app_context():
             for i, query in enumerate(queries):
                 try:
-                    videos = search_youtube_videos(query)
+                    videos = search_youtube_videos(query, video_language=detected_language)
                     all_videos.extend(videos)
                     logger.info(f"Found {len(videos)} videos for query '{query}'")
                 except Exception as e:
@@ -188,10 +190,12 @@ def process():
 
     logger.info(f"Processing text: {text[:100]}\n...\n{text[-100:]}")
 
-    keywords = extract_keywords(text=text, top_n=15, n_word_range=(1, 5), algorithm='yake')
+    detected_language = detect_language(text)
+
+    keywords = extract_keywords(text=text, top_n=15, n_word_range=(1, 5), algorithm='yake', language=detected_language)
     logger.info(f"Extracted Keywords: {keywords}")
 
-    queries = generate_search_queries(keywords=keywords, num_queries=MAX_QUERIES_TO_GENERATE)
+    queries = generate_search_queries(keywords=keywords, num_queries=MAX_QUERIES_TO_GENERATE, query_language=detected_language)
     logger.info(f"Generated Queries: {queries}")
 
     if not queries or len(queries) == 0:
@@ -201,7 +205,7 @@ def process():
     all_videos = []
     for query in queries:
         try:
-            videos = search_youtube_videos(query)
+            videos = search_youtube_videos(query, video_language=detected_language)
             all_videos.extend(videos)
         except Exception as e:
             logger.error(f"Error searching YouTube for query '{query}': {e}")
