@@ -1,129 +1,24 @@
-import json
 import os
-import io
-from enum import Enum
 from typing import List, Optional
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from werkzeug.datastructures import FileStorage
-
 from lib.app_logger import logger, trim_log_file
 from lib.query_generation import generate_search_queries, check_ollama_connection_health
 from lib.text_processing import extract_keywords
-from lib.word_extraction import extract_text_from_pdf, extract_text_from_image, extract_text_from_docx, \
-    extract_text_from_doc, extract_text_from_txt, extract_text_from_md
+from lib.types.StreamResponse import StreamResponse, StreamProcessStatus
+from lib.word_extraction import read_file_from_bytes
 from lib.youtube_interactions import search_youtube_videos, Video
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000",
-                   "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
+CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
 
 MAX_QUERIES_TO_GENERATE = 4  # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
-
-
-class StreamProcessStatus(Enum):
-    ERROR = 'error'
-    FILE_RECEIVED = 'file_received'
-    FILE_PROCESSED = 'file_processed'
-    EXTRACTING_KEYWORDS = 'extracting_keywords'
-    KEYWORDS_EXTRACTED = 'keywords_extracted'
-    GENERATING_QUERIES = 'generating_queries'
-    QUERIES_GENERATED = 'queries_generated'
-    YOUTUBE_SEARCH_STARTED = 'youtube_search_started'
-    YOUTUBE_SEARCH_COMPLETED = 'youtube_search_completed'
-    PROCESSING_COMPLETE = 'processing_complete'
-
-
-class StreamResponse:
-    def __init__(self, status: StreamProcessStatus, message: str = "", keywords: List[tuple[str, float]] = None,
-                 queries: List[str] = None, videos: List[Video] = None, **kwargs):
-        if keywords is None:
-            keywords = []
-        if queries is None:
-            queries = []
-        if videos is None:
-            videos = []
-
-        self.status = status.value
-        self.message = message
-        self.keywords = [kw for kw, _ in keywords]
-        self.queries = queries
-        self.videos = [video.__dict__ for video in videos]
-
-        if status is StreamProcessStatus.ERROR and not message:
-            raise ValueError("Stream Response Error status requires a message")
-
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-
-    def to_json(self) -> str:
-        return json.dumps(self.__dict__) + '\n'
 
 
 def rank_videos(notes_text, videos: List[Video]):
     # Ordina i video per punteggio di engagement
     ranked_videos = sorted(videos, key=lambda x: x.engagement_score, reverse=True)
     return ranked_videos
-
-
-def read_file(file: FileStorage):
-    success = True
-    filename = file.filename
-    if filename.endswith('.pdf'):
-        text = extract_text_from_pdf(file)
-    elif filename.endswith('.txt'):
-        text = extract_text_from_txt(file)
-    elif filename.endswith('.md'):
-        text = extract_text_from_md(file)
-    elif filename.endswith('.docx'):
-        text = extract_text_from_docx(file)
-    elif filename.endswith('.doc'):
-        text = extract_text_from_doc(file)
-    elif filename.endswith(('.jpg', '.jpeg', '.png')):
-        text = extract_text_from_image(file)
-    else:
-        text = ''
-        success = False
-        logger.warning(f"Unsupported file format or could not read file: {filename}")
-
-    return success, text
-
-
-def read_file_from_bytes(file_bytes: bytes, filename: str) -> tuple[bool, str]:
-    text_content = ''
-    # Crea un oggetto file-like dai byte
-    file_like_object = io.BytesIO(file_bytes)
-
-    try:
-        if filename.endswith('.pdf'):
-            text_content = extract_text_from_pdf(file_like_object)
-        elif filename.endswith('.txt'):
-            text_content = extract_text_from_txt(file_like_object)
-        elif filename.endswith('.md'):
-            text_content = extract_text_from_md(file_like_object)
-        elif filename.endswith('.docx'):
-            text_content = extract_text_from_docx(file_like_object)
-        elif filename.endswith('.doc'):
-            text_content = extract_text_from_doc(file_like_object)
-        elif filename.endswith(('.jpg', '.jpeg', '.png')):
-            text_content = extract_text_from_image(file_like_object)
-        else:
-            logger.warning(f"Unsupported file format: {filename}")
-            return False, ""  # Formato non supportato
-
-        # Assicura che text_content sia una stringa; alcuni estrattori potrebbero restituire None in caso di fallimento
-        if text_content is None:
-            text_content = ""
-            # Considera se 'None' da un estrattore significa fallimento
-            # Per ora, se nessuna eccezione, si assume successo ma il contenuto potrebbe essere vuoto
-
-        return True, str(text_content)  # Assicura che sia una stringa
-
-    except Exception as e:
-        logger.error(f"Error extracting text from file {filename} (type: {filename.split('.')[-1]}): {e}",
-                     exc_info=True)
-        return False, ""  # Estrazione fallita
 
 
 def filter_unique_videos(all_videos):
@@ -256,7 +151,6 @@ def process():
                 # Se non è streaming, restituisci un errore qui.
                 if not is_stream:
                     return jsonify({'error': f'Error reading file: {str(e)}', 'filename': filename_from_request}), 500
-                # Lascia file_bytes_from_request = None, il generatore lo noterà.
 
 
     text_from_request = request.form.get('text', '')
