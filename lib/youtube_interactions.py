@@ -1,9 +1,9 @@
 import os
 import json
 from flask import jsonify
-from googleapiclient.discovery import build
+from googleapiclient.discovery import build, Resource
 from lib.app_logger import logger
-from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video
+from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video, YouTubeSearchListResponse
 
 
 def get_all_youtube_topic() -> dict[str, str]:
@@ -42,7 +42,7 @@ youtube_topics = get_all_youtube_topic()
 youtube_categories = get_all_youtube_categories()
 
 
-def initialize_youtube_api():
+def initialize_youtube_api() -> Resource:
     """Inizializza e restituisce l'oggetto API di YouTube"""
     youtube_api_key = os.environ.get('YOUTUBE_API_KEY')
 
@@ -52,7 +52,7 @@ def initialize_youtube_api():
     return build('youtube', 'v3', developerKey=youtube_api_key)
 
 
-def search_videos(youtube, query, max_results=10, language='it', youtube_topic_key='Knowledge'):
+def search_videos(youtube: Resource, query, max_results=10, language='it', youtube_topic_key='Knowledge') -> YouTubeSearchListResponse:
     """
     Esegue la ricerca dei video su YouTube e restituisce i risultati grezzi
 
@@ -75,7 +75,8 @@ def search_videos(youtube, query, max_results=10, language='it', youtube_topic_k
         topicId=youtube_topics.get(youtube_topic_key, youtube_topics.get('Knowledge', '')),
     )
 
-    return yt_request.execute()
+    data: dict = yt_request.execute()
+    return YouTubeSearchListResponse.from_dict(data)
 
 
 def process_search_results(response_items):
@@ -212,12 +213,25 @@ def log_response(query, filtered_videos):
         log_file.write(str(jsonify(filtered_videos).json))
 
 
-def search_youtube_videos(query, video_language='it', max_results=50, min_subscribers=30000, min_likes=1000):
+def search_youtube_videos(query, video_language='it', max_results=50, min_subscribers=30000, min_likes=1000, verbose=False):
     """Funzione principale per la ricerca di video su YouTube con filtri"""
+    if verbose:
+        logger.info(f"Inizializzazione API YouTube con query: {query}, video_language: {video_language}, max_results: {max_results}, min_subscribers: {min_subscribers}, min_likes: {min_likes}, verbose: {verbose}")
+
     youtube = initialize_youtube_api()
+    if verbose:
+        logger.info(f"API YouTube: {youtube}")
 
     # Ricerca video
     search_response = search_videos(youtube, query, max_results, video_language)
+    if verbose:
+        logger.info(f"search_response: {search_response}")
+        try:
+            search_dict = search_response.to_dict()
+            with open('search_response.json', 'w') as f:
+                json.dump(search_dict, f, ensure_ascii=False, indent=2)
+        except (TypeError, AttributeError) as e:
+            logger.error(f"Impossibile serializzare search_response in JSON: {e}")
 
     # Processa i risultati della ricerca
     temp_videos, channel_ids, video_ids = process_search_results(search_response['items'])
@@ -238,3 +252,39 @@ def search_youtube_videos(query, video_language='it', max_results=50, min_subscr
     log_response(query, filtered_videos)
 
     return filtered_videos
+
+
+if __name__ == "__main__":
+    """
+    per testare dalla root del progetto:
+    
+    python -m lib.youtube_interactions
+    """
+    # Aggiungi il percorso della directory principale al sys.path quando esegui direttamente
+    import sys
+    import os.path
+
+    # Ottieni il percorso della directory principale del progetto
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+    # Configura l'API key di YouTube per i test
+    if not os.environ.get('YOUTUBE_API_KEY'):
+        api_key = input("Inserisci la tua YOUTUBE_API_KEY: ")
+        os.environ['YOUTUBE_API_KEY'] = api_key
+
+    # Esempio di utilizzo della funzione di ricerca
+    test_query = input("Inserisci la query di ricerca (default: 'Python programming'): ") or "Python programming"
+    print(f"Ricerca in corso per: {test_query}...")
+
+    try:
+        results = search_youtube_videos(test_query, verbose=True, max_results=2)
+        print(f"\nTrovati {len(results)} video che soddisfano i criteri.")
+        for i, video in enumerate(results[:5], 1):  # Mostra solo i primi 5 risultati
+            print(f"\n{i}. {video.title}")
+            print(f"   Engagement Score: {video.engagement_score}")
+            print(f"   Views: {video.view_count}, Likes: {video.like_count}")
+            print(f"   URL: {video.url}")
+    except Exception as e:
+        print(f"Errore durante la ricerca: {e}")
+        import traceback
+        traceback.print_exc()

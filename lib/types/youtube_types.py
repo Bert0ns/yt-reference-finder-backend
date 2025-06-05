@@ -35,6 +35,24 @@ class Thumbnail:
     width: int = 0
     height: int = 0
 
+    @classmethod
+    def from_dict(cls, json_dict: dict):
+        """Crea un oggetto Thumbnail da un dizionario JSON."""
+        return cls(
+            url=json_dict.get('url', ''),
+            width=json_dict.get('width', 0),
+            height=json_dict.get('height', 0)
+        )
+
+    def to_dict(self):
+        """Converte l'oggetto Thumbnail in un dizionario JSON."""
+        return {
+            'url': self.url,
+            'width': self.width,
+            'height': self.height
+        }
+
+
 @dataclass
 class Thumbnails:
     default: Optional[Thumbnail] = None
@@ -42,6 +60,45 @@ class Thumbnails:
     high: Optional[Thumbnail] = None
     standard: Optional[Thumbnail] = None
     maxres: Optional[Thumbnail] = None
+
+    @classmethod
+    def from_dict(cls, json_dict: dict):
+        """        Crea un oggetto Thumbnails da un dizionario JSON."""
+        default = None
+        medium = None
+        high = None
+        standard = None
+        maxres = None
+
+        if 'default' in json_dict:
+            default = Thumbnail.from_dict(json_dict['default'])
+        if 'medium' in json_dict:
+            medium = Thumbnail.from_dict(json_dict['medium'])
+        if 'high' in json_dict:
+            high = Thumbnail.from_dict(json_dict['high'])
+        if 'standard' in json_dict:
+            standard = Thumbnail.from_dict(json_dict['standard'])
+        if 'maxres' in json_dict:
+            maxres = Thumbnail.from_dict(json_dict['maxres'])
+
+        return cls(
+            default=default,
+            medium=medium,
+            high=high,
+            standard=standard,
+            maxres=maxres
+        )
+
+    def to_dict(self):
+        """Converte l'oggetto Thumbnails in un dizionario JSON."""
+        return {
+            'default': self.default.to_dict() if self.default else None,
+            'medium': self.medium.to_dict() if self.medium else None,
+            'high': self.high.to_dict() if self.high else None,
+            'standard': self.standard.to_dict() if self.standard else None,
+            'maxres': self.maxres.to_dict() if self.maxres else None
+        }
+
 
 @dataclass
 class Localized:
@@ -225,34 +282,212 @@ class YouTubeSearchResourceId:
     channelId: str = ""
     playlistId: str = ""
 
+    @classmethod
+    def from_dict(cls, data: dict) -> 'YouTubeSearchResourceId':
+        """
+        Crea un oggetto YouTubeSearchResourceId da un dizionario JSON.
+
+        Args:
+            data: Dizionario contenente i dati dell'ID della risorsa di ricerca
+
+        Returns:
+            Un'istanza di YouTubeSearchResourceId
+        """
+        return cls(
+            kind=data.get('kind', ''),
+            videoId=data.get('videoId', ''),
+            channelId=data.get('channelId', ''),
+            playlistId=data.get('playlistId', '')
+        )
+
+    def to_dict(self):
+        """
+        Converte l'istanza in un dizionario JSON.
+
+        Returns:
+            Un dizionario contenente i dati dell'ID della risorsa di ricerca.
+        """
+        return {
+            'kind': self.kind,
+            'videoId': self.videoId,
+            'channelId': self.channelId,
+            'playlistId': self.playlistId
+        }
+
+
 @dataclass
 class SearchResourceSnippet:
-    published_at: Optional[datetime] = None
-    channel_id: str = ""
+    publishedAt: Optional[datetime] = None
+    channelId: str = ""
     title: str = ""
     description: str = ""
     thumbnails: Thumbnails = field(default_factory=Thumbnails)
-    channel_title: str = ""
-    live_broadcast_content: str = ""
+    channelTitle: str = ""
+    liveBroadcastContent: str = ""
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'SearchResourceSnippet':
+        """
+        Crea un oggetto SearchResourceSnippet da un dizionario JSON.
+
+        Args:
+            data: Dizionario contenente i dati dello snippet della risorsa di ricerca
+
+        Returns:
+            Un'istanza di SearchResourceSnippet
+        """
+        thumbnails = Thumbnails.from_dict(data.get('thumbnails', {}))
+        return cls(
+            publishedAt=datetime.fromisoformat(data['publishedAt']) if 'publishedAt' in data else None,
+            channelId=data.get('channelId', ''),
+            title=data.get('title', ''),
+            description=data.get('description', ''),
+            thumbnails=thumbnails,
+            channelTitle=data.get('channelTitle', ''),
+            liveBroadcastContent=data.get('liveBroadcastContent', '')
+        )
+
+    def to_dict(self):
+        """
+        Converte l'istanza in un dizionario JSON.
+
+        Returns:
+            Un dizionario contenente i dati dello snippet della risorsa di ricerca.
+        """
+        return {
+            'publishedAt': self.publishedAt.isoformat() if self.publishedAt else None,
+            'channelId': self.channelId,
+            'title': self.title,
+            'description': self.description,
+            'thumbnails': self.thumbnails.to_dict(),
+            'channelTitle': self.channelTitle,
+            'liveBroadcastContent': self.liveBroadcastContent
+        }
+
 
 @dataclass
 class YoutubeSearchResource:
     kind: str = "youtube#searchResult"
     etag: str = ""
     id: YouTubeSearchResourceId = field(default_factory=YouTubeSearchResourceId)
-    snippet: VideoResourceSnippet = field(default_factory=SearchResourceSnippet)
+    snippet: SearchResourceSnippet = field(default_factory=SearchResourceSnippet)
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'YoutubeSearchResource':
+        """
+        Crea un oggetto YoutubeSearchResource da un dizionario JSON.
+
+        Args:
+            data: Dizionario contenente i dati della risorsa di ricerca
+
+        Returns:
+            Un'istanza di YoutubeSearchResource
+        """
+        kind_received = data.get('kind', '')
+        if kind_received != 'youtube#searchResult':
+            raise ValueError(f"Expected kind='youtube#searchResult', got '{kind_received}'")
+
+        resource_id = YouTubeSearchResourceId.from_dict(data.get('id', {}))
+        snippet = SearchResourceSnippet.from_dict(data.get('snippet', {}))
+
+        return cls(
+            kind=kind_received,
+            etag=data.get('etag', ''),
+            id=resource_id,
+            snippet=snippet
+        )
+
+    def to_dict(self):
+        """
+        Converte l'istanza in un dizionario JSON.
+
+        Returns:
+            Un dizionario contenente i dati della risorsa di ricerca.
+        """
+        return {
+            'kind': self.kind,
+            'etag': self.etag,
+            'id': self.id.to_dict(),
+            'snippet': self.snippet.to_dict()
+        }
+
 
 @dataclass
 class PageInfo:
-    total_results: int = 0
-    results_per_page: int = 0
+    totalResults: int = 0
+    resultsPerPage: int = 0
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'PageInfo':
+        """
+        Crea un oggetto PageInfo da un dizionario JSON.
+
+        Args:
+            data: Dizionario contenente i dati della pagina
+
+        Returns:
+            Un'istanza di PageInfo
+        """
+        return cls(
+            totalResults=data.get('totalResults', 0),
+            resultsPerPage=data.get('resultsPerPage', 0)
+        )
 
 @dataclass
 class YouTubeSearchListResponse:
     kind: str = "youtube#searchListResponse"
     etag: str = ""
-    next_page_token: Optional[str] = None
-    prev_page_token: Optional[str] = None
-    region_code: Optional[str] = None
-    page_info: PageInfo = field(default_factory=PageInfo)
+    nextPageToken: Optional[str] = None
+    prevPageToken: Optional[str] = None
+    regionCode: Optional[str] = None
+    pageInfo: PageInfo = field(default_factory=PageInfo)
     items: List[YoutubeSearchResource] = field(default_factory=list)
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'YouTubeSearchListResponse':
+        """
+        Crea un oggetto YouTubeSearchListResponse da un dizionario JSON.
+
+        Args:
+            data: Dizionario contenente i dati della risposta di ricerca di YouTube
+
+        Returns:
+            Un'istanza di YouTubeSearchListResponse
+        """
+        # Utilizzo from_dict per PageInfo
+        page_info = PageInfo.from_dict(data.get('pageInfo', {}))
+
+        # Elabora gli elementi
+        items = []
+        for item_data in data.get('items', []):
+            # Utilizza from_dict per YoutubeSearchResource
+            search_item = YoutubeSearchResource.from_dict(item_data)
+            items.append(search_item)
+
+        # Crea e restituisce l'oggetto di risposta
+        return cls(
+            kind=data.get('kind', 'youtube#searchListResponse'),
+            etag=data.get('etag', ''),
+            nextPageToken=data.get('nextPageToken'),
+            prevPageToken=data.get('prevPageToken'),
+            regionCode=data.get('regionCode'),
+            pageInfo=page_info,
+            items=items
+        )
+
+    def to_dict(self):
+        """
+        Converte l'istanza in un dizionario JSON.
+
+        Returns:
+            Un dizionario contenente i dati della risposta di ricerca di YouTube.
+        """
+        return {
+            'kind': self.kind,
+            'etag': self.etag,
+            'nextPageToken': self.nextPageToken,
+            'prevPageToken': self.prevPageToken,
+            'regionCode': self.regionCode,
+            'pageInfo': self.pageInfo.__dict__,
+            'items': [item.to_dict() for item in self.items]
+        }

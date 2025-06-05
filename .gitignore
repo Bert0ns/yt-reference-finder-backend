@@ -1,6 +1,9 @@
 youtube_responses.log
 app.log
 
+search_response.json
+search_videos_response_data.json
+
 .idea/
 
 .env
