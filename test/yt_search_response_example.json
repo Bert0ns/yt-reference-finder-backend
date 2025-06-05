@@ -1,0 +1,1712 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "8F3OFnAhgMZDulfV5vVahNfn8jY",
+  "nextPageToken": "CDIQAA",
+  "regionCode": "IT",
+  "pageInfo": {
+    "totalResults": 1000000,
+    "resultsPerPage": 50
+  },
+  "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "WfYFOCZvLnS-SEF_0wp-2DTtEsA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "cNN_tTXABUA"
+      },
+      "snippet": {
+        "publishedAt": "2013-03-15T11:57:30Z",
+        "channelId": "UC6eaVn7349LRh5yzpXjeu8A",
+        "title": "How a CPU Works",
+        "description": "Learn how the most important component in your device works, right here! Author's Website: http://www.buthowdoitknow.com/ See ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/cNN_tTXABUA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/cNN_tTXABUA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/cNN_tTXABUA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "In One Lesson",
+        "liveBroadcastContent": "none",
+        "publishTime": "2013-03-15T11:57:30Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "fXBXIINbYclBkVBukR0m_l7z3VQ",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "_cyVDoyI6NE"
+      },
+      "snippet": {
+        "publishedAt": "2015-12-22T12:56:54Z",
+        "channelId": "UC9-y-6csu5WGm29I7JiwpnA",
+        "title": "CPU vs GPU (What&#39;s the Difference?) - Computerphile",
+        "description": "What does a GPU do differently to a CPU and why don't we use them for everything? First of a series from Jem Davies, VP of ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/_cyVDoyI6NE/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/_cyVDoyI6NE/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/_cyVDoyI6NE/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Computerphile",
+        "liveBroadcastContent": "none",
+        "publishTime": "2015-12-22T12:56:54Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "ko_KqDjRjyurEjdJCHlLP7T8sOk",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "lmDsCo6uV24"
+      },
+      "snippet": {
+        "publishedAt": "2019-09-23T18:57:57Z",
+        "channelId": "UCGgAsNJ-w5v4c4iyOH_hGig",
+        "title": "What Is CPU ? | How CPU Works ? | Functions Of Central Processing Unit",
+        "description": "What Is CPU ? | How CPU Works ? | Functions Of Central Processing Unit The CPU stands for Central Processing Unit of the ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lmDsCo6uV24/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lmDsCo6uV24/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lmDsCo6uV24/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Computer Science",
+        "liveBroadcastContent": "none",
+        "publishTime": "2019-09-23T18:57:57Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "dC2QOgocTYXmP0HjzoxX_4ivD98",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "FZGugFqdr60"
+      },
+      "snippet": {
+        "publishedAt": "2017-04-05T21:56:27Z",
+        "channelId": "UCX6b17PVsYBQ0ip5gyeme-Q",
+        "title": "The Central Processing Unit (CPU): Crash Course Computer Science #7",
+        "description": "Today we're going to build the ticking heart of every computer - the Central Processing Unit or CPU. The CPU's job is to execute ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/FZGugFqdr60/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/FZGugFqdr60/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/FZGugFqdr60/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "CrashCourse",
+        "liveBroadcastContent": "none",
+        "publishTime": "2017-04-05T21:56:27Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "KBcpzhw1iUWnxCSykR0DFp6cA4U",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "AkFi90lZmXA"
+      },
+      "snippet": {
+        "publishedAt": "2013-07-01T15:14:08Z",
+        "channelId": "UCsooa4yRKGN_zEE8iknghZA",
+        "title": "Inside your computer - Bettina Bair",
+        "description": "View full lesson: http://ed.ted.com/lessons/inside-your-computer-bettina-bair How does a computer work? The critical components ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/AkFi90lZmXA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/AkFi90lZmXA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/AkFi90lZmXA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "TED-Ed",
+        "liveBroadcastContent": "none",
+        "publishTime": "2013-07-01T15:14:08Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "bD--PyCWP3r1Z_muvoH4cCq98cc",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "Z5JC9Ve1sfI"
+      },
+      "snippet": {
+        "publishedAt": "2019-07-29T15:00:09Z",
+        "channelId": "UCBa659QWEk1AI4Tg--mrJ2A",
+        "title": "The Fetch-Execute Cycle: What&#39;s Your Computer Actually Doing?",
+        "description": "The fetch-execute cycle is the basis of everything your computer or phone does. This is literally The Basics. \u2022 Sponsored by ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/Z5JC9Ve1sfI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/Z5JC9Ve1sfI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/Z5JC9Ve1sfI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Tom Scott",
+        "liveBroadcastContent": "none",
+        "publishTime": "2019-07-29T15:00:09Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "UEXJIIPg9X553kIqTQIK52im6PA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "yi0FhRqDJfo"
+      },
+      "snippet": {
+        "publishedAt": "2016-11-28T03:05:11Z",
+        "channelId": "UCJQJ4GjTiq5lmn8czf8oo0Q",
+        "title": "CPU Cache Explained - What is Cache Memory?",
+        "description": "What is CPU cache? This is an animated video tutorial on CPU Cache memory. It explains Level 1, level 2 and level 3 cache.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/yi0FhRqDJfo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/yi0FhRqDJfo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/yi0FhRqDJfo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "PowerCert Animated Videos",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-11-28T03:05:11Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "oVRDQOAnPgyYYrDlPFGgMfoDtrc",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "CxGSnA-RTsA"
+      },
+      "snippet": {
+        "publishedAt": "2024-05-19T18:40:02Z",
+        "channelId": "UC8VhAX-voAUegprM4SpHQJQ",
+        "title": "COMPUTER SCIENCE explained in 17 Minutes",
+        "description": "Learn more about Computer Science, Math, and AI with Brilliant! First 30 Days are free + 20% off an annual subscription when you ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/CxGSnA-RTsA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/CxGSnA-RTsA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/CxGSnA-RTsA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Wacky Science",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-05-19T18:40:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "Lm28HUbffAOLUUxgiyUjWOt9oj0",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "-ZPLyzW4eEI"
+      },
+      "snippet": {
+        "publishedAt": "2025-06-02T13:30:06Z",
+        "channelId": "UCZdbPJ6BfourklJIOBXodDg",
+        "title": "Introduction to RAG with FAISS | Gen AI Full Course (Ep 4)",
+        "description": "Continuing our Gen AI series! Explore the revolutionary world of RAG with FAISS. This essential video provides a clear RAG ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/-ZPLyzW4eEI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/-ZPLyzW4eEI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/-ZPLyzW4eEI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "StarAgile",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-02T13:30:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "Rfd-o9ClyEM07EtKgCR65hdSTUc",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "p3q5zWCw8J4"
+      },
+      "snippet": {
+        "publishedAt": "2016-05-10T15:03:30Z",
+        "channelId": "UCsooa4yRKGN_zEE8iknghZA",
+        "title": "How computer memory works - Kanawat Senanan",
+        "description": "View full lesson: http://ed.ted.com/lessons/how-computer-memory-works-kanawat-senanan In many ways, our memories make us ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/p3q5zWCw8J4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/p3q5zWCw8J4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/p3q5zWCw8J4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "TED-Ed",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-05-10T15:03:30Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "er5SK30WQBzFrd3s0eEGsu-t1Ks",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "YbTQ3uJsZ84"
+      },
+      "snippet": {
+        "publishedAt": "2023-04-19T00:18:26Z",
+        "channelId": "UC2MAKe5X7pohhiMZ4nzdInA",
+        "title": "What is a Computer? | All About Computers | Tynker",
+        "description": "Learn how a simple computer can help the Super Squad stay organized. This is part of our video series about computer basics.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/YbTQ3uJsZ84/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/YbTQ3uJsZ84/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/YbTQ3uJsZ84/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Tynker",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-04-19T00:18:26Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "nbJilrmXZorfVOVFP7w0jNriBpc",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "JhHMJCUmq28"
+      },
+      "snippet": {
+        "publishedAt": "2015-12-08T15:32:12Z",
+        "channelId": "UCsXVk37bltHxD1rDPwtNM8Q",
+        "title": "Quantum Computers Explained \u2013 Limits of Human Technology",
+        "description": "Where are the limits of human technology? And can we somehow avoid them? This is where quantum computers become very ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/JhHMJCUmq28/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/JhHMJCUmq28/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/JhHMJCUmq28/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Kurzgesagt \u2013 In a Nutshell",
+        "liveBroadcastContent": "none",
+        "publishTime": "2015-12-08T15:32:12Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "utEpyKRNbrxSNedMPEsEsNNmvio",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "P2Fc0Aj_u58"
+      },
+      "snippet": {
+        "publishedAt": "2016-12-05T16:07:35Z",
+        "channelId": "UCRFIPG2u1DxKLNuE3y2SjHA",
+        "title": "How Do Computers Work? - #CSforAll",
+        "description": "We use computers for all kinds of things, like talking to our friends, doing our homework, and watching SciShow Kids! But have ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/P2Fc0Aj_u58/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/P2Fc0Aj_u58/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/P2Fc0Aj_u58/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "SciShow Kids",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-12-05T16:07:35Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "qLewFFLHaU6jj_MtXnPOVp16JtQ",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "mCq8-xTH7jA"
+      },
+      "snippet": {
+        "publishedAt": "2018-01-30T13:59:19Z",
+        "channelId": "UCJyEBMU1xVP2be1-AoGS1BA",
+        "title": "How Computers Work: What Makes a Computer, a Computer?",
+        "description": "Computers are all around us, but what really makes a computer, a computer? Explore the history of computers and the features ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/mCq8-xTH7jA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/mCq8-xTH7jA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/mCq8-xTH7jA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Code.org",
+        "liveBroadcastContent": "none",
+        "publishTime": "2018-01-30T13:59:19Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "13VarDGU66cZY7nC5HpRQ6FlOEk",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "WhNyURBiJcU"
+      },
+      "snippet": {
+        "publishedAt": "2016-06-06T15:09:02Z",
+        "channelId": "UCsooa4yRKGN_zEE8iknghZA",
+        "title": "How transistors work - Gokul J. Krishnan",
+        "description": "View full lesson: http://ed.ted.com/lessons/how-transistors-work-gokul-j-krishnan Modern computers are revolutionizing our lives, ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/WhNyURBiJcU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/WhNyURBiJcU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/WhNyURBiJcU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "TED-Ed",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-06-06T15:09:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "uItE51NWtx43p_Er62A-J1tbFI0",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "6JpLD3PUAZk"
+      },
+      "snippet": {
+        "publishedAt": "2015-11-20T14:19:00Z",
+        "channelId": "UC9-y-6csu5WGm29I7JiwpnA",
+        "title": "Why do CPUs Need Caches? - Computerphile",
+        "description": "We've all heard of web browser caches, but why does a super fast modern CPU need a cache? Because it's too fast. Dr Steve ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/6JpLD3PUAZk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/6JpLD3PUAZk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/6JpLD3PUAZk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Computerphile",
+        "liveBroadcastContent": "none",
+        "publishTime": "2015-11-20T14:19:00Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "hFw1QFUgKQ5Lw2fnFEwjKEBV6xM",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "QZwneRb-zqA"
+      },
+      "snippet": {
+        "publishedAt": "2020-11-16T11:01:04Z",
+        "channelId": "UCmtyQOKKmrMVaKuRXz02jbQ",
+        "title": "Exploring How Computers Work",
+        "description": "A little exploration of some of the fundamentals of how computers work. Logic gates, binary, two's complement; all that good stuff!",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/QZwneRb-zqA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/QZwneRb-zqA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/QZwneRb-zqA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Sebastian Lague",
+        "liveBroadcastContent": "none",
+        "publishTime": "2020-11-16T11:01:04Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "zcaR5qxnNX68_di3P_HV06Gv-E4",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "rRSD128KWIM"
+      },
+      "snippet": {
+        "publishedAt": "2020-03-03T22:27:19Z",
+        "channelId": "UCJyEBMU1xVP2be1-AoGS1BA",
+        "title": "What is a Computer?",
+        "description": "Computers are everywhere! But what are they exactly? Find out here. Start learning at http://code.org/ Stay in touch with us!",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/rRSD128KWIM/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/rRSD128KWIM/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/rRSD128KWIM/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Code.org",
+        "liveBroadcastContent": "none",
+        "publishTime": "2020-03-03T22:27:19Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "zzmgVKgQPvCRz8nNbIXUu4vBG6A",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "g_IaVepNDT4"
+      },
+      "snippet": {
+        "publishedAt": "2013-06-17T15:01:01Z",
+        "channelId": "UCHnyfMqiRRG1u-2MsSQLbXA",
+        "title": "How Does a Quantum Computer Work?",
+        "description": "For more on spin, check out: http://youtu.be/v1_-LsQLwkA This video was supported by TechNYou: http://bit.ly/19bBX5G A ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/g_IaVepNDT4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/g_IaVepNDT4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/g_IaVepNDT4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Veritasium",
+        "liveBroadcastContent": "none",
+        "publishTime": "2013-06-17T15:01:01Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "W7-k9p3Cg9XAcci6rhy_mNm9abA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "vqhRy6ABbJs"
+      },
+      "snippet": {
+        "publishedAt": "2022-12-20T10:32:15Z",
+        "channelId": "UCGT2k7Pcv4KMIL4CyBMpsQw",
+        "title": "\ud83d\udda5 What is a Computer? | Computer Science for Kids Part 1 | Grades K-2",
+        "description": "Have you ever asked yourself... What is a computer? In this video, students will learn about the different ways in which they use ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/vqhRy6ABbJs/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/vqhRy6ABbJs/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/vqhRy6ABbJs/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Ms. Dorismond's Virtual Corner",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-12-20T10:32:15Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "9vmG5qSBUb-TvV-4cc5RF3yht5o",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "GjNp0bBrjmU"
+      },
+      "snippet": {
+        "publishedAt": "2018-09-24T07:36:57Z",
+        "channelId": "UCvmofFg-oZc4jvBUIfZbjzg",
+        "title": "How Do Operating Systems Work?",
+        "description": "Download your Operating Systems teacher resource pack \u2795 try this video with built-in interactive questions FREE ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/GjNp0bBrjmU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/GjNp0bBrjmU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/GjNp0bBrjmU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "ClickView",
+        "liveBroadcastContent": "none",
+        "publishTime": "2018-09-24T07:36:57Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "Oqt29Rc6mpB_tQMoOw9BKUXJXTg",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "Qlv5pB6u534"
+      },
+      "snippet": {
+        "publishedAt": "2023-05-20T14:19:55Z",
+        "channelId": "UCuCkxoKLYO_EQ2GeFtbM_bw",
+        "title": "Why We&#39;re Reaching the Theoretical Limit of Computer Power",
+        "description": "Get a free bag of fresh coffee with any Trade subscription at http://drinktrade.com/hai Half as Interesting's Crime Spree: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/Qlv5pB6u534/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/Qlv5pB6u534/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/Qlv5pB6u534/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Half as Interesting",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-05-20T14:19:55Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "f2jfbs5HgZka1Dcyay45daj2Q5U",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "sduoAUgNX9Q"
+      },
+      "snippet": {
+        "publishedAt": "2016-03-09T12:39:19Z",
+        "channelId": "UC0n301vYaad8F3p4Esg5x4Q",
+        "title": "What is computer, Computer Hardware - Computer Tutorials for Beginners Course Day #1",
+        "description": "Latest Link: 'This video is old and outdated. Please click the link in the description to see the latest.\" In today's lesson we will learn ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/sduoAUgNX9Q/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/sduoAUgNX9Q/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/sduoAUgNX9Q/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Tech Plus",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-03-09T12:39:19Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "0U9kD6zLIGMLgn2x3Zfa11NbH-Y",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "ZBnqnJUqHs4"
+      },
+      "snippet": {
+        "publishedAt": "2023-11-29T17:04:08Z",
+        "channelId": "UCKC4KJBQblJEoxzlJDnSn2Q",
+        "title": "What is CPU ll Few Lines about Computer CPU",
+        "description": "What is CPU ll Few Lines about Computer CPU #cpu #computer #cpufullform.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/ZBnqnJUqHs4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/ZBnqnJUqHs4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/ZBnqnJUqHs4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Engineering Tutorials",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-11-29T17:04:08Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "OKNw5pRaXt2-uZPWodcmmUBUz70",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "_O9cNYzIKsg"
+      },
+      "snippet": {
+        "publishedAt": "2023-04-19T00:21:16Z",
+        "channelId": "UC2MAKe5X7pohhiMZ4nzdInA",
+        "title": "What is a Computer? | All About Computers | Tynker",
+        "description": "Codey teaches his troll friends what a computer is. This is part of our video series about computer basics. All About Computers is ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/_O9cNYzIKsg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/_O9cNYzIKsg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/_O9cNYzIKsg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Tynker",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-04-19T00:21:16Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "7-vTqN7qrhTIGr4KLRgFH8464dA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "PRVY1Dx_xdw"
+      },
+      "snippet": {
+        "publishedAt": "2018-10-31T17:37:45Z",
+        "channelId": "UCn02JqZ4HDQy1188_6X5wXQ",
+        "title": "what is a cpu || \u0938\u0940. \u092a\u0940. \u092f\u0942 .\u0915\u094d\u092f\u093e \u0939\u0948?",
+        "description": "what is a cpu A central processing unit (CPU) is an important part of every computer. The CPU is the unit which performs most of ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/PRVY1Dx_xdw/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/PRVY1Dx_xdw/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/PRVY1Dx_xdw/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "K-Tech Bhilwara",
+        "liveBroadcastContent": "none",
+        "publishTime": "2018-10-31T17:37:45Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "bRlFwmWO647BO3HKdYUU9Chf-6I",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "5LeZflr8Zfs"
+      },
+      "snippet": {
+        "publishedAt": "2024-06-26T04:33:33Z",
+        "channelId": "UC4a-Gbdw7vOaccHmFo40b9g",
+        "title": "What is computer science? | Intro to CS - Python | Khan Academy",
+        "description": "What is a program? What does a programmer do? What is the difference between computer science and computer programming?",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/5LeZflr8Zfs/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/5LeZflr8Zfs/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/5LeZflr8Zfs/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Khan Academy",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-06-26T04:33:33Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "wMUJwzHmhUUzleBwmCyJnUxoj8s",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "ngOq5baLDHU"
+      },
+      "snippet": {
+        "publishedAt": "2021-07-15T11:16:06Z",
+        "channelId": "UCG0Hd8E8oAeYaxAnBN8qgNw",
+        "title": "Std 5th ,6th Computer| What is a CPU , Internal Parts of CPU, Main Parts of CPU",
+        "description": "Std 5th 6th Computer | What is a CPU , Internal Parts of CPU, Main Parts of CPU. #learnknowledgewithshaz Thank you.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/ngOq5baLDHU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/ngOq5baLDHU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/ngOq5baLDHU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "learn knowledge with shaz",
+        "liveBroadcastContent": "none",
+        "publishTime": "2021-07-15T11:16:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "C0pATxhTMD_gHXKmPrMo9XZG7Pw",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "P3b5BxtcCws"
+      },
+      "snippet": {
+        "publishedAt": "2020-10-08T15:58:05Z",
+        "channelId": "UCtXRIIGnq4rU8REt1vAuttw",
+        "title": "What Is A Computer Really? | Fundamental Concepts",
+        "description": "We all have lots of computers in our lives, but how do they work? Tyler Bletsch of Duke's Electrical and Computer Engineering ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/P3b5BxtcCws/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/P3b5BxtcCws/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/P3b5BxtcCws/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Duke University",
+        "liveBroadcastContent": "none",
+        "publishTime": "2020-10-08T15:58:05Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "0TGFvz5KBSC2_xukQh_CSBQfz68",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "PGnTZinVIYI"
+      },
+      "snippet": {
+        "publishedAt": "2023-02-06T15:30:05Z",
+        "channelId": "UCTEHsdbpgtcQX7SAVvKz4CA",
+        "title": "Computers: What is a Computer | Science Trek",
+        "description": "Do you know what a computer is? The definition of what a computer is has changed over time. Find out more about the history of ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/PGnTZinVIYI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/PGnTZinVIYI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/PGnTZinVIYI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Science Trek",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-02-06T15:30:05Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "YivI8A--8UvvmI_GzlMrjhKNAho",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "wgbV6DLVezo"
+      },
+      "snippet": {
+        "publishedAt": "2018-07-12T15:02:15Z",
+        "channelId": "UCsooa4yRKGN_zEE8iknghZA",
+        "title": "How exactly does binary code work? - Jos\u00e9 Am\u00e9rico N L F de Freitas",
+        "description": "Check out our Patreon page: https://www.patreon.com/teded View full lesson: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/wgbV6DLVezo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/wgbV6DLVezo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/wgbV6DLVezo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "TED-Ed",
+        "liveBroadcastContent": "none",
+        "publishTime": "2018-07-12T15:02:15Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "qI1Bedum67auc_y7bHEoldBsRuU",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "O-sMSKjNgIk"
+      },
+      "snippet": {
+        "publishedAt": "2023-11-18T18:15:07Z",
+        "channelId": "UCLGr2w15KjKIjsMGmLGeXHg",
+        "title": "What is CPU ? | CPU Video part  - 1 | computer hardware part - 44 | What is CPU Technology&#39;s ? | cpu",
+        "description": "Must watch the previous video link here :- 1 Rare Projector Technology | computer hardware part - 43 | How to rare projectors ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/O-sMSKjNgIk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/O-sMSKjNgIk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/O-sMSKjNgIk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Online Nettech Blue Sky",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-11-18T18:15:07Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "FoFBlx-fXhFHzJelnoc91GQTnd0",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "78d19VlJqQQ"
+      },
+      "snippet": {
+        "publishedAt": "2022-04-15T09:30:01Z",
+        "channelId": "UCIJr9qiD_TtLgEcLxiRQTUA",
+        "title": "How to indent paragraph in Microsoft Word? #shortsvideo #mswordtutoiral",
+        "description": "In this video we will learn that How to indent paragraph in Microsoft Word? Microsoft word me paragraph ko indent kaise karte ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/78d19VlJqQQ/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/78d19VlJqQQ/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/78d19VlJqQQ/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Basics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-04-15T09:30:01Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "lRSbAk03naqJWPtPaGJVaVLuPJI",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "YjgvWfmdmfM"
+      },
+      "snippet": {
+        "publishedAt": "2022-11-07T08:03:03Z",
+        "channelId": "UCjwGYAzTRX8bSLILblTygMQ",
+        "title": "What is CPU | Processor | Core of Processor | Motherboard || CPU \u0915\u094d\u092f\u093e \u0939\u094b\u0924\u093e \u0939\u0948 ? | Lecture-7",
+        "description": "What is CPU | Processor | Core of Processor | Motherboard ||CPU \u0915\u094d\u092f\u093e \u0939\u094b\u0924\u093e \u0939\u0948 ? central processing unit 100 % Free ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/YjgvWfmdmfM/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/YjgvWfmdmfM/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/YjgvWfmdmfM/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Olevel Guruji ",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-11-07T08:03:03Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "O3exNgz3hE_9Ow31bN36CEsQ4VM",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "ROudfklqxbg"
+      },
+      "snippet": {
+        "publishedAt": "2015-07-05T05:56:39Z",
+        "channelId": "UCS3RXL1ICt42KV-EeXSt--A",
+        "title": "What does computer processor mean?",
+        "description": "What does computer processor mean? A spoken definition of computer processor. Intro Sound: Typewriter - Tamskp Licensed ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/ROudfklqxbg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/ROudfklqxbg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/ROudfklqxbg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "What Does That Mean?",
+        "liveBroadcastContent": "none",
+        "publishTime": "2015-07-05T05:56:39Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "-LIP760kSdNQhElu_xiIULIUTqA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "TEMPASzpCRs"
+      },
+      "snippet": {
+        "publishedAt": "2024-12-27T13:00:38Z",
+        "channelId": "UC0R6_FWEaDjlJaXVedzRqBw",
+        "title": "Don\u2019t make this mistake in Cambridge A Level Computer Science exam! #shorts #pseudocode",
+        "description": "More resources at www.haguin.school Don't make this mistake in Cambridge A Level Computer Science exam! #pseudocode ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/TEMPASzpCRs/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/TEMPASzpCRs/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/TEMPASzpCRs/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Haguin School",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-12-27T13:00:38Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "2OrcxKXg4f4eSnI5LBOUy3lTK2U",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "47Mk2-5kFX0"
+      },
+      "snippet": {
+        "publishedAt": "2021-11-30T12:08:26Z",
+        "channelId": "UCIJr9qiD_TtLgEcLxiRQTUA",
+        "title": "How to open ease of access in windows 10?",
+        "description": "In this video we will learn how to open ease of access in windows 10? Windows 10 me ease of access kaise open karte hain?",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/47Mk2-5kFX0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/47Mk2-5kFX0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/47Mk2-5kFX0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Basics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2021-11-30T12:08:26Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "lqCvkMX47Pn1pXd88PFYt_yUiGQ",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "-Zj5OhRN8QE"
+      },
+      "snippet": {
+        "publishedAt": "2025-05-08T02:42:17Z",
+        "channelId": "UCz1pshio7OORCgxycsvpEmA",
+        "title": "What Is a Computer? \ud83d\udcbb | Easy Tech for Kids | MiniTech Minds",
+        "description": "Welcome to MiniTech Minds! In this video, we explore a super fun question: **What is a computer?** Perfect for kids ages 6 ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/-Zj5OhRN8QE/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/-Zj5OhRN8QE/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/-Zj5OhRN8QE/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "MiniTech Minds",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-08T02:42:17Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "C1_ObhurkoLfDHTiIe4I5YxQzf4",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "tzCx2rrCftQ"
+      },
+      "snippet": {
+        "publishedAt": "2024-09-18T10:27:22Z",
+        "channelId": "UCzy7u0cMU5IfDlvocjiuU4Q",
+        "title": "What is a computer and what is inside it",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/tzCx2rrCftQ/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/tzCx2rrCftQ/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/tzCx2rrCftQ/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "NETECH-SOLUTIONS ",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-09-18T10:27:22Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "f6Oe67HRyYiKG1zgc6eKdGmGp0M",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "75UKvpzzk6U"
+      },
+      "snippet": {
+        "publishedAt": "2021-12-04T10:45:53Z",
+        "channelId": "UCLRLoEB5AnlzsOW7iArqykg",
+        "title": "What is CPU ? What is Processor ? Types of processor | Parts of CPU",
+        "description": "Thanks for coming on my video IN this video i Explain all About the CPU that is also called processor and a brain of the computer ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/75UKvpzzk6U/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/75UKvpzzk6U/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/75UKvpzzk6U/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "ST Services",
+        "liveBroadcastContent": "none",
+        "publishTime": "2021-12-04T10:45:53Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "gOzo9k_fYHN5NSLI9pOxGOgWsfI",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "BR0jGjgW4MA"
+      },
+      "snippet": {
+        "publishedAt": "2022-12-04T17:45:49Z",
+        "channelId": "UCIJr9qiD_TtLgEcLxiRQTUA",
+        "title": "how to open Microsoft excel using run command? #shorts",
+        "description": "In this video we will learn that how to open Microsoft excel using run command? Subscribe my channel ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/BR0jGjgW4MA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/BR0jGjgW4MA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/BR0jGjgW4MA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Basics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-12-04T17:45:49Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "fh8tAToAuzA6NIU_hS_wQcYzWNo",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "3JZnjyx83P0"
+      },
+      "snippet": {
+        "publishedAt": "2022-10-08T07:14:40Z",
+        "channelId": "UCIJr9qiD_TtLgEcLxiRQTUA",
+        "title": "\ud83d\udcd2how to open notepad? #shorts #notepad",
+        "description": "In this video we will learn that how to open notepad? Subscribe my channel - https://www.youtube.com/learnbasics #shorts ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/3JZnjyx83P0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/3JZnjyx83P0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/3JZnjyx83P0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Basics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-10-08T07:14:40Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "_qvj0kbm6MKHolVXha_GoKJmUx4",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "eXcsSi5y7p0"
+      },
+      "snippet": {
+        "publishedAt": "2024-06-17T11:30:17Z",
+        "channelId": "UCaTV8HRt51_H-LHHoiInHEg",
+        "title": "\ud83d\udca5Best Free AI Courses for Beginners! Must Do Courses for MBA Students\u2611\ufe0f#mba #artificialintelligence",
+        "description": "Get Free MBA Career Counseling: ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/eXcsSi5y7p0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/eXcsSi5y7p0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/eXcsSi5y7p0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "MBA Fundas by Sunstone",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-06-17T11:30:17Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "YqDvHmpZXoZddNqKB0DweGDHYB8",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "2Z_lwu42EgM"
+      },
+      "snippet": {
+        "publishedAt": "2024-04-05T06:00:02Z",
+        "channelId": "UCcR5UJrbNN9DgGMPGd92OCg",
+        "title": "What is a Computer? | BNN Documentary",
+        "description": "computerbasics #techexplained #documentary Title: What is a Computer? | BNN Documentary Description: Discover the ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/2Z_lwu42EgM/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/2Z_lwu42EgM/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/2Z_lwu42EgM/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "BNN Documentary",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-04-05T06:00:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "fYG9tqkzmNopwvvFRxdHTsY4DGY",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "-dX1uci7Mmw"
+      },
+      "snippet": {
+        "publishedAt": "2025-01-16T20:00:00Z",
+        "channelId": "UCKWaEZ-_VweaEx1j62do_vQ",
+        "title": "What is a GPT?",
+        "description": "Learn more about GPT here \u2192 https://www.ibm.com/think/topics/gpt GPT in a nutshell: Transformer architecture, self-attention ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/-dX1uci7Mmw/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/-dX1uci7Mmw/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/-dX1uci7Mmw/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "IBM Technology",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-01-16T20:00:00Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "NLRx0JWauVpFgCrQcJWkZ3yISFw",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "dnHdqPBrtH8"
+      },
+      "snippet": {
+        "publishedAt": "2022-07-07T23:00:15Z",
+        "channelId": "UC1LpsuAUaKoMzzJSEt5WImw",
+        "title": "Why the Soviet Computer Failed",
+        "description": "In 1986, the Soviet Union had slightly more than 10000 computers. The Americans had 1.3 million. At the time of Stalin's death, ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/dnHdqPBrtH8/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/dnHdqPBrtH8/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/dnHdqPBrtH8/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Asianometry",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-07-07T23:00:15Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "7sebUC78vuhmRsXbe7ISYVRR6yA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "ZG_VCpiR7cw"
+      },
+      "snippet": {
+        "publishedAt": "2022-09-23T01:37:09Z",
+        "channelId": "UCIJr9qiD_TtLgEcLxiRQTUA",
+        "title": "How to add a new slide in Microsoft PowerPoint?",
+        "description": "In this video we will learn that How to add a new slide in Microsoft PowerPoint? Subscribe my channel ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/ZG_VCpiR7cw/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/ZG_VCpiR7cw/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/ZG_VCpiR7cw/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Basics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-09-23T01:37:09Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "cl3xkU1oMBgNcmUt5Xs7-yKYOGA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "9lVKcTNVD1Q"
+      },
+      "snippet": {
+        "publishedAt": "2016-11-23T17:33:30Z",
+        "channelId": "UCv_iIb0G-4JyFfm7IvqMk8Q",
+        "title": "What is a computer?",
+        "description": "",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/9lVKcTNVD1Q/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/9lVKcTNVD1Q/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/9lVKcTNVD1Q/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Hello Ruby",
+        "liveBroadcastContent": "none",
+        "publishTime": "2016-11-23T17:33:30Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "iKG2FVkavWqrC5Y5H6Oj-LTp0bE",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "PK4UbRWzvfc"
+      },
+      "snippet": {
+        "publishedAt": "2021-11-26T18:04:37Z",
+        "channelId": "UCIJr9qiD_TtLgEcLxiRQTUA",
+        "title": "How to open clipboard in windows 10? #shorts",
+        "description": "In this video we will learn that how to open clipboard in windows 10? Subscribe my channel ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/PK4UbRWzvfc/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/PK4UbRWzvfc/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/PK4UbRWzvfc/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Basics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2021-11-26T18:04:37Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "nVQlLlHiZTOIg4JyEAkYEkNwwqk",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "b2eW6xwzuq8"
+      },
+      "snippet": {
+        "publishedAt": "2023-10-27T11:32:43Z",
+        "channelId": "UCIJr9qiD_TtLgEcLxiRQTUA",
+        "title": "How to Delete Temporary Files in Windows? #shortsvideo #windowstutorials",
+        "description": "In this video we will learn that How to Delete Temporary Files in Windows? Windows me temporary files kaise delete karte hain?",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/b2eW6xwzuq8/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/b2eW6xwzuq8/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/b2eW6xwzuq8/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Learn Basics",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-10-27T11:32:43Z"
+      }
+    }
+  ]
+}
