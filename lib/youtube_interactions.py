@@ -1,9 +1,9 @@
 import os
 import json
-from flask import jsonify
+from typing import List
 from googleapiclient.discovery import build, Resource
 from lib.app_logger import logger
-from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video, YouTubeSearchListResponse
+from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video, YouTubeSearchListResponse, YoutubeSearchResource
 
 
 def get_all_youtube_topic() -> dict[str, str]:
@@ -79,21 +79,21 @@ def search_videos(youtube: Resource, query, max_results=10, language='it', youtu
     return YouTubeSearchListResponse.from_dict(data)
 
 
-def process_search_results(response_items):
+def process_search_results(response_items : List[YoutubeSearchResource]):
     """Estrae informazioni dai risultati di ricerca e restituisce video temporanei e IDs"""
     temp_videos = []
     channel_ids = set()
     video_ids = []
 
     for item in response_items:
-        channel_id = item['snippet']['channelId']
-        video_id = item['id']['videoId']
+        channel_id = item.snippet.channelId
+        video_id = item.id.videoId
         channel_ids.add(channel_id)
         video_ids.append(video_id)
         temp_videos.append({
-            'title': item['snippet']['title'],
-            'description': item['snippet']['description'],
-            'thumbnail': item['snippet']['thumbnails']['high']['url'],
+            'title': item.snippet.title,
+            'description': item.snippet.description,
+            'thumbnail': item.snippet.thumbnails.high.url,
             'video_id': video_id,
             'url': f"https://www.youtube.com/watch?v={video_id}",
             'channel_id': channel_id
@@ -102,7 +102,7 @@ def process_search_results(response_items):
     return temp_videos, channel_ids, video_ids
 
 
-def get_channel_info_batch(youtube, channel_ids):
+def get_channel_info_batch(youtube: Resource, channel_ids):
     """Recupera informazioni sui canali in batch"""
     channels_data = {}
 
@@ -128,7 +128,7 @@ def get_channel_info_batch(youtube, channel_ids):
     return channels_data
 
 
-def get_video_statistics_batch(youtube, video_ids):
+def get_video_statistics_batch(youtube: Resource, video_ids):
     """Recupera statistiche dei video in batch"""
     videos_statistics = {}
 
@@ -204,15 +204,6 @@ def normalize_engagement_scores(videos):
     return videos
 
 
-def log_response(query, filtered_videos):
-    """Registra la risposta in un file di log"""
-    with open('youtube_responses.log', 'a', encoding="utf-8") as log_file:
-        log_file.write("----------------------------------\n")
-        log_file.write(f"Query: {query}\n")
-        log_file.write(f"Processed Response: \n")
-        log_file.write(str(jsonify(filtered_videos).json))
-
-
 def search_youtube_videos(query, video_language='it', max_results=50, min_subscribers=30000, min_likes=1000, verbose=False):
     """Funzione principale per la ricerca di video su YouTube con filtri"""
     if verbose:
@@ -234,7 +225,7 @@ def search_youtube_videos(query, video_language='it', max_results=50, min_subscr
             logger.error(f"Impossibile serializzare search_response in JSON: {e}")
 
     # Processa i risultati della ricerca
-    temp_videos, channel_ids, video_ids = process_search_results(search_response['items'])
+    temp_videos, channel_ids, video_ids = process_search_results(search_response.items)
 
     # Ottieni informazioni su canali e statistiche video
     channels_data = get_channel_info_batch(youtube, channel_ids)
@@ -247,9 +238,6 @@ def search_youtube_videos(query, video_language='it', max_results=50, min_subscr
 
     # Normalizza i punteggi
     filtered_videos = normalize_engagement_scores(filtered_videos)
-
-    # Registra la risposta
-    log_response(query, filtered_videos)
 
     return filtered_videos
 
