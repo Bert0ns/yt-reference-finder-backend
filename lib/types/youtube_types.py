@@ -147,30 +147,22 @@ class RegionRestriction:
 
 @dataclass
 class ContentRating:
-    # TODO aggiungi tutti i campi di ContentRating secondo le specifiche di YouTube
     # Includo solo alcuni campi rappresentativi
-    acb_rating: str = ""
-    mpaa_rating: str = ""
-    yt_rating: str = ""
-
+    ytRating: str = ""
     # Aggiungere gli altri rating secondo necessità
 
     @classmethod
     def from_dict(cls, param) -> 'ContentRating':
         """Crea un oggetto ContentRating da un dizionario JSON."""
         return cls(
-            acb_rating=param.get('acbRating', ''),
-            mpaa_rating=param.get('mpaaRating', ''),
-            yt_rating=param.get('ytRating', '')
+            ytRating=param.get('ytRating', '')
             # Aggiungere gli altri campi secondo necessità
         )
 
     def to_dict(self):
         """Converte l'oggetto ContentRating in un dizionario JSON."""
         return {
-            'acbRating': self.acb_rating,
-            'mpaaRating': self.mpaa_rating,
-            'ytRating': self.yt_rating
+            'ytRating': self.ytRating
             # Aggiungere gli altri campi secondo necessità
         }
 
@@ -235,17 +227,17 @@ class ContentDetails:
 
 @dataclass
 class Status:
-    upload_status: str = ""
-    failure_reason: str = ""
-    rejection_reason: str = ""
-    privacy_status: str = ""
-    publish_at: Optional[datetime] = None
+    uploadStatus: str = ""
+    failureReason: str = ""
+    rejectionReason: str = ""
+    privacyStatus: str = ""
+    publishAt: Optional[datetime] = None
     license: str = ""
     embeddable: bool = True
-    public_stats_viewable: bool = True
-    made_for_kids: bool = False
-    self_declared_made_for_kids: bool = False
-    contains_synthetic_media: bool = False
+    publicStatsViewable: bool = True
+    madeForFids: bool = False
+    selfDeclaredMadeForKids: bool = False
+    containsSyntheticMedia: bool = False
 
     @classmethod
     def from_dict(cls, param) -> 'Status':
@@ -259,17 +251,17 @@ class Status:
             Un'istanza di Status
         """
         return cls(
-            upload_status=param.get('uploadStatus', ''),
-            failure_reason=param.get('failureReason', ''),
-            rejection_reason=param.get('rejectionReason', ''),
-            privacy_status=param.get('privacyStatus', ''),
-            publish_at=datetime.fromisoformat(param['publishAt']) if 'publishAt' in param else None,
+            uploadStatus=param.get('uploadStatus', ''),
+            failureReason=param.get('failureReason', ''),
+            rejectionReason=param.get('rejectionReason', ''),
+            privacyStatus=param.get('privacyStatus', ''),
+            publishAt=datetime.fromisoformat(param['publishAt']) if 'publishAt' in param else None,
             license=param.get('license', ''),
             embeddable=param.get('embeddable', True),
-            public_stats_viewable=param.get('publicStatsViewable', True),
-            made_for_kids=param.get('madeForKids', False),
-            self_declared_made_for_kids=param.get('selfDeclaredMadeForKids', False),
-            contains_synthetic_media=param.get('containsSyntheticMedia', False)
+            publicStatsViewable=param.get('publicStatsViewable', True),
+            madeForFids=param.get('madeForKids', False),
+            selfDeclaredMadeForKids=param.get('selfDeclaredMadeForKids', False),
+            containsSyntheticMedia=param.get('containsSyntheticMedia', False)
         )
 
     def to_dict(self) -> dict:
@@ -280,27 +272,27 @@ class Status:
             Un dizionario contenente i dati dello stato.
         """
         return {
-            'uploadStatus': self.upload_status,
-            'failureReason': self.failure_reason,
-            'rejectionReason': self.rejection_reason,
-            'privacyStatus': self.privacy_status,
-            'publishAt': self.publish_at.isoformat() if self.publish_at else None,
+            'uploadStatus': self.uploadStatus,
+            'failureReason': self.failureReason,
+            'rejectionReason': self.rejectionReason,
+            'privacyStatus': self.privacyStatus,
+            'publishAt': self.publishAt.isoformat() if self.publishAt else None,
             'license': self.license,
             'embeddable': self.embeddable,
-            'publicStatsViewable': self.public_stats_viewable,
-            'madeForKids': self.made_for_kids,
-            'selfDeclaredMadeForKids': self.self_declared_made_for_kids,
-            'containsSyntheticMedia': self.contains_synthetic_media
+            'publicStatsViewable': self.publicStatsViewable,
+            'madeForKids': self.madeForFids,
+            'selfDeclaredMadeForKids': self.selfDeclaredMadeForKids,
+            'containsSyntheticMedia': self.containsSyntheticMedia
         }
 
 
 @dataclass
 class Statistics:
-    view_count: str = "0"
-    like_count: str = "0"
-    dislike_count: str = "0"
-    favorite_count: str = "0"
-    comment_count: str = "0"
+    viewCount: str = "0"
+    likeCount: str = "0"
+    dislikeCount: str = "0"
+    favoriteCount: str = "0"
+    commentCount: str = "0"
 
     @classmethod
     def from_dict(cls, param):
@@ -314,11 +306,11 @@ class Statistics:
             Un'istanza di Statistics
         """
         return cls(
-            view_count=param.get('viewCount', '0'),
-            like_count=param.get('likeCount', '0'),
-            dislike_count=param.get('dislikeCount', '0'),
-            favorite_count=param.get('favoriteCount', '0'),
-            comment_count=param.get('commentCount', '0')
+            viewCount=param.get('viewCount', '0'),
+            likeCount=param.get('likeCount', '0'),
+            dislikeCount=param.get('dislikeCount', '0'),
+            favoriteCount=param.get('favoriteCount', '0'),
+            commentCount=param.get('commentCount', '0')
         )
 
     def to_dict(self) -> dict:
@@ -329,17 +321,17 @@ class Statistics:
             Un dizionario contenente i dati delle statistiche.
         """
         return {
-            'viewCount': self.view_count,
-            'likeCount': self.like_count,
-            'dislikeCount': self.dislike_count,
-            'favoriteCount': self.favorite_count,
-            'commentCount': self.comment_count
+            'viewCount': self.viewCount,
+            'likeCount': self.likeCount,
+            'dislikeCount': self.dislikeCount,
+            'favoriteCount': self.favoriteCount,
+            'commentCount': self.commentCount
         }
 
 
 @dataclass
 class PaidProductPlacementDetails:
-    has_paid_product_placement: bool = False
+    hasPaidProductPlacement: bool = False
 
     @classmethod
     def from_dict(cls, param):
@@ -353,7 +345,7 @@ class PaidProductPlacementDetails:
             Un'istanza di PaidProductPlacementDetails
         """
         return cls(
-            has_paid_product_placement=param.get('hasPaidProductPlacement', False)
+            hasPaidProductPlacement=param.get('hasPaidProductPlacement', False)
         )
 
     def to_dict(self) -> dict:
@@ -364,7 +356,7 @@ class PaidProductPlacementDetails:
             Un dizionario contenente i dati dei dettagli del posizionamento del prodotto a pagamento.
         """
         return {
-            'hasPaidProductPlacement': self.has_paid_product_placement
+            'hasPaidProductPlacement': self.hasPaidProductPlacement
         }
 
 
@@ -409,7 +401,7 @@ class Player:
 class TopicDetails:
     topicIds: List[str] = field(default_factory=list)
     relevantTopicIds: List[str] = field(default_factory=list)
-    topic_categories: List[str] = field(default_factory=list)
+    topicCategories: List[str] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, param):
@@ -425,7 +417,7 @@ class TopicDetails:
         return cls(
             topicIds=param.get('topicIds', []),
             relevantTopicIds=param.get('relevantTopicIds', []),
-            topic_categories=param.get('topicCategories', [])
+            topicCategories=param.get('topicCategories', [])
         )
 
     def to_dict(self) -> dict:
@@ -438,13 +430,13 @@ class TopicDetails:
         return {
             'topicIds': self.topicIds,
             'relevantTopicIds': self.relevantTopicIds,
-            'topicCategories': self.topic_categories
+            'topicCategories': self.topicCategories
         }
 
 
 @dataclass
 class RecordingDetails:
-    recording_date: Optional[datetime] = None
+    recordingDate: Optional[datetime] = None
 
     @classmethod
     def from_dict(cls, param) -> 'RecordingDetails':
@@ -458,7 +450,7 @@ class RecordingDetails:
             Un'istanza di RecordingDetails
         """
         return cls(
-            recording_date=datetime.fromisoformat(param['recordingDate']) if 'recordingDate' in param else None
+            recordingDate=datetime.fromisoformat(param['recordingDate']) if 'recordingDate' in param else None
         )
 
     def to_dict(self) -> dict:
@@ -469,7 +461,7 @@ class RecordingDetails:
             Un dizionario contenente i dati dei dettagli di registrazione.
         """
         return {
-            'recordingDate': self.recording_date.isoformat() if self.recording_date else None
+            'recordingDate': self.recordingDate.isoformat() if self.recordingDate else None
         }
 
 
