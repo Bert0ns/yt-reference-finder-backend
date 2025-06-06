@@ -1,9 +1,10 @@
-import os
 import json
-from flask import jsonify
-from googleapiclient.discovery import build
+import os
+from typing import List
+from googleapiclient.discovery import build, Resource
 from lib.app_logger import logger
-from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video
+from lib.types.youtube_types import YouTubeSearchListResponse, SearchResource
+from lib.types.youtube_types_custom import ChannelInfo, VideoStatistics, Video, VideoPartialData
 
 
 def get_all_youtube_topic() -> dict[str, str]:
@@ -19,7 +20,8 @@ def get_all_youtube_topic() -> dict[str, str]:
         logger.error('File youtube_topics.json not found. Please ensure it exists in the static directory.')
         return {}
     logger.info('YouTube topics loaded successfully.')
-    return {i['topic']: i['id'] for i in data}
+    return {item['topic']: item['id'] for item in data}
+
 
 def get_all_youtube_categories() -> dict[str, str]:
     """
@@ -36,10 +38,12 @@ def get_all_youtube_categories() -> dict[str, str]:
     logger.info('YouTube categories loaded successfully.')
     return data
 
+
 youtube_topics = get_all_youtube_topic()
 youtube_categories = get_all_youtube_categories()
 
-def initialize_youtube_api():
+
+def initialize_youtube_api() -> Resource:
     """Inizializza e restituisce l'oggetto API di YouTube"""
     youtube_api_key = os.environ.get('YOUTUBE_API_KEY')
 
@@ -48,7 +52,9 @@ def initialize_youtube_api():
 
     return build('youtube', 'v3', developerKey=youtube_api_key)
 
-def search_videos(youtube, query, max_results=10, language='it', youtube_topic_key='Knowledge'):
+
+def search_videos(youtube: Resource, query, max_results=10, language='it',
+                  youtube_topic_key='Knowledge') -> YouTubeSearchListResponse:
     """
     Esegue la ricerca dei video su YouTube e restituisce i risultati grezzi
 
@@ -68,34 +74,38 @@ def search_videos(youtube, query, max_results=10, language='it', youtube_topic_k
         videoCategoryId='27',
         videoDefinition='high',
         safeSearch='none',
-        topicId=youtube_topics.get(youtube_topic_key, youtube_topics.get('Knowledge', '')),
+        topicId=youtube_topics.get(youtube_topic_key, youtube_topics.get('Society', '')),
     )
 
-    return yt_request.execute()
+    data: dict = yt_request.execute()
+    return YouTubeSearchListResponse.from_dict(data)
 
-def process_search_results(response_items):
+
+def process_search_results(response_items: List[SearchResource]) -> tuple[List[VideoPartialData], set[str], set[str]]:
     """Estrae informazioni dai risultati di ricerca e restituisce video temporanei e IDs"""
-    temp_videos = []
+    temp_videos: List[VideoPartialData] = []
     channel_ids = set()
-    video_ids = []
+    video_ids = set()
 
     for item in response_items:
-        channel_id = item['snippet']['channelId']
-        video_id = item['id']['videoId']
+        channel_id = item.snippet.channelId
+        video_id = item.id.videoId
         channel_ids.add(channel_id)
-        video_ids.append(video_id)
-        temp_videos.append({
-            'title': item['snippet']['title'],
-            'description': item['snippet']['description'],
-            'thumbnail': item['snippet']['thumbnails']['high']['url'],
-            'video_id': video_id,
-            'url': f"https://www.youtube.com/watch?v={video_id}",
-            'channel_id': channel_id
-        })
+        video_ids.add(video_id)
+
+        video_partial_data = VideoPartialData(title=item.snippet.title,
+                                              description=item.snippet.description,
+                                              video_id=video_id,
+                                              url=f"https://www.youtube.com/watch?v={video_id}",
+                                              channel_id=channel_id,
+                                              thumbnails=item.snippet.thumbnails)
+
+        temp_videos.append(video_partial_data)
 
     return temp_videos, channel_ids, video_ids
 
-def get_channel_info_batch(youtube, channel_ids):
+
+def get_channel_info_batch(youtube: Resource, channel_ids: set[str]) -> dict[str, ChannelInfo]:
     """Recupera informazioni sui canali in batch"""
     channels_data = {}
 
@@ -120,7 +130,8 @@ def get_channel_info_batch(youtube, channel_ids):
 
     return channels_data
 
-def get_video_statistics_batch(youtube, video_ids):
+
+def get_video_statistics_batch(youtube: Resource, video_ids: set[str]) -> dict[str, VideoStatistics]:
     """Recupera statistiche dei video in batch"""
     videos_statistics = {}
 
@@ -144,86 +155,129 @@ def get_video_statistics_batch(youtube, video_ids):
 
     return videos_statistics
 
+
 def calculate_engagement_score(view_count, like_count):
     """Calcola il punteggio di engagement di un video"""
     if view_count > 0:
         return like_count / view_count
     return 0.0
 
-def filter_and_create_videos(temp_videos, channels_data, videos_statistics, min_subscribers, min_likes):
-    """Filtra i video in base ai criteri e crea oggetti Video"""
-    filtered_videos = []
 
-    for video_dict in temp_videos:
-        channel_info = channels_data.get(video_dict['channel_id'], ChannelInfo())
-        video_stats = videos_statistics.get(video_dict['video_id'], VideoStatistics())
+def filter_and_create_videos(temp_videos: List[VideoPartialData], channels_data, videos_statistics, min_subscribers, min_likes, language_set: set[str]) -> List[Video]:
+    """Filtra i video in base ai criteri e crea oggetti Video"""
+    filtered_videos: List[Video] = []
+
+    for v_partial_data in temp_videos:
+        channel_info = channels_data.get(v_partial_data.channel_id, ChannelInfo())
+        video_stats = videos_statistics.get(v_partial_data.video_id, VideoStatistics())
 
         engagement_score = calculate_engagement_score(video_stats.view_count, video_stats.like_count)
 
         # Verifica criteri di filtro
-        if (channel_info.subscriber_count >= min_subscribers and
-            (not channel_info.language or channel_info.language in ['it', 'en']) and
-            video_stats.like_count >= min_likes):
-
-            video = Video(
-                title=video_dict['title'],
-                description=video_dict['description'],
-                thumbnail=video_dict['thumbnail'],
-                video_id=video_dict['video_id'],
-                url=video_dict['url'],
-                channel_id=video_dict['channel_id'],
+        include = channel_info.subscriber_count >= min_subscribers and (not channel_info.language or channel_info.language in language_set) and video_stats.like_count >= min_likes
+        if include:
+            video_complete_data = Video(
+                title=v_partial_data.title,
+                description=v_partial_data.description,
+                video_id=v_partial_data.video_id,
+                url=v_partial_data.url,
+                channel_id=v_partial_data.channel_id,
+                thumbnails=v_partial_data.thumbnails,
                 channel_subscribers=channel_info.subscriber_count,
                 like_count=video_stats.like_count,
                 view_count=video_stats.view_count,
                 engagement_score=round(engagement_score, 10)
             )
-            filtered_videos.append(video)
+            filtered_videos.append(video_complete_data)
 
     return filtered_videos
+
 
 def normalize_engagement_scores(videos):
     """Normalizza i punteggi di engagement su scala 0-1"""
     if not videos:
         return videos
 
-    max_engagement = max(video.engagement_score for video in videos)
+    max_engagement = max(v.engagement_score for v in videos)
     if max_engagement > 0:
-        for video in videos:
-            video.engagement_score = round(video.engagement_score / max_engagement, 5)
+        for v in videos:
+            v.engagement_score = round(v.engagement_score / max_engagement, 5)
 
     return videos
 
-def log_response(query, filtered_videos):
-    """Registra la risposta in un file di log"""
-    with open('youtube_responses.log', 'a', encoding="utf-8") as log_file:
-        log_file.write("----------------------------------\n")
-        log_file.write(f"Query: {query}\n")
-        log_file.write(f"Processed Response: \n")
-        log_file.write(str(jsonify(filtered_videos).json))
 
-def search_youtube_videos(query, video_language='it', max_results=50, min_subscribers=30000, min_likes=1000):
+def search_youtube_videos(query, video_language='it', max_results=50, min_subscribers=30000, min_likes=1000,
+                          verbose=False):
     """Funzione principale per la ricerca di video su YouTube con filtri"""
+    if verbose:
+        logger.info(
+            f"Inizializzazione API YouTube con query: {query}, video_language: {video_language}, max_results: {max_results}, min_subscribers: {min_subscribers}, min_likes: {min_likes}, verbose: {verbose}")
+
     youtube = initialize_youtube_api()
+    if verbose:
+        logger.info(f"API YouTube: {youtube}")
 
     # Ricerca video
-    search_response = search_videos(youtube, query, max_results, video_language)
+    search_response: YouTubeSearchListResponse = search_videos(youtube, query, max_results, video_language)
+    if verbose:
+        logger.info(f"search_response: {search_response}")
+        try:
+            search_dict = search_response.to_dict()
+            with open('search_response.json', 'w') as f:
+                json.dump(search_dict, f, ensure_ascii=False, indent=2)
+        except (TypeError, AttributeError) as error:
+            logger.error(f"Impossibile serializzare search_response in JSON: {error}")
+
 
     # Processa i risultati della ricerca
-    temp_videos, channel_ids, video_ids = process_search_results(search_response['items'])
+    temp_videos, channel_ids, video_ids = process_search_results(search_response.items)
 
     # Ottieni informazioni su canali e statistiche video
     channels_data = get_channel_info_batch(youtube, channel_ids)
     videos_statistics = get_video_statistics_batch(youtube, video_ids)
 
     # Filtra e crea oggetti video
-    filtered_videos = filter_and_create_videos(
-        temp_videos, channels_data, videos_statistics, min_subscribers, min_likes
-    )
+    filtered_videos = filter_and_create_videos(temp_videos, channels_data, videos_statistics, min_subscribers,
+                                               min_likes, language_set={video_language, 'en'})
 
     # Normalizza i punteggi
     filtered_videos = normalize_engagement_scores(filtered_videos)
 
-    # Registra la risposta
-    log_response(query, filtered_videos)
-
     return filtered_videos
+
+
+if __name__ == "__main__":
+    """
+    per testare dalla root del progetto:
+    
+    python -m lib.youtube_interactions
+    """
+    # Aggiungi il percorso della directory principale al sys.path quando esegui direttamente
+    import sys
+    import os.path
+
+    # Ottieni il percorso della directory principale del progetto
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+    # Configura l'API key di YouTube per i test
+    if not os.environ.get('YOUTUBE_API_KEY'):
+        api_key = input("Inserisci la tua YOUTUBE_API_KEY: ")
+        os.environ['YOUTUBE_API_KEY'] = api_key
+
+    # Esempio di utilizzo della funzione di ricerca
+    test_query = input("Inserisci la query di ricerca (default: 'Python programming'): ") or "Python programming"
+    print(f"Ricerca in corso per: {test_query}...")
+
+    try:
+        results = search_youtube_videos(test_query, verbose=True, max_results=2)
+        print(f"\nTrovati {len(results)} video che soddisfano i criteri.")
+        for i, video in enumerate(results[:5], 1):  # Mostra solo i primi 5 risultati
+            print(f"\n{i}. {video.title}")
+            print(f"   Engagement Score: {video.engagement_score}")
+            print(f"   Views: {video.view_count}, Likes: {video.like_count}")
+            print(f"   URL: {video.url}")
+    except Exception as e:
+        print(f"Errore durante la ricerca: {e}")
+        import traceback
+
+        traceback.print_exc()
