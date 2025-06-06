@@ -3,7 +3,7 @@ import json
 from typing import List
 from googleapiclient.discovery import build, Resource
 from lib.app_logger import logger
-from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video, YouTubeSearchListResponse, YoutubeSearchResource
+from lib.types.youtube_types import ChannelInfo, VideoStatistics, Video, YouTubeSearchListResponse, SearchResource
 
 
 def get_all_youtube_topic() -> dict[str, str]:
@@ -79,7 +79,7 @@ def search_videos(youtube: Resource, query, max_results=10, language='it', youtu
     return YouTubeSearchListResponse.from_dict(data)
 
 
-def process_search_results(response_items : List[YoutubeSearchResource]):
+def process_search_results(response_items : List[SearchResource]):
     """Estrae informazioni dai risultati di ricerca e restituisce video temporanei e IDs"""
     temp_videos = []
     channel_ids = set()
