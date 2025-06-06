@@ -12,8 +12,9 @@ from lib.youtube_interactions import search_youtube_videos, Video
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
 
-MAX_QUERIES_TO_GENERATE = 2  # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
-
+MAX_QUERIES_TO_GENERATE = 4  # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
+MIN_LIKES = 500 # Numero minimo di like per considerare un video rilevante
+MIN_SUBSCRIBERS = 10000 # Numero minimo di iscritti al canale per considerare un video rilevante
 
 def rank_videos(notes_text, videos: List[Video]):
     # Ordina i video per punteggio di engagement
@@ -21,8 +22,8 @@ def rank_videos(notes_text, videos: List[Video]):
     return ranked_videos
 
 
-def filter_unique_videos(all_videos):
-    unique_videos = []
+def filter_unique_videos(all_videos: List[Video]) -> List[Video]:
+    unique_videos: List[Video] = []
     seen_ids = set()
     for video in all_videos:
         if video.video_id not in seen_ids:
@@ -110,7 +111,7 @@ def generate_process_stream(file_bytes_arg: Optional[bytes], original_filename_a
         with app.app_context():
             for i, query in enumerate(queries):
                 try:
-                    videos = search_youtube_videos(query, video_language=detected_language)
+                    videos = search_youtube_videos(query=query, video_language=detected_language, min_likes=MIN_LIKES, min_subscribers=MIN_SUBSCRIBERS)
                     all_videos.extend(videos)
                     logger.info(f"Found {len(videos)} videos for query '{query}'")
                 except Exception as e:
@@ -205,7 +206,7 @@ def process():
     all_videos = []
     for query in queries:
         try:
-            videos = search_youtube_videos(query, video_language=detected_language)
+            videos = search_youtube_videos(query=query, video_language=detected_language, min_likes=MIN_LIKES, min_subscribers=MIN_SUBSCRIBERS)
             all_videos.extend(videos)
         except Exception as e:
             logger.error(f"Error searching YouTube for query '{query}': {e}")
@@ -217,7 +218,7 @@ def process():
     response_data = {
         'keywords': [kw for kw, _ in keywords],
         'queries': queries,
-        'videos': [video.__dict__ for video in ranked_videos[:10]]
+        'videos': [video.to_dict() for video in ranked_videos[:10]]
     }
     response = jsonify(response_data)
     try:

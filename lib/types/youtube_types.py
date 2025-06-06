@@ -3,34 +3,26 @@ from datetime import datetime
 from typing import Optional, List, Dict
 
 
-@dataclass
-class VideoStatistics:
-    like_count: int = 0
-    view_count: int = 0
+def parse_iso_datetime(datetime_str: Optional[str]) -> Optional[datetime]:
+    """
+    Converte una stringa di data ISO 8601 in un oggetto datetime,
+    gestendo correttamente i suffissi 'Z'.
 
+    Args:
+        datetime_str: La stringa di data in formato ISO 8601
 
-@dataclass
-class ChannelInfo:
-    subscriber_count: int = 0
-    language: str = ""
+    Returns:
+        Un oggetto datetime o None se l'input è None
+    """
+    if not datetime_str:
+        return None
 
+    # Gestisci il formato con 'Z' (UTC/Zulu time)
+    if datetime_str.endswith('Z'):
+        datetime_str = datetime_str[:-1] + '+00:00'
 
-@dataclass
-class Video:
-    title: str
-    description: str
-    thumbnail: str
-    video_id: str
-    url: str
-    channel_id: str
-    channel_subscribers: int = 0
-    like_count: int = 0
-    view_count: int = 0
-    engagement_score: float = 0.0
-    relevance_score: float = 0.0
+    return datetime.fromisoformat(datetime_str)
 
-
-# YouTube objects
 
 @dataclass
 class Thumbnail:
@@ -255,7 +247,7 @@ class Status:
             failureReason=param.get('failureReason', ''),
             rejectionReason=param.get('rejectionReason', ''),
             privacyStatus=param.get('privacyStatus', ''),
-            publishAt=datetime.fromisoformat(param['publishAt']) if 'publishAt' in param else None,
+            publishAt=parse_iso_datetime(param.get('publishAt')),
             license=param.get('license', ''),
             embeddable=param.get('embeddable', True),
             publicStatsViewable=param.get('publicStatsViewable', True),
@@ -450,7 +442,7 @@ class RecordingDetails:
             Un'istanza di RecordingDetails
         """
         return cls(
-            recordingDate=datetime.fromisoformat(param['recordingDate']) if 'recordingDate' in param else None
+            recordingDate=parse_iso_datetime(param.get('recordingDate'))
         )
 
     def to_dict(self) -> dict:
@@ -806,11 +798,10 @@ class LiveStreamingDetails:
             Un'istanza di LiveStreamingDetails
         """
         return cls(
-            actualStartTime=datetime.fromisoformat(param['actualStartTime']) if 'actualStartTime' in param else None,
-            actualEndTime=datetime.fromisoformat(param['actualEndTime']) if 'actualEndTime' in param else None,
-            scheduledStartTime=datetime.fromisoformat(
-                param['scheduledStartTime']) if 'scheduledStartTime' in param else None,
-            scheduledEndTime=datetime.fromisoformat(param['scheduledEndTime']) if 'scheduledEndTime' in param else None,
+            actualStartTime=parse_iso_datetime(param['actualStartTime']),
+            actualEndTime=parse_iso_datetime(param['actualEndTime']),
+            scheduledStartTime=parse_iso_datetime(param['scheduledStartTime']),
+            scheduledEndTime=parse_iso_datetime(param['scheduledEndTime']),
             concurrentViewers=param.get('concurrentViewers', 0),
             activeLiveChatId=param.get('activeLiveChatId', '')
         )
@@ -860,9 +851,8 @@ class VideoResourceSnippet:
         """
         thumbnails = Thumbnails.from_dict(data.get('thumbnails', {}))
         localized = Localized.from_dict(data.get('localized', {}))
-
         return cls(
-            publishedAt=datetime.fromisoformat(data['publishedAt']) if 'publishedAt' in data else None,
+            publishedAt=parse_iso_datetime(data['publishedAt']),
             channelId=data.get('channelId', ''),
             title=data.get('title', ''),
             description=data.get('description', ''),
@@ -1032,8 +1022,9 @@ class SearchResourceSnippet:
             Un'istanza di SearchResourceSnippet
         """
         thumbnails = Thumbnails.from_dict(data.get('thumbnails', {}))
+
         return cls(
-            publishedAt=datetime.fromisoformat(data['publishedAt']) if 'publishedAt' in data else None,
+            publishedAt=parse_iso_datetime(data.get('publishedAt')),
             channelId=data.get('channelId', ''),
             title=data.get('title', ''),
             description=data.get('description', ''),
