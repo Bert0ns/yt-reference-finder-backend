@@ -3,7 +3,8 @@ import os
 from typing import List
 from googleapiclient.discovery import build, Resource
 from lib.app_logger import logger
-from lib.types.youtube_types import YouTubeSearchListResponse, SearchResource
+from lib.types.youtube_types import YouTubeSearchListResponse, SearchResource, YouTubeChannelListResponse, \
+    YouTubeVideoListResponse
 from lib.types.youtube_types_custom import ChannelInfo, VideoStatistics, Video, VideoPartialData
 
 
@@ -53,7 +54,7 @@ def initialize_youtube_api() -> Resource:
     return build('youtube', 'v3', developerKey=youtube_api_key)
 
 
-def search_videos(youtube: Resource, query, max_results=10, language='it',
+def search_videos(youtube: Resource, query: str, max_results=10, language='it',
                   youtube_topic_key='Knowledge') -> YouTubeSearchListResponse:
     """
     Esegue la ricerca dei video su YouTube e restituisce i risultati grezzi
@@ -81,13 +82,13 @@ def search_videos(youtube: Resource, query, max_results=10, language='it',
     return YouTubeSearchListResponse.from_dict(data)
 
 
-def process_search_results(response_items: List[SearchResource]) -> tuple[List[VideoPartialData], set[str], set[str]]:
+def process_search_results(search_resources: List[SearchResource]) -> tuple[List[VideoPartialData], set[str], set[str]]:
     """Estrae informazioni dai risultati di ricerca e restituisce video temporanei e IDs"""
     temp_videos: List[VideoPartialData] = []
     channel_ids = set()
     video_ids = set()
 
-    for item in response_items:
+    for item in search_resources:
         channel_id = item.snippet.channelId
         video_id = item.id.videoId
         channel_ids.add(channel_id)
@@ -116,12 +117,13 @@ def get_channel_info_batch(youtube: Resource, channel_ids: set[str]) -> dict[str
         part='statistics,snippet',
         id=','.join(channel_ids)
     )
-    channels_response = channels_request.execute()
+    channels_response_data = channels_request.execute()
+    channels_response = YouTubeChannelListResponse.from_dict(channels_response_data)
 
-    for channel in channels_response.get('items', []):
-        channel_id = channel['id']
-        subscriber_count = int(channel['statistics'].get('subscriberCount', 0))
-        language = channel['snippet'].get('defaultLanguage', '')
+    for channel in channels_response.items:
+        channel_id = channel.id
+        subscriber_count = int(channel.statistics.subscriberCount)
+        language = channel.snippet.defaultLanguage
 
         channels_data[channel_id] = ChannelInfo(
             subscriber_count=subscriber_count,
@@ -142,12 +144,13 @@ def get_video_statistics_batch(youtube: Resource, video_ids: set[str]) -> dict[s
         part='statistics',
         id=','.join(video_ids)
     )
-    video_stats_response = video_stats_request.execute()
+    video_stats_response_data = video_stats_request.execute()
+    video_stats_response = YouTubeVideoListResponse.from_dict(video_stats_response_data)
 
-    for video_stat in video_stats_response.get('items', []):
-        video_id = video_stat['id']
-        like_count = int(video_stat['statistics'].get('likeCount', 0))
-        view_count = int(video_stat['statistics'].get('viewCount', 0))
+    for video_stat in video_stats_response.items:
+        video_id = video_stat.id
+        like_count = int(video_stat.statistics.likeCount)
+        view_count = int(video_stat.statistics.viewCount)
         videos_statistics[video_id] = VideoStatistics(
             like_count=like_count,
             view_count=view_count
