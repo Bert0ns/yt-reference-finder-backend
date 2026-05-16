@@ -34,7 +34,6 @@ The Flask application will be accessible at `http://localhost:5000` and the Olla
 
 ### Locally (Without Docker)
 
-
 1. Ensure all dependencies are installed, create virtual environment:
 
     ```bash
@@ -55,23 +54,15 @@ You will need to manually download the desired Ollama model (e.g., `ollama pull 
 
 ## API Endpoints
 
-`GET /logs`
+* `GET /logs`: Returns all the logs produced during runtime
 
-`GET /health`
+* `GET /health`: Returns a JSON string with the status of the system
 
-`GET /`
+* `GET /`
 
-`GET /about`
+* `GET /about`: Returns a JSON string with a brief description of the project
 
-Returns a simple JSON message describing the API.
-* Example response:
-    ```json
-    {
-        "about": "This is a simple API to extract keywords from a text and search YouTube videos based on them."
-    }
-    ```
-
-`POST /process`
+* `POST /process`:
 
 Processes the provided text (from a file or direct input), extracts keywords, 
 generates search queries, and returns relevant YouTube videos.

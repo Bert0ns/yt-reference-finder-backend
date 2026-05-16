@@ -16,16 +16,16 @@ services:
       - -c
       - |
         set -e
-        echo "Avvio server ollama..." 
+        echo "Starting ollama server..." 
         ollama serve & OLLAMA_PID=$!
-        echo "Avvio pull del modello: $OLLAMA_MODEL" 
+        echo "Starting model pull: $OLLAMA_MODEL" 
         sleep 1
         ollama pull "$OLLAMA_MODEL"
-        echo 'Pull del modello completato.' 
+        echo 'Model pull completed.' 
 
         # kill "$OLLAMA_PID"
         pkill -e ollama
-        echo 'Avvio del server Ollama in foreground.' 
+        echo 'Starting ollama server in foreground.' 
         exec ollama serve
         
 

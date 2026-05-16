@@ -1,6 +1,6 @@
 import os
-from typing import List, Optional
-from flask import Flask, request, jsonify
+from typing import Generator, List, Optional
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 from lib.app_logger import logger, trim_log_file
 from lib.query_generation import generate_search_queries, check_ollama_connection_health
@@ -10,19 +10,20 @@ from lib.word_extraction import read_file_from_bytes
 from lib.youtube_interactions import search_youtube_videos, Video
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from http://localhost:3000
+CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yt-reference-finder-frontend.vercel.app"])  # Allow requests only from the specified addresses
 
-MAX_QUERIES_TO_GENERATE = 4  # Numero massimo di query da generare, che poi verranno passate a youtube per la ricerca
-MIN_LIKES = 500 # Numero minimo di like per considerare un video rilevante
-MIN_SUBSCRIBERS = 10000 # Numero minimo di iscritti al canale per considerare un video rilevante
+MAX_QUERIES_TO_GENERATE = 4  # Maximum number of queries to generate for YouTube search
+MIN_LIKES = 500  # Minimum likes required for a video to be considered relevant
+MIN_SUBSCRIBERS = 10000  # Minimum channel subscribers required for relevance
 
-def rank_videos(notes_text, videos: List[Video]):
-    # Ordina i video per punteggio di engagement
+def rank_videos(_notes_text, videos: List[Video]) -> List[Video]:
+    """Return videos sorted by engagement score in descending order."""
     ranked_videos = sorted(videos, key=lambda x: x.engagement_score, reverse=True)
     return ranked_videos
 
 
 def filter_unique_videos(all_videos: List[Video]) -> List[Video]:
+    """Deduplicate videos by video ID while preserving order."""
     unique_videos: List[Video] = []
     seen_ids = set()
     for video in all_videos:
@@ -34,13 +35,15 @@ def filter_unique_videos(all_videos: List[Video]) -> List[Video]:
 
 @app.route('/')
 @app.route('/about', methods=['GET'])
-def about():
+def about() -> Response:
+    """Return basic API description metadata."""
     return jsonify(
         {'about': 'This is a simple API to extract keywords from a text and search YouTube videos based on them.'})
 
 
 @app.route('/health', methods=['GET'])
-def health_check():
+def health_check() -> Response:
+    """Return API status and the health of the Ollama connection."""
     is_ollama_connection_healthy = check_ollama_connection_health()
     return jsonify(
         {'status': 'ok', 'message': 'API is running', 'ollama_connection_healthy': is_ollama_connection_healthy})
@@ -48,6 +51,7 @@ def health_check():
 
 @app.route('/logs', methods=['GET'])
 def get_api_logs():
+    """Return the current application logs as JSON."""
     try:
         with open('app.log', 'r', encoding='utf-8') as f:
             logs = f.readlines()
@@ -57,7 +61,12 @@ def get_api_logs():
         return jsonify({'error': 'Could not read logs'}), 500
 
 
-def generate_process_stream(file_bytes_arg: Optional[bytes], original_filename_arg: Optional[str], form_text_arg: str):
+def generate_process_stream(
+    file_bytes_arg: Optional[bytes],
+    original_filename_arg: Optional[str],
+    form_text_arg: str,
+) -> Generator[str, None, None]:
+    """Yield NDJSON status updates for the processing pipeline."""
     text_from_file = ""
     try:
         if file_bytes_arg is not None and original_filename_arg:
@@ -70,11 +79,11 @@ def generate_process_stream(file_bytes_arg: Optional[bytes], original_filename_a
                                      message='File format not supported or error reading file content',
                                      filename=original_filename_arg).to_json()
                 return
-            text_from_file = text_from_file_content  # Assegna il contenuto letto
+            text_from_file = text_from_file_content
             yield StreamResponse(status=StreamProcessStatus.FILE_PROCESSED, filename=original_filename_arg,
                                  file_content=text_from_file).to_json()
 
-        # Combina testo da file e da form
+        # Combine file and form text for processing
         text_parts = []
         if text_from_file.strip():
             text_parts.append(text_from_file.strip())
@@ -109,7 +118,7 @@ def generate_process_stream(file_bytes_arg: Optional[bytes], original_filename_a
         yield StreamResponse(status=StreamProcessStatus.YOUTUBE_SEARCH_STARTED, queries=queries).to_json()
         all_videos = []
         with app.app_context():
-            for i, query in enumerate(queries):
+            for query in queries:
                 try:
                     videos = search_youtube_videos(query=query, video_language=detected_language, min_likes=MIN_LIKES, min_subscribers=MIN_SUBSCRIBERS)
                     all_videos.extend(videos)
@@ -136,6 +145,7 @@ def generate_process_stream(file_bytes_arg: Optional[bytes], original_filename_a
 
 @app.route('/process', methods=['POST'])
 def process():
+    """Process a request in streaming or non-streaming mode."""
     is_stream = request.form.get('response_as_stream', 'false').lower() == 'true'
 
     file_bytes_from_request: Optional[bytes] = None
@@ -143,15 +153,13 @@ def process():
 
     if 'file' in request.files:
         file_storage_obj = request.files['file']
-        if file_storage_obj and file_storage_obj.filename: # Assicurati che ci sia un file e un nome file
+        if file_storage_obj and file_storage_obj.filename:
             filename_from_request = file_storage_obj.filename
             try:
                 file_bytes_from_request = file_storage_obj.read()
                 logger.info(f"Successfully read {len(file_bytes_from_request)} bytes from file {filename_from_request}")
             except Exception as e:
                 logger.error(f"Error reading file {filename_from_request} from request: {e}", exc_info=True)
-                # Se lo streaming è abilitato, il generatore gestirà l'errore se file_bytes_from_request è None.
-                # Se non è streaming, restituisci un errore qui.
                 if not is_stream:
                     return jsonify({'error': f'Error reading file: {str(e)}', 'filename': filename_from_request}), 500
 
@@ -168,15 +176,13 @@ def process():
             ),
             mimetype='application/x-ndjson')
 
-    # Percorso non in streaming
     text_from_file_content = ""
     if file_bytes_from_request and filename_from_request:
         read_suc, text_from_file_content = read_file_from_bytes(file_bytes_from_request, filename_from_request)
         if not read_suc:
-            return jsonify({'error': 'Formato file non supportato o errore nella lettura del contenuto del file',
+            return jsonify({'error': 'Unsupported file format or error reading file content',
                             'filename': filename_from_request}), 400
 
-    # Combina testo da file e da form per il percorso non streaming
     text_parts = []
     if text_from_file_content.strip():
         text_parts.append(text_from_file_content.strip())
@@ -187,7 +193,7 @@ def process():
 
     if not text:
         logger.error("No text provided (file or form) for non-streaming process")
-        return jsonify({'error': 'Nessun testo fornito'}), 400
+        return jsonify({'error': 'No text provided'}), 400
 
     logger.info(f"Processing text: {text[:100]}\n...\n{text[-100:]}")
 
@@ -202,7 +208,6 @@ def process():
     if not queries or len(queries) == 0:
         logger.warning(f"No queries generated from keywords, MAX_QUERIES_TO_GENERATE={MAX_QUERIES_TO_GENERATE}")
 
-    # Cerca video
     all_videos = []
     for query in queries:
         try:
@@ -232,9 +237,10 @@ def process():
 
 if __name__ == '__main__':
     prod_env = os.environ.get("PRODUCTION_ENVIRONMENT", "False")  # Set to True in production
+    port = int(os.environ.get("PORT", 5000))
     if prod_env.lower() == "true":
         logger.info("Starting Flask app in PRODUCTION mode")
-        app.run(host='0.0.0.0', port=5000, debug=False)
+        app.run(host='0.0.0.0', port=port, debug=False)
     else:
         logger.info("Starting Flask app in DEVELOPMENT mode")
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        app.run(host='0.0.0.0', port=port, debug=True)
