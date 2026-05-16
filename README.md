@@ -1,7 +1,5 @@
 # Youtube Reference Finder - Backend
 
-<hr/>
-
 This project is a Flask application that serves as the backend for "Youtube Reference Finder". 
 The application extracts keywords from a provided text (via PDF/image file upload or direct text input), 
 generates search queries based on these keywords using a local language model (Ollama), 
@@ -9,8 +7,6 @@ and searches for relevant educational videos on YouTube.
 The found videos are then ranked and returned to the user.
 
 ## Configuration
-
-<hr/>
 
 ### Environment Variables
 The application uses several environment variables for configuration:
@@ -24,8 +20,6 @@ An example `.env` file is provided for local configuration.
 When using Docker, these variables are passed through the `docker-compose.yml` file.
 
 ## Running the Application
-
-<hr/>
 
 ### Via Docker (Recommended)
 The recommended method for running the application is via Docker Compose, 
@@ -41,10 +35,11 @@ The Flask application will be accessible at `http://localhost:5000` and the Olla
 ### Locally (Without Docker)
 
 
-1. Ensure all dependencies are installed:
-    The project dependencies are listed in the `requirements.txt` file. 
-    They can be installed using pip:
+1. Ensure all dependencies are installed, create virtual environment:
+
     ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
     pip install -r requirements.txt
     ```
 
@@ -59,8 +54,6 @@ You will need to manually download the desired Ollama model (e.g., `ollama pull 
 5. The application will be accessible at [http://localhost:5000]().
 
 ## API Endpoints
-
-<hr/>
 
 `GET /logs`
 
@@ -115,8 +108,6 @@ The `videos` list is limited to the top 10 ranked results.
 
 ## Main Features
 
-<hr/>
-
 1. Text Extraction: From PDF files, images (JPG, PNG), or direct text input.
 2. Keyword Extraction: Uses Rake-NLTK to identify the most relevant phrases and keywords from the text.
 3. Query Generation: Uses a language model (via Ollama) to generate optimized YouTube search queries from keywords.
@@ -125,8 +116,6 @@ The `videos` list is limited to the top 10 ranked results.
 6. Logging: YouTube API responses are logged in the youtube_responses.log file.
 
 ## Useful commands
-
-<hr/>
 
 Installing dependencies:
 `pip install -r requirements.txt`

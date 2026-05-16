@@ -9,5 +9,6 @@ search_videos_response_data.json
 .env
 
 __pycache__/
+.venv/
 
 .vercel

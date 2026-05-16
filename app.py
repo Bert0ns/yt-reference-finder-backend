@@ -231,7 +231,7 @@ def process():
 
 
 if __name__ == '__main__':
-    prod_env = os.environ.get("PRODUCTION_ENVIROMENT", "False")  # Set to True in production
+    prod_env = os.environ.get("PRODUCTION_ENVIRONMENT", "False")  # Set to True in production
     if prod_env.lower() == "true":
         logger.info("Starting Flask app in PRODUCTION mode")
         app.run(host='0.0.0.0', port=5000, debug=False)
