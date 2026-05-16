@@ -7,7 +7,7 @@ ollama_model_name = os.environ.get("OLLAMA_MODEL", "gemma3:1b")
 OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434")
 
 ollama_client = ollama.Client(host=OLLAMA_API_URL)
-# ollama_client.pull(ollama_model_name) # Pull the model if not already available (docker compose should automatically pull it)
+# ollama_client.pull(ollama_model_name) # Pull the model if not already available (docker compose should pull it)
 
 def check_ollama_connection_health():
     """
@@ -26,47 +26,47 @@ def check_ollama_connection_health():
 
 def generate_search_queries(keywords, num_queries=3, query_language='it'):
     """
-    Genera query di ricerca usando un modello AI locale di Ollama basate su keywords estratte.
+    Generate search queries using a local Ollama AI model based on extracted keywords.
 
-    :param keywords: Lista di tuple (keyword, score)
-    :param num_queries: Numero di query da generare
-    :param query_language: Lingua della query (default 'it' per italiano)
+    :param keywords: List of tuples (keyword, score)
+    :param num_queries: Number of queries to generate
+    :param query_language: Query language (default 'it' for Italian)
 
     Returns:
-        Lista di query ottimizzate per la ricerca YouTube
+        List of optimized queries for YouTube search
     """
-    # Estrai le keywords dalle tuple (keyword, score)
+    # Extract keywords from (keyword, score) tuples
     kw_list = [kw for kw, _ in keywords]
 
-    # Prepara il prompt per il modello
+    # Prepare the model prompt
     prompt = f"""
-    Genera {num_queries} query di ricerca per YouTube per trovare video educativi 
-    basati sulle seguenti parole chiave estratte da appunti di studio:
+    Generate {num_queries} YouTube search queries to find educational videos
+    based on the following keywords extracted from study notes:
     {', '.join(kw_list)}
     
-    Ogni query deve:
-    - Essere strutturata per massimizzare la rilevanza dei risultati su YouTube
-    - Includere le parole chiave più importanti
-    - Essere comprensibile anche senza contesto
-    - Essere in italiano oppure in inglese
-    - Mantenere una lunghezza ragionevole (3-7 parole)
-    - Essere scritta nella lingua definita dall' iso-code {query_language}
+    Each query must:
+    - Be structured to maximize result relevance on YouTube
+    - Include the most important keywords
+    - Be understandable without additional context
+    - Be in Italian or English
+    - Keep a reasonable length (3-7 words)
+    - Be written in the language defined by the ISO code {query_language}
     
-    Restituisci SOLO le query generate, una per riga, senza numerazione o altro testo.
-    NON numerare le query.
+    Return ONLY the generated queries, one per line, without numbering or extra text.
+    Do NOT number the queries.
     """
     try:
         generated_response: GenerateResponse= ollama_client.generate(prompt=prompt, model=ollama_model_name, stream=False, keep_alive=60 * 10)
         generated_text = generated_response.response
 
-        # Dividi il testo in righe e pulisci
+        # Split and clean lines
         queries = [line.strip() for line in generated_text.split('\n') if line.strip()]
-        # Se la query inizia con (numero.) rimuovilo
+        # Strip leading numbering like "1." if present
         queries = [q[2:].strip() if q and len(q) > 1 and q[0].isdigit() and q[1] == '.' else q for q in queries]
 
-        # Gestisci il numero di query
+        # Normalize query count
         if len(queries) < num_queries:
-            # Aggiungi keywords dirette se il modello ha generato meno query
+            # Add direct keywords if the model generated fewer queries
             additional_queries = [kw for kw, _ in keywords[:(num_queries-len(queries))]]
             queries.extend(additional_queries)
         elif len(queries) > num_queries:
@@ -75,7 +75,7 @@ def generate_search_queries(keywords, num_queries=3, query_language='it'):
 
     except Exception as e:
         logger.error(f"Error generating search queries: {e}, ollama_url: {OLLAMA_API_URL}, model: {ollama_model_name}")
-        # Fallback all'approccio semplice in caso di errore
+        # Fall back to a simple keyword approach on error
         fallback_queries = []
         for keyword, _ in keywords[:num_queries]:
             fallback_queries.append(f"{keyword}")

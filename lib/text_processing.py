@@ -35,12 +35,12 @@ nltk_stopwords_languages = {
 
 
 def preprocess_text(text):
-    # Rimuovi caratteri speciali e numeri
+    # Remove special characters and numbers
     text = re.sub(r'[^\w\s]', ' ', text)
     text = re.sub(r'\d+', ' ', text)
 
     text = text.lower()
-    # Rimuovi spazi multipli
+    # Collapse multiple spaces
     text = re.sub(r'\s+', ' ', text).strip()
     return text
 

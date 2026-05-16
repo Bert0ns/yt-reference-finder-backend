@@ -70,7 +70,7 @@ def read_file(file: FileStorage):
 
 def read_file_from_bytes(file_bytes: bytes, filename: str) -> tuple[bool, str]:
     text_content = ''
-    # Crea un oggetto file-like dai byte
+    # Create a file-like object from bytes
     file_like_object = io.BytesIO(file_bytes)
 
     try:
@@ -88,18 +88,17 @@ def read_file_from_bytes(file_bytes: bytes, filename: str) -> tuple[bool, str]:
             text_content = extract_text_from_image(file_like_object)
         else:
             logger.warning(f"Unsupported file format: {filename}")
-            return False, ""  # Formato non supportato
+            return False, ""  # Unsupported format
 
-        # Assicura che text_content sia una stringa; alcuni estrattori potrebbero restituire None in caso di fallimento
+        # Ensure text_content is a string; some extractors may return None on failure
         if text_content is None:
             text_content = ""
-            # Considera se 'None' da un estrattore significa fallimento
-            # Per ora, se nessuna eccezione, si assume successo ma il contenuto potrebbe essere vuoto
+            # If an extractor returns None, treat it as empty output for now
 
-        return True, str(text_content)  # Assicura che sia una stringa
+        return True, str(text_content)  # Ensure it is a string
 
     except Exception as e:
         logger.error(f"Error extracting text from file {filename} (type: {filename.split('.')[-1]}): {e}",
                      exc_info=True)
-        return False, ""  # Estrazione fallita
+        return False, ""  # Extraction failed
 

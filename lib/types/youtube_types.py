@@ -5,21 +5,21 @@ from typing import Optional, List, Dict
 
 def parse_iso_datetime(datetime_str: Optional[str]) -> Optional[datetime]:
     """
-    Converte una stringa di data ISO 8601 in un oggetto datetime,
-    gestendo correttamente i suffissi 'Z'.
+    Convert an ISO 8601 date string into a datetime object,
+    handling trailing 'Z' suffixes correctly.
 
     Args:
-        datetime_str: La stringa di data in formato ISO 8601
+        datetime_str: ISO 8601 date string
 
     Returns:
-        Un oggetto datetime o None se l'input è None
+        A datetime object, or None if the input is None
     """
     if not datetime_str:
         return None
 
-    # Gestisci il formato con 'Z' (UTC/Zulu time)
-    if datetime_str.endswith('Z'):
-        datetime_str = datetime_str[:-1] + '+00:00'
+    # Handle the 'Z' suffix (UTC/Zulu time)
+    if datetime_str.endswith("Z"):
+        datetime_str = datetime_str[:-1] + "+00:00"
 
     return datetime.fromisoformat(datetime_str)
 
@@ -32,20 +32,16 @@ class Thumbnail:
 
     @classmethod
     def from_dict(cls, json_dict: dict):
-        """Crea un oggetto Thumbnail da un dizionario JSON."""
+        """Create a Thumbnail object from a JSON dictionary."""
         return cls(
-            url=json_dict.get('url', ''),
-            width=json_dict.get('width', 0),
-            height=json_dict.get('height', 0)
+            url=json_dict.get("url", ""),
+            width=json_dict.get("width", 0),
+            height=json_dict.get("height", 0),
         )
 
     def to_dict(self):
-        """Converte l'oggetto Thumbnail in un dizionario JSON."""
-        return {
-            'url': self.url,
-            'width': self.width,
-            'height': self.height
-        }
+        """Convert the Thumbnail object to a JSON dictionary."""
+        return {"url": self.url, "width": self.width, "height": self.height}
 
 
 @dataclass
@@ -58,40 +54,36 @@ class Thumbnails:
 
     @classmethod
     def from_dict(cls, json_dict: dict):
-        """        Crea un oggetto Thumbnails da un dizionario JSON."""
+        """Create a Thumbnails object from a JSON dictionary."""
         default = None
         medium = None
         high = None
         standard = None
         maxres = None
 
-        if 'default' in json_dict:
-            default = Thumbnail.from_dict(json_dict['default'])
-        if 'medium' in json_dict:
-            medium = Thumbnail.from_dict(json_dict['medium'])
-        if 'high' in json_dict:
-            high = Thumbnail.from_dict(json_dict['high'])
-        if 'standard' in json_dict:
-            standard = Thumbnail.from_dict(json_dict['standard'])
-        if 'maxres' in json_dict:
-            maxres = Thumbnail.from_dict(json_dict['maxres'])
+        if "default" in json_dict:
+            default = Thumbnail.from_dict(json_dict["default"])
+        if "medium" in json_dict:
+            medium = Thumbnail.from_dict(json_dict["medium"])
+        if "high" in json_dict:
+            high = Thumbnail.from_dict(json_dict["high"])
+        if "standard" in json_dict:
+            standard = Thumbnail.from_dict(json_dict["standard"])
+        if "maxres" in json_dict:
+            maxres = Thumbnail.from_dict(json_dict["maxres"])
 
         return cls(
-            default=default,
-            medium=medium,
-            high=high,
-            standard=standard,
-            maxres=maxres
+            default=default, medium=medium, high=high, standard=standard, maxres=maxres
         )
 
     def to_dict(self):
-        """Converte l'oggetto Thumbnails in un dizionario JSON."""
+        """Convert the Thumbnails object to a JSON dictionary."""
         return {
-            'default': self.default.to_dict() if self.default else None,
-            'medium': self.medium.to_dict() if self.medium else None,
-            'high': self.high.to_dict() if self.high else None,
-            'standard': self.standard.to_dict() if self.standard else None,
-            'maxres': self.maxres.to_dict() if self.maxres else None
+            "default": self.default.to_dict() if self.default else None,
+            "medium": self.medium.to_dict() if self.medium else None,
+            "high": self.high.to_dict() if self.high else None,
+            "standard": self.standard.to_dict() if self.standard else None,
+            "maxres": self.maxres.to_dict() if self.maxres else None,
         }
 
 
@@ -101,19 +93,16 @@ class Localized:
     description: str = ""
 
     @classmethod
-    def from_dict(cls, json_dict: dict) -> 'Localized':
-        """Crea un oggetto Localized da un dizionario JSON."""
+    def from_dict(cls, json_dict: dict) -> "Localized":
+        """Create a Localized object from a JSON dictionary."""
         return cls(
-            title=json_dict.get('title', ''),
-            description=json_dict.get('description', '')
+            title=json_dict.get("title", ""),
+            description=json_dict.get("description", ""),
         )
 
     def to_dict(self) -> dict:
-        """Converte l'oggetto Localized in un dizionario JSON."""
-        return {
-            'title': self.title,
-            'description': self.description
-        }
+        """Convert the Localized object to a JSON dictionary."""
+        return {"title": self.title, "description": self.description}
 
 
 @dataclass
@@ -122,31 +111,31 @@ class PageInfo:
     resultsPerPage: int = 0
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'PageInfo':
+    def from_dict(cls, data: dict) -> "PageInfo":
         """
-        Crea un oggetto PageInfo da un dizionario JSON.
+        Create a PageInfo object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati della pagina
+            data: Dictionary containing page data
 
         Returns:
-            Un'istanza di PageInfo
+            A PageInfo instance
         """
         return cls(
-            totalResults=data.get('totalResults', 0),
-            resultsPerPage=data.get('resultsPerPage', 0)
+            totalResults=data.get("totalResults", 0),
+            resultsPerPage=data.get("resultsPerPage", 0),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati della pagina.
+            A dictionary containing page data.
         """
         return {
-            'totalResults': self.totalResults,
-            'resultsPerPage': self.resultsPerPage
+            "totalResults": self.totalResults,
+            "resultsPerPage": self.resultsPerPage,
         }
 
 
@@ -156,41 +145,37 @@ class VideoRegionRestriction:
     blocked: List[str] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, json_dict: dict) -> 'VideoRegionRestriction':
-        """Crea un oggetto RegionRestriction da un dizionario JSON."""
+    def from_dict(cls, json_dict: dict) -> "VideoRegionRestriction":
+        """Create a RegionRestriction object from a JSON dictionary."""
         return cls(
-            allowed=json_dict.get('allowed', []),
-            blocked=json_dict.get('blocked', [])
+            allowed=json_dict.get("allowed", []), blocked=json_dict.get("blocked", [])
         )
 
     def to_dict(self) -> dict:
-        """Converte l'oggetto RegionRestriction in un dizionario JSON."""
-        return {
-            'allowed': self.allowed,
-            'blocked': self.blocked
-        }
+        """Convert the RegionRestriction object to a JSON dictionary."""
+        return {"allowed": self.allowed, "blocked": self.blocked}
 
 
 @dataclass
 class VideoContentRating:
-    # Includo solo alcuni campi rappresentativi
+    # Include only some representative fields
     ytRating: str = ""
 
-    # Aggiungere gli altri rating secondo necessità
+    # Add other ratings as needed
 
     @classmethod
-    def from_dict(cls, param) -> 'VideoContentRating':
-        """Crea un oggetto ContentRating da un dizionario JSON."""
+    def from_dict(cls, param) -> "VideoContentRating":
+        """Create a ContentRating object from a JSON dictionary."""
         return cls(
-            ytRating=param.get('ytRating', '')
-            # Aggiungere gli altri campi secondo necessità
+            ytRating=param.get("ytRating", "")
+            # Add other fields as needed
         )
 
     def to_dict(self):
-        """Converte l'oggetto ContentRating in un dizionario JSON."""
+        """Convert the ContentRating object to a JSON dictionary."""
         return {
-            'ytRating': self.ytRating
-            # Aggiungere gli altri campi secondo necessità
+            "ytRating": self.ytRating
+            # Add other fields as needed
         }
 
 
@@ -201,54 +186,60 @@ class VideoContentDetails:
     definition: str = ""
     caption: str = ""
     licensedContent: bool = False
-    regionRestriction: VideoRegionRestriction = field(default_factory=VideoRegionRestriction)
+    regionRestriction: VideoRegionRestriction = field(
+        default_factory=VideoRegionRestriction
+    )
     contentRating: VideoContentRating = field(default_factory=VideoContentRating)
     projection: str = ""
     hasCustomThumbnail: bool = False
 
     @classmethod
-    def from_dict(cls, json_dict: dict) -> 'VideoContentDetails':
+    def from_dict(cls, json_dict: dict) -> "VideoContentDetails":
         """
-        Crea un oggetto ContentDetails da un dizionario JSON.
+        Create a ContentDetails object from a JSON dictionary.
 
         Args:
-            json_dict: Dizionario contenente i dati dei dettagli del contenuto
+            json_dict: Dictionary containing content details
 
         Returns:
-            Un'istanza di ContentDetails
+            A ContentDetails instance
         """
-        region_restriction = VideoRegionRestriction.from_dict(json_dict.get('regionRestriction', {}))
-        content_rating = VideoContentRating.from_dict(json_dict.get('contentRating', {}))
+        region_restriction = VideoRegionRestriction.from_dict(
+            json_dict.get("regionRestriction", {})
+        )
+        content_rating = VideoContentRating.from_dict(
+            json_dict.get("contentRating", {})
+        )
 
         return cls(
-            duration=json_dict.get('duration', ''),
-            dimension=json_dict.get('dimension', ''),
-            definition=json_dict.get('definition', ''),
-            caption=json_dict.get('caption', ''),
-            licensedContent=json_dict.get('licensedContent', False),
+            duration=json_dict.get("duration", ""),
+            dimension=json_dict.get("dimension", ""),
+            definition=json_dict.get("definition", ""),
+            caption=json_dict.get("caption", ""),
+            licensedContent=json_dict.get("licensedContent", False),
             regionRestriction=region_restriction,
             contentRating=content_rating,
-            projection=json_dict.get('projection', ''),
-            hasCustomThumbnail=json_dict.get('hasCustomThumbnail', False)
+            projection=json_dict.get("projection", ""),
+            hasCustomThumbnail=json_dict.get("hasCustomThumbnail", False),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli del contenuto.
+            A dictionary containing content details.
         """
         return {
-            'duration': self.duration,
-            'dimension': self.dimension,
-            'definition': self.definition,
-            'caption': self.caption,
-            'licensedContent': self.licensedContent,
-            'regionRestriction': self.regionRestriction.to_dict(),
-            'contentRating': self.contentRating.to_dict(),
-            'projection': self.projection,
-            'hasCustomThumbnail': self.hasCustomThumbnail
+            "duration": self.duration,
+            "dimension": self.dimension,
+            "definition": self.definition,
+            "caption": self.caption,
+            "licensedContent": self.licensedContent,
+            "regionRestriction": self.regionRestriction.to_dict(),
+            "contentRating": self.contentRating.to_dict(),
+            "projection": self.projection,
+            "hasCustomThumbnail": self.hasCustomThumbnail,
         }
 
 
@@ -267,49 +258,49 @@ class VideoStatus:
     containsSyntheticMedia: bool = False
 
     @classmethod
-    def from_dict(cls, param) -> 'VideoStatus':
+    def from_dict(cls, param) -> "VideoStatus":
         """
-        Crea un oggetto Status da un dizionario JSON.
+        Create a Status object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dello stato
+            param: Dictionary containing status data
 
         Returns:
-            Un'istanza di Status
+            A Status instance
         """
         return cls(
-            uploadStatus=param.get('uploadStatus', ''),
-            failureReason=param.get('failureReason', ''),
-            rejectionReason=param.get('rejectionReason', ''),
-            privacyStatus=param.get('privacyStatus', ''),
-            publishAt=parse_iso_datetime(param.get('publishAt', None)),
-            license=param.get('license', ''),
-            embeddable=param.get('embeddable', True),
-            publicStatsViewable=param.get('publicStatsViewable', True),
-            madeForFids=param.get('madeForKids', False),
-            selfDeclaredMadeForKids=param.get('selfDeclaredMadeForKids', False),
-            containsSyntheticMedia=param.get('containsSyntheticMedia', False)
+            uploadStatus=param.get("uploadStatus", ""),
+            failureReason=param.get("failureReason", ""),
+            rejectionReason=param.get("rejectionReason", ""),
+            privacyStatus=param.get("privacyStatus", ""),
+            publishAt=parse_iso_datetime(param.get("publishAt", None)),
+            license=param.get("license", ""),
+            embeddable=param.get("embeddable", True),
+            publicStatsViewable=param.get("publicStatsViewable", True),
+            madeForFids=param.get("madeForKids", False),
+            selfDeclaredMadeForKids=param.get("selfDeclaredMadeForKids", False),
+            containsSyntheticMedia=param.get("containsSyntheticMedia", False),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dello stato.
+            A dictionary containing status data.
         """
         return {
-            'uploadStatus': self.uploadStatus,
-            'failureReason': self.failureReason,
-            'rejectionReason': self.rejectionReason,
-            'privacyStatus': self.privacyStatus,
-            'publishAt': self.publishAt.isoformat() if self.publishAt else None,
-            'license': self.license,
-            'embeddable': self.embeddable,
-            'publicStatsViewable': self.publicStatsViewable,
-            'madeForKids': self.madeForFids,
-            'selfDeclaredMadeForKids': self.selfDeclaredMadeForKids,
-            'containsSyntheticMedia': self.containsSyntheticMedia
+            "uploadStatus": self.uploadStatus,
+            "failureReason": self.failureReason,
+            "rejectionReason": self.rejectionReason,
+            "privacyStatus": self.privacyStatus,
+            "publishAt": self.publishAt.isoformat() if self.publishAt else None,
+            "license": self.license,
+            "embeddable": self.embeddable,
+            "publicStatsViewable": self.publicStatsViewable,
+            "madeForKids": self.madeForFids,
+            "selfDeclaredMadeForKids": self.selfDeclaredMadeForKids,
+            "containsSyntheticMedia": self.containsSyntheticMedia,
         }
 
 
@@ -324,35 +315,35 @@ class VideoStatistics:
     @classmethod
     def from_dict(cls, param):
         """
-        Crea un oggetto Statistics da un dizionario JSON.
+        Create a Statistics object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati delle statistiche
+            param: Dictionary containing statistics data
 
         Returns:
-            Un'istanza di Statistics
+            A Statistics instance
         """
         return cls(
-            viewCount=param.get('viewCount', '0'),
-            likeCount=param.get('likeCount', '0'),
-            dislikeCount=param.get('dislikeCount', '0'),
-            favoriteCount=param.get('favoriteCount', '0'),
-            commentCount=param.get('commentCount', '0')
+            viewCount=param.get("viewCount", "0"),
+            likeCount=param.get("likeCount", "0"),
+            dislikeCount=param.get("dislikeCount", "0"),
+            favoriteCount=param.get("favoriteCount", "0"),
+            commentCount=param.get("commentCount", "0"),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati delle statistiche.
+            A dictionary containing statistics data.
         """
         return {
-            'viewCount': self.viewCount,
-            'likeCount': self.likeCount,
-            'dislikeCount': self.dislikeCount,
-            'favoriteCount': self.favoriteCount,
-            'commentCount': self.commentCount
+            "viewCount": self.viewCount,
+            "likeCount": self.likeCount,
+            "dislikeCount": self.dislikeCount,
+            "favoriteCount": self.favoriteCount,
+            "commentCount": self.commentCount,
         }
 
 
@@ -363,28 +354,24 @@ class VideoPaidProductPlacementDetails:
     @classmethod
     def from_dict(cls, param):
         """
-        Crea un oggetto PaidProductPlacementDetails da un dizionario JSON.
+        Create a PaidProductPlacementDetails object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dei dettagli del posizionamento del prodotto a pagamento
+            param: Dictionary containing paid product placement details
 
         Returns:
-            Un'istanza di PaidProductPlacementDetails
+            A PaidProductPlacementDetails instance
         """
-        return cls(
-            hasPaidProductPlacement=param.get('hasPaidProductPlacement', False)
-        )
+        return cls(hasPaidProductPlacement=param.get("hasPaidProductPlacement", False))
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli del posizionamento del prodotto a pagamento.
+            A dictionary containing paid product placement details.
         """
-        return {
-            'hasPaidProductPlacement': self.hasPaidProductPlacement
-        }
+        return {"hasPaidProductPlacement": self.hasPaidProductPlacement}
 
 
 @dataclass
@@ -396,31 +383,31 @@ class VideoPlayer:
     @classmethod
     def from_dict(cls, param):
         """
-        Crea un oggetto Player da un dizionario JSON.
+        Create a Player object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati del player
+            param: Dictionary containing player data
 
         Returns:
-            Un'istanza di Player
+            A Player instance
         """
         return cls(
-            embedHtml=param.get('embedHtml', ''),
-            embedHeight=param.get('embedHeight', 0),
-            embedWidth=param.get('embedWidth', 0)
+            embedHtml=param.get("embedHtml", ""),
+            embedHeight=param.get("embedHeight", 0),
+            embedWidth=param.get("embedWidth", 0),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati del player.
+            A dictionary containing player data.
         """
         return {
-            'embedHtml': self.embedHtml,
-            'embedHeight': self.embedHeight,
-            'embedWidth': self.embedWidth
+            "embedHtml": self.embedHtml,
+            "embedHeight": self.embedHeight,
+            "embedWidth": self.embedWidth,
         }
 
 
@@ -433,31 +420,31 @@ class VideoTopicDetails:
     @classmethod
     def from_dict(cls, param):
         """
-        Crea un oggetto TopicDetails da un dizionario JSON.
+        Create a TopicDetails object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dei dettagli del topic
+            param: Dictionary containing topic details
 
         Returns:
-            Un'istanza di TopicDetails
+            A TopicDetails instance
         """
         return cls(
-            topicIds=param.get('topicIds', []),
-            relevantTopicIds=param.get('relevantTopicIds', []),
-            topicCategories=param.get('topicCategories', [])
+            topicIds=param.get("topicIds", []),
+            relevantTopicIds=param.get("relevantTopicIds", []),
+            topicCategories=param.get("topicCategories", []),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli del topic.
+            A dictionary containing topic details.
         """
         return {
-            'topicIds': self.topicIds,
-            'relevantTopicIds': self.relevantTopicIds,
-            'topicCategories': self.topicCategories
+            "topicIds": self.topicIds,
+            "relevantTopicIds": self.relevantTopicIds,
+            "topicCategories": self.topicCategories,
         }
 
 
@@ -466,29 +453,29 @@ class VideoRecordingDetails:
     recordingDate: Optional[datetime] = None
 
     @classmethod
-    def from_dict(cls, param) -> 'VideoRecordingDetails':
+    def from_dict(cls, param) -> "VideoRecordingDetails":
         """
-        Crea un oggetto RecordingDetails da un dizionario JSON.
+        Create a RecordingDetails object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dei dettagli di registrazione
+            param: Dictionary containing recording details
 
         Returns:
-            Un'istanza di RecordingDetails
+            A RecordingDetails instance
         """
-        return cls(
-            recordingDate=parse_iso_datetime(param.get('recordingDate', None))
-        )
+        return cls(recordingDate=parse_iso_datetime(param.get("recordingDate", None)))
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli di registrazione.
+            A dictionary containing recording details.
         """
         return {
-            'recordingDate': self.recordingDate.isoformat() if self.recordingDate else None
+            "recordingDate": (
+                self.recordingDate.isoformat() if self.recordingDate else None
+            )
         }
 
 
@@ -506,41 +493,41 @@ class VideoStream:
     @classmethod
     def from_dict(cls, vs):
         """
-        Crea un oggetto VideoStream da un dizionario JSON.
+        Create a VideoStream object from a JSON dictionary.
 
         Args:
-            vs: Dizionario contenente i dati dello stream video
+            vs: Dictionary containing video stream data
 
         Returns:
-            Un'istanza di VideoStream
+            A VideoStream instance
         """
         return cls(
-            widthPixels=vs.get('widthPixels', 0),
-            heightPixels=vs.get('heightPixels', 0),
-            frameRateFps=vs.get('frameRateFps', 0.0),
-            aspectRatio=vs.get('aspectRatio', 0.0),
-            codec=vs.get('codec', ''),
-            bitrateBps=vs.get('bitrateBps', 0),
-            rotation=vs.get('rotation', ''),
-            vendor=vs.get('vendor', '')
+            widthPixels=vs.get("widthPixels", 0),
+            heightPixels=vs.get("heightPixels", 0),
+            frameRateFps=vs.get("frameRateFps", 0.0),
+            aspectRatio=vs.get("aspectRatio", 0.0),
+            codec=vs.get("codec", ""),
+            bitrateBps=vs.get("bitrateBps", 0),
+            rotation=vs.get("rotation", ""),
+            vendor=vs.get("vendor", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dello stream video.
+            A dictionary containing video stream data.
         """
         return {
-            'widthPixels': self.widthPixels,
-            'heightPixels': self.heightPixels,
-            'frameRateFps': self.frameRateFps,
-            'aspectRatio': self.aspectRatio,
-            'codec': self.codec,
-            'bitrateBps': self.bitrateBps,
-            'rotation': self.rotation,
-            'vendor': self.vendor
+            "widthPixels": self.widthPixels,
+            "heightPixels": self.heightPixels,
+            "frameRateFps": self.frameRateFps,
+            "aspectRatio": self.aspectRatio,
+            "codec": self.codec,
+            "bitrateBps": self.bitrateBps,
+            "rotation": self.rotation,
+            "vendor": self.vendor,
         }
 
 
@@ -552,35 +539,35 @@ class VideoAudioStream:
     vendor: str = ""
 
     @classmethod
-    def from_dict(cls, json_dict: dict) -> 'VideoAudioStream':
+    def from_dict(cls, json_dict: dict) -> "VideoAudioStream":
         """
-        Crea un oggetto AudioStream da un dizionario JSON.
+        Create an AudioStream object from a JSON dictionary.
 
         Args:
-            json_dict: Dizionario contenente i dati dello stream audio
+            json_dict: Dictionary containing audio stream data
 
         Returns:
-            Un'istanza di AudioStream
+            An AudioStream instance
         """
         return cls(
-            channel_count=json_dict.get('channelCount', 0),
-            codec=json_dict.get('codec', ''),
-            bitrate_bps=json_dict.get('bitrateBps', 0),
-            vendor=json_dict.get('vendor', '')
+            channel_count=json_dict.get("channelCount", 0),
+            codec=json_dict.get("codec", ""),
+            bitrate_bps=json_dict.get("bitrateBps", 0),
+            vendor=json_dict.get("vendor", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dello stream audio.
+            A dictionary containing audio stream data.
         """
         return {
-            'channelCount': self.channel_count,
-            'codec': self.codec,
-            'bitrateBps': self.bitrate_bps,
-            'vendor': self.vendor
+            "channelCount": self.channel_count,
+            "codec": self.codec,
+            "bitrateBps": self.bitrate_bps,
+            "vendor": self.vendor,
         }
 
 
@@ -599,46 +586,50 @@ class VideoFileDetails:
     @classmethod
     def from_dict(cls, param):
         """
-        Crea un oggetto FileDetails da un dizionario JSON.
+        Create a FileDetails object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dei dettagli del file
+            param: Dictionary containing file details
 
         Returns:
-            Un'istanza di FileDetails
+            A FileDetails instance
         """
-        video_streams = [VideoStream.from_dict(vs) for vs in param.get('videoStreams', [])]
-        audio_streams = [VideoAudioStream.from_dict(as_) for as_ in param.get('audioStreams', [])]
+        video_streams = [
+            VideoStream.from_dict(vs) for vs in param.get("videoStreams", [])
+        ]
+        audio_streams = [
+            VideoAudioStream.from_dict(as_) for as_ in param.get("audioStreams", [])
+        ]
 
         return cls(
-            file_name=param.get('fileName', ''),
-            file_size=param.get('fileSize', 0),
-            file_type=param.get('fileType', ''),
-            container=param.get('container', ''),
+            file_name=param.get("fileName", ""),
+            file_size=param.get("fileSize", 0),
+            file_type=param.get("fileType", ""),
+            container=param.get("container", ""),
             video_streams=video_streams,
             audio_streams=audio_streams,
-            duration_ms=param.get('durationMs', 0),
-            bitrate_bps=param.get('bitrateBps', 0),
-            creation_time=param.get('creationTime', '')
+            duration_ms=param.get("durationMs", 0),
+            bitrate_bps=param.get("bitrateBps", 0),
+            creation_time=param.get("creationTime", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli del file.
+            A dictionary containing file details.
         """
         return {
-            'fileName': self.file_name,
-            'fileSize': self.file_size,
-            'fileType': self.file_type,
-            'container': self.container,
-            'videoStreams': [vs.to_dict() for vs in self.video_streams],
-            'audioStreams': [as_.to_dict() for as_ in self.audio_streams],
-            'durationMs': self.duration_ms,
-            'bitrateBps': self.bitrate_bps,
-            'creationTime': self.creation_time
+            "fileName": self.file_name,
+            "fileSize": self.file_size,
+            "fileType": self.file_type,
+            "container": self.container,
+            "videoStreams": [vs.to_dict() for vs in self.video_streams],
+            "audioStreams": [as_.to_dict() for as_ in self.audio_streams],
+            "durationMs": self.duration_ms,
+            "bitrateBps": self.bitrate_bps,
+            "creationTime": self.creation_time,
         }
 
 
@@ -649,40 +640,42 @@ class VideoProcessingProgress:
     timeLeftMs: int = 0
 
     @classmethod
-    def from_dict(cls, param: dict) -> 'VideoProcessingProgress':
+    def from_dict(cls, param: dict) -> "VideoProcessingProgress":
         """
-        Crea un oggetto ProcessingProgress da un dizionario JSON.
+        Create a ProcessingProgress object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati del progresso dell'elaborazione
+            param: Dictionary containing processing progress data
 
         Returns:
-            Un'istanza di ProcessingProgress
+            A ProcessingProgress instance
         """
         return cls(
-            partsTotal=param.get('partsTotal', 0),
-            partsProcessed=param.get('partsProcessed', 0),
-            timeLeftMs=param.get('timeLeftMs', 0)
+            partsTotal=param.get("partsTotal", 0),
+            partsProcessed=param.get("partsProcessed", 0),
+            timeLeftMs=param.get("timeLeftMs", 0),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati del progresso dell'elaborazione.
+            A dictionary containing processing progress data.
         """
         return {
-            'partsTotal': self.partsTotal,
-            'partsProcessed': self.partsProcessed,
-            'timeLeftMs': self.timeLeftMs
+            "partsTotal": self.partsTotal,
+            "partsProcessed": self.partsProcessed,
+            "timeLeftMs": self.timeLeftMs,
         }
 
 
 @dataclass
 class VideoProcessingDetails:
     processingStatus: str = ""
-    processingProgress: VideoProcessingProgress = field(default_factory=VideoProcessingProgress)
+    processingProgress: VideoProcessingProgress = field(
+        default_factory=VideoProcessingProgress
+    )
     processingFailureReason: str = ""
     fileDetailsAvailability: str = ""
     processingIssuesAvailability: str = ""
@@ -691,45 +684,49 @@ class VideoProcessingDetails:
     thumbnailsAvailability: str = ""
 
     @classmethod
-    def from_dict(cls, param) -> 'VideoProcessingDetails':
+    def from_dict(cls, param) -> "VideoProcessingDetails":
         """
-        Crea un oggetto ProcessingDetails da un dizionario JSON.
+        Create a ProcessingDetails object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dei dettagli di elaborazione
+            param: Dictionary containing processing details
 
         Returns:
-            Un'istanza di ProcessingDetails
+            A ProcessingDetails instance
         """
-        processing_progress = VideoProcessingProgress.from_dict(param.get('processingProgress', {}))
+        processing_progress = VideoProcessingProgress.from_dict(
+            param.get("processingProgress", {})
+        )
 
         return cls(
-            processingStatus=param.get('processingStatus', ''),
+            processingStatus=param.get("processingStatus", ""),
             processingProgress=processing_progress,
-            processingFailureReason=param.get('processingFailureReason', ''),
-            fileDetailsAvailability=param.get('fileDetailsAvailability', ''),
-            processingIssuesAvailability=param.get('processingIssuesAvailability', ''),
-            tagSuggestionsAvailability=param.get('tagSuggestionsAvailability', ''),
-            editorSuggestionsAvailability=param.get('editorSuggestionsAvailability', ''),
-            thumbnailsAvailability=param.get('thumbnailsAvailability', '')
+            processingFailureReason=param.get("processingFailureReason", ""),
+            fileDetailsAvailability=param.get("fileDetailsAvailability", ""),
+            processingIssuesAvailability=param.get("processingIssuesAvailability", ""),
+            tagSuggestionsAvailability=param.get("tagSuggestionsAvailability", ""),
+            editorSuggestionsAvailability=param.get(
+                "editorSuggestionsAvailability", ""
+            ),
+            thumbnailsAvailability=param.get("thumbnailsAvailability", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli di elaborazione.
+            A dictionary containing processing details.
         """
         return {
-            'processingStatus': self.processingStatus,
-            'processingProgress': self.processingProgress.to_dict(),
-            'processingFailureReason': self.processingFailureReason,
-            'fileDetailsAvailability': self.fileDetailsAvailability,
-            'processingIssuesAvailability': self.processingIssuesAvailability,
-            'tagSuggestionsAvailability': self.tagSuggestionsAvailability,
-            'editorSuggestionsAvailability': self.editorSuggestionsAvailability,
-            'thumbnailsAvailability': self.thumbnailsAvailability
+            "processingStatus": self.processingStatus,
+            "processingProgress": self.processingProgress.to_dict(),
+            "processingFailureReason": self.processingFailureReason,
+            "fileDetailsAvailability": self.fileDetailsAvailability,
+            "processingIssuesAvailability": self.processingIssuesAvailability,
+            "tagSuggestionsAvailability": self.tagSuggestionsAvailability,
+            "editorSuggestionsAvailability": self.editorSuggestionsAvailability,
+            "thumbnailsAvailability": self.thumbnailsAvailability,
         }
 
 
@@ -741,30 +738,26 @@ class VideoTagSuggestion:
     @classmethod
     def from_dict(cls, ts):
         """
-        Crea un oggetto TagSuggestion da un dizionario JSON.
+        Create a TagSuggestion object from a JSON dictionary.
 
         Args:
-            ts: Dizionario contenente i dati del suggerimento di tag
+            ts: Dictionary containing tag suggestion data
 
         Returns:
-            Un'istanza di TagSuggestion
+            A TagSuggestion instance
         """
         return cls(
-            tag=ts.get('tag', ''),
-            categoryRestricts=ts.get('categoryRestricts', [])
+            tag=ts.get("tag", ""), categoryRestricts=ts.get("categoryRestricts", [])
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati del suggerimento di tag.
+            A dictionary containing tag suggestion data.
         """
-        return {
-            'tag': self.tag,
-            'categoryRestricts': self.categoryRestricts
-        }
+        return {"tag": self.tag, "categoryRestricts": self.categoryRestricts}
 
 
 @dataclass
@@ -776,39 +769,41 @@ class VideoSuggestions:
     editorSuggestions: List[str] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, param: dict) -> 'VideoSuggestions':
+    def from_dict(cls, param: dict) -> "VideoSuggestions":
         """
-        Crea un oggetto Suggestions da un dizionario JSON.
+        Create a Suggestions object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dei suggerimenti
+            param: Dictionary containing suggestions data
 
         Returns:
-            Un'istanza di Suggestions
+            A Suggestions instance
         """
-        tag_suggestions = [VideoTagSuggestion.from_dict(ts) for ts in param.get('tagSuggestions', [])]
+        tag_suggestions = [
+            VideoTagSuggestion.from_dict(ts) for ts in param.get("tagSuggestions", [])
+        ]
 
         return cls(
-            processingErrors=param.get('processingErrors', []),
-            processingWarnings=param.get('processingWarnings', []),
-            processingHints=param.get('processingHints', []),
+            processingErrors=param.get("processingErrors", []),
+            processingWarnings=param.get("processingWarnings", []),
+            processingHints=param.get("processingHints", []),
             tagSuggestions=tag_suggestions,
-            editorSuggestions=param.get('editorSuggestions', [])
+            editorSuggestions=param.get("editorSuggestions", []),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei suggerimenti.
+            A dictionary containing suggestions data.
         """
         return {
-            'processingErrors': self.processingErrors,
-            'processingWarnings': self.processingWarnings,
-            'processingHints': self.processingHints,
-            'tagSuggestions': [ts.to_dict() for ts in self.tagSuggestions],
-            'editorSuggestions': self.editorSuggestions
+            "processingErrors": self.processingErrors,
+            "processingWarnings": self.processingWarnings,
+            "processingHints": self.processingHints,
+            "tagSuggestions": [ts.to_dict() for ts in self.tagSuggestions],
+            "editorSuggestions": self.editorSuggestions,
         }
 
 
@@ -822,39 +817,49 @@ class VideoLiveStreamingDetails:
     activeLiveChatId: str = ""
 
     @classmethod
-    def from_dict(cls, param: dict) -> 'VideoLiveStreamingDetails':
+    def from_dict(cls, param: dict) -> "VideoLiveStreamingDetails":
         """
-        Crea un oggetto LiveStreamingDetails da un dizionario JSON.
+        Create a LiveStreamingDetails object from a JSON dictionary.
 
         Args:
-            param: Dizionario contenente i dati dei dettagli dello streaming live
+            param: Dictionary containing live streaming details
 
         Returns:
-            Un'istanza di LiveStreamingDetails
+            A LiveStreamingDetails instance
         """
         return cls(
-            actualStartTime=parse_iso_datetime(param.get('actualStartTime', None)),
-            actualEndTime=parse_iso_datetime(param.get('actualEndTime', None)),
-            scheduledStartTime=parse_iso_datetime(param.get('scheduledStartTime', None)),
-            scheduledEndTime=parse_iso_datetime(param.get('scheduledEndTime', None)),
-            concurrentViewers=param.get('concurrentViewers', 0),
-            activeLiveChatId=param.get('activeLiveChatId', '')
+            actualStartTime=parse_iso_datetime(param.get("actualStartTime", None)),
+            actualEndTime=parse_iso_datetime(param.get("actualEndTime", None)),
+            scheduledStartTime=parse_iso_datetime(
+                param.get("scheduledStartTime", None)
+            ),
+            scheduledEndTime=parse_iso_datetime(param.get("scheduledEndTime", None)),
+            concurrentViewers=param.get("concurrentViewers", 0),
+            activeLiveChatId=param.get("activeLiveChatId", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli dello streaming live.
+            A dictionary containing live streaming details.
         """
         return {
-            'actualStartTime': self.actualStartTime.isoformat() if self.actualStartTime else None,
-            'actualEndTime': self.actualEndTime.isoformat() if self.actualEndTime else None,
-            'scheduledStartTime': self.scheduledStartTime.isoformat() if self.scheduledStartTime else None,
-            'scheduledEndTime': self.scheduledEndTime.isoformat() if self.scheduledEndTime else None,
-            'concurrentViewers': self.concurrentViewers,
-            'activeLiveChatId': self.activeLiveChatId
+            "actualStartTime": (
+                self.actualStartTime.isoformat() if self.actualStartTime else None
+            ),
+            "actualEndTime": (
+                self.actualEndTime.isoformat() if self.actualEndTime else None
+            ),
+            "scheduledStartTime": (
+                self.scheduledStartTime.isoformat() if self.scheduledStartTime else None
+            ),
+            "scheduledEndTime": (
+                self.scheduledEndTime.isoformat() if self.scheduledEndTime else None
+            ),
+            "concurrentViewers": self.concurrentViewers,
+            "activeLiveChatId": self.activeLiveChatId,
         }
 
 
@@ -874,53 +879,53 @@ class VideoResourceSnippet:
     defaultAudioLanguage: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'VideoResourceSnippet':
+    def from_dict(cls, data: dict) -> "VideoResourceSnippet":
         """
-        Crea un oggetto VideoResourceSnippet da un dizionario JSON.
+        Create a VideoResourceSnippet object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dello snippet della risorsa video
+            data: Dictionary containing video resource snippet data
 
         Returns:
-            Un'istanza di VideoResourceSnippet
+            A VideoResourceSnippet instance
         """
-        thumbnails = Thumbnails.from_dict(data.get('thumbnails', {}))
-        localized = Localized.from_dict(data.get('localized', {}))
+        thumbnails = Thumbnails.from_dict(data.get("thumbnails", {}))
+        localized = Localized.from_dict(data.get("localized", {}))
         return cls(
-            publishedAt=parse_iso_datetime(data.get('publishedAt', None)),
-            channelId=data.get('channelId', ''),
-            title=data.get('title', ''),
-            description=data.get('description', ''),
+            publishedAt=parse_iso_datetime(data.get("publishedAt", None)),
+            channelId=data.get("channelId", ""),
+            title=data.get("title", ""),
+            description=data.get("description", ""),
             thumbnails=thumbnails,
-            channelTitle=data.get('channelTitle', ''),
-            tags=data.get('tags', []),
-            categoryId=data.get('categoryId', ''),
-            liveBroadcastContent=data.get('liveBroadcastContent', ''),
-            defaultLanguage=data.get('defaultLanguage', ''),
+            channelTitle=data.get("channelTitle", ""),
+            tags=data.get("tags", []),
+            categoryId=data.get("categoryId", ""),
+            liveBroadcastContent=data.get("liveBroadcastContent", ""),
+            defaultLanguage=data.get("defaultLanguage", ""),
             localized=localized,
-            defaultAudioLanguage=data.get('defaultAudioLanguage', '')
+            defaultAudioLanguage=data.get("defaultAudioLanguage", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dello snippet della risorsa video.
+            A dictionary containing video resource snippet data.
         """
         return {
-            'publishedAt': self.publishedAt.isoformat() if self.publishedAt else None,
-            'channelId': self.channelId,
-            'title': self.title,
-            'description': self.description,
-            'thumbnails': self.thumbnails.to_dict(),
-            'channelTitle': self.channelTitle,
-            'tags': self.tags,
-            'categoryId': self.categoryId,
-            'liveBroadcastContent': self.liveBroadcastContent,
-            'defaultLanguage': self.defaultLanguage,
-            'localized': self.localized.to_dict(),
-            'defaultAudioLanguage': self.defaultAudioLanguage
+            "publishedAt": self.publishedAt.isoformat() if self.publishedAt else None,
+            "channelId": self.channelId,
+            "title": self.title,
+            "description": self.description,
+            "thumbnails": self.thumbnails.to_dict(),
+            "channelTitle": self.channelTitle,
+            "tags": self.tags,
+            "categoryId": self.categoryId,
+            "liveBroadcastContent": self.liveBroadcastContent,
+            "defaultLanguage": self.defaultLanguage,
+            "localized": self.localized.to_dict(),
+            "defaultAudioLanguage": self.defaultAudioLanguage,
         }
 
 
@@ -934,52 +939,68 @@ class VideoResource:
     status: VideoStatus = field(default_factory=VideoStatus)
     statistics: VideoStatistics = field(default_factory=VideoStatistics)
     paidProductPlacementDetails: VideoPaidProductPlacementDetails = field(
-        default_factory=VideoPaidProductPlacementDetails)
+        default_factory=VideoPaidProductPlacementDetails
+    )
     player: VideoPlayer = field(default_factory=VideoPlayer)
     topicDetails: VideoTopicDetails = field(default_factory=VideoTopicDetails)
-    recordingDetails: VideoRecordingDetails = field(default_factory=VideoRecordingDetails)
+    recordingDetails: VideoRecordingDetails = field(
+        default_factory=VideoRecordingDetails
+    )
     fileDetails: VideoFileDetails = field(default_factory=VideoFileDetails)
-    processingDetails: VideoProcessingDetails = field(default_factory=VideoProcessingDetails)
+    processingDetails: VideoProcessingDetails = field(
+        default_factory=VideoProcessingDetails
+    )
     suggestions: VideoSuggestions = field(default_factory=VideoSuggestions)
-    liveStreamingDetails: VideoLiveStreamingDetails = field(default_factory=VideoLiveStreamingDetails)
+    liveStreamingDetails: VideoLiveStreamingDetails = field(
+        default_factory=VideoLiveStreamingDetails
+    )
     localizations: Dict[str, Localized] = field(default_factory=dict)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'VideoResource':
+    def from_dict(cls, data: dict) -> "VideoResource":
         """
-        Crea un oggetto VideoResource da un dizionario JSON.
+        Create a VideoResource object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati della risorsa video
+            data: Dictionary containing video resource data
 
         Returns:
-            Un'istanza di VideoResource
+            A VideoResource instance
         """
-        kind_received = data.get('kind', '')
-        if kind_received != 'youtube#video':
+        kind_received = data.get("kind", "")
+        if kind_received != "youtube#video":
             raise ValueError(f"Expected kind='youtube#video', got '{kind_received}'")
 
-        snippet = VideoResourceSnippet.from_dict(data.get('snippet', {}))
-        content_details = VideoContentDetails.from_dict(data.get('contentDetails', {}))
-        status = VideoStatus.from_dict(data.get('status', {}))
-        statistics = VideoStatistics.from_dict(data.get('statistics', {}))
+        snippet = VideoResourceSnippet.from_dict(data.get("snippet", {}))
+        content_details = VideoContentDetails.from_dict(data.get("contentDetails", {}))
+        status = VideoStatus.from_dict(data.get("status", {}))
+        statistics = VideoStatistics.from_dict(data.get("statistics", {}))
         paid_product_placement_details = VideoPaidProductPlacementDetails.from_dict(
-            data.get('paidProductPlacementDetails', {}))
-        player = VideoPlayer.from_dict(data.get('player', {}))
-        topic_details = VideoTopicDetails.from_dict(data.get('topicDetails', {}))
-        recording_details = VideoRecordingDetails.from_dict(data.get('recordingDetails', {}))
-        file_details = VideoFileDetails.from_dict(data.get('fileDetails', {}))
-        processing_details = VideoProcessingDetails.from_dict(data.get('processingDetails', {}))
-        suggestions = VideoSuggestions.from_dict(data.get('suggestions', {}))
-        live_streaming_details = VideoLiveStreamingDetails.from_dict(data.get('liveStreamingDetails', {}))
+            data.get("paidProductPlacementDetails", {})
+        )
+        player = VideoPlayer.from_dict(data.get("player", {}))
+        topic_details = VideoTopicDetails.from_dict(data.get("topicDetails", {}))
+        recording_details = VideoRecordingDetails.from_dict(
+            data.get("recordingDetails", {})
+        )
+        file_details = VideoFileDetails.from_dict(data.get("fileDetails", {}))
+        processing_details = VideoProcessingDetails.from_dict(
+            data.get("processingDetails", {})
+        )
+        suggestions = VideoSuggestions.from_dict(data.get("suggestions", {}))
+        live_streaming_details = VideoLiveStreamingDetails.from_dict(
+            data.get("liveStreamingDetails", {})
+        )
 
-        localizations_data = data.get('localizations', {})
-        localizations = {lang: Localized.from_dict(loc) for lang, loc in localizations_data.items()}
+        localizations_data = data.get("localizations", {})
+        localizations = {
+            lang: Localized.from_dict(loc) for lang, loc in localizations_data.items()
+        }
 
         return cls(
             kind=kind_received,
-            etag=data.get('etag', ''),
-            id=data.get('id', ''),
+            etag=data.get("etag", ""),
+            id=data.get("id", ""),
             snippet=snippet,
             contentDetails=content_details,
             status=status,
@@ -992,33 +1013,35 @@ class VideoResource:
             processingDetails=processing_details,
             suggestions=suggestions,
             liveStreamingDetails=live_streaming_details,
-            localizations=localizations
+            localizations=localizations,
         )
 
     def to_dict(self):
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati della risorsa video.
+            A dictionary containing video resource data.
         """
         return {
-            'kind': self.kind,
-            'etag': self.etag,
-            'id': self.id,
-            'snippet': self.snippet.to_dict(),
-            'contentDetails': self.contentDetails.to_dict(),
-            'status': self.status.to_dict(),
-            'statistics': self.statistics.to_dict(),
-            'paidProductPlacementDetails': self.paidProductPlacementDetails.to_dict(),
-            'player': self.player.to_dict(),
-            'topicDetails': self.topicDetails.to_dict(),
-            'recordingDetails': self.recordingDetails.to_dict(),
-            'fileDetails': self.fileDetails.to_dict(),
-            'processingDetails': self.processingDetails.to_dict(),
-            'suggestions': self.suggestions.to_dict(),
-            'liveStreamingDetails': self.liveStreamingDetails.to_dict(),
-            'localizations': {lang: loc.to_dict() for lang, loc in self.localizations.items()}
+            "kind": self.kind,
+            "etag": self.etag,
+            "id": self.id,
+            "snippet": self.snippet.to_dict(),
+            "contentDetails": self.contentDetails.to_dict(),
+            "status": self.status.to_dict(),
+            "statistics": self.statistics.to_dict(),
+            "paidProductPlacementDetails": self.paidProductPlacementDetails.to_dict(),
+            "player": self.player.to_dict(),
+            "topicDetails": self.topicDetails.to_dict(),
+            "recordingDetails": self.recordingDetails.to_dict(),
+            "fileDetails": self.fileDetails.to_dict(),
+            "processingDetails": self.processingDetails.to_dict(),
+            "suggestions": self.suggestions.to_dict(),
+            "liveStreamingDetails": self.liveStreamingDetails.to_dict(),
+            "localizations": {
+                lang: loc.to_dict() for lang, loc in self.localizations.items()
+            },
         }
 
 
@@ -1032,46 +1055,46 @@ class YouTubeVideoListResponse:
     items: List[VideoResource] = field(default_factory=list[VideoResource])
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'YouTubeVideoListResponse':
+    def from_dict(cls, data: dict) -> "YouTubeVideoListResponse":
         """
-        Crea un oggetto YouTubeVideoListResponse da un dizionario JSON.
+        Create a YouTubeVideoListResponse object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati della risposta della lista video
+            data: Dictionary containing video list response data
 
         Returns:
-            Un'istanza di YouTubeVideoListResponse
+            A YouTubeVideoListResponse instance
         """
-        kind = data.get('kind', '')
-        if kind != 'youtube#videoListResponse':
+        kind = data.get("kind", "")
+        if kind != "youtube#videoListResponse":
             raise ValueError(f"Expected kind='youtube#videoListResponse', got '{kind}'")
 
-        items_data = data.get('items', [])
+        items_data = data.get("items", [])
         items = [VideoResource.from_dict(item) for item in items_data]
 
         return cls(
             kind=kind,
-            etag=data.get('etag', ''),
-            pageInfo=PageInfo.from_dict(data.get('pageInfo', {})),
+            etag=data.get("etag", ""),
+            pageInfo=PageInfo.from_dict(data.get("pageInfo", {})),
             items=items,
-            nextPageToken=data.get('nextPageToken'),
-            prevPageToken=data.get('prevPageToken')
+            nextPageToken=data.get("nextPageToken"),
+            prevPageToken=data.get("prevPageToken"),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati della risposta della lista video.
+            A dictionary containing video list response data.
         """
         return {
-            'kind': self.kind,
-            'etag': self.etag,
-            'pageInfo': self.pageInfo.to_dict(),
-            'items': [item.to_dict() for item in self.items],
-            'nextPageToken': self.nextPageToken,
-            'prevPageToken': self.prevPageToken,
+            "kind": self.kind,
+            "etag": self.etag,
+            "pageInfo": self.pageInfo.to_dict(),
+            "items": [item.to_dict() for item in self.items],
+            "nextPageToken": self.nextPageToken,
+            "prevPageToken": self.prevPageToken,
         }
 
 
@@ -1083,35 +1106,35 @@ class SearchResourceId:
     playlistId: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'SearchResourceId':
+    def from_dict(cls, data: dict) -> "SearchResourceId":
         """
-        Crea un oggetto YouTubeSearchResourceId da un dizionario JSON.
+        Create a YouTubeSearchResourceId object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dell'ID della risorsa di ricerca
+            data: Dictionary containing search resource ID data
 
         Returns:
-            Un'istanza di YouTubeSearchResourceId
+            A YouTubeSearchResourceId instance
         """
         return cls(
-            kind=data.get('kind', ''),
-            videoId=data.get('videoId', ''),
-            channelId=data.get('channelId', ''),
-            playlistId=data.get('playlistId', '')
+            kind=data.get("kind", ""),
+            videoId=data.get("videoId", ""),
+            channelId=data.get("channelId", ""),
+            playlistId=data.get("playlistId", ""),
         )
 
     def to_dict(self):
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dell'ID della risorsa di ricerca.
+            A dictionary containing search resource ID data.
         """
         return {
-            'kind': self.kind,
-            'videoId': self.videoId,
-            'channelId': self.channelId,
-            'playlistId': self.playlistId
+            "kind": self.kind,
+            "videoId": self.videoId,
+            "channelId": self.channelId,
+            "playlistId": self.playlistId,
         }
 
 
@@ -1126,43 +1149,43 @@ class SearchResourceSnippet:
     liveBroadcastContent: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'SearchResourceSnippet':
+    def from_dict(cls, data: dict) -> "SearchResourceSnippet":
         """
-        Crea un oggetto SearchResourceSnippet da un dizionario JSON.
+        Create a SearchResourceSnippet object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dello snippet della risorsa di ricerca
+            data: Dictionary containing search resource snippet data
 
         Returns:
-            Un'istanza di SearchResourceSnippet
+            A SearchResourceSnippet instance
         """
-        thumbnails = Thumbnails.from_dict(data.get('thumbnails', {}))
+        thumbnails = Thumbnails.from_dict(data.get("thumbnails", {}))
 
         return cls(
-            publishedAt=parse_iso_datetime(data.get('publishedAt', None)),
-            channelId=data.get('channelId', ''),
-            title=data.get('title', ''),
-            description=data.get('description', ''),
+            publishedAt=parse_iso_datetime(data.get("publishedAt", None)),
+            channelId=data.get("channelId", ""),
+            title=data.get("title", ""),
+            description=data.get("description", ""),
             thumbnails=thumbnails,
-            channelTitle=data.get('channelTitle', ''),
-            liveBroadcastContent=data.get('liveBroadcastContent', '')
+            channelTitle=data.get("channelTitle", ""),
+            liveBroadcastContent=data.get("liveBroadcastContent", ""),
         )
 
     def to_dict(self):
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dello snippet della risorsa di ricerca.
+            A dictionary containing search resource snippet data.
         """
         return {
-            'publishedAt': self.publishedAt.isoformat() if self.publishedAt else None,
-            'channelId': self.channelId,
-            'title': self.title,
-            'description': self.description,
-            'thumbnails': self.thumbnails.to_dict(),
-            'channelTitle': self.channelTitle,
-            'liveBroadcastContent': self.liveBroadcastContent
+            "publishedAt": self.publishedAt.isoformat() if self.publishedAt else None,
+            "channelId": self.channelId,
+            "title": self.title,
+            "description": self.description,
+            "thumbnails": self.thumbnails.to_dict(),
+            "channelTitle": self.channelTitle,
+            "liveBroadcastContent": self.liveBroadcastContent,
         }
 
 
@@ -1174,42 +1197,44 @@ class SearchResource:
     snippet: SearchResourceSnippet = field(default_factory=SearchResourceSnippet)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'SearchResource':
+    def from_dict(cls, data: dict) -> "SearchResource":
         """
-        Crea un oggetto YoutubeSearchResource da un dizionario JSON.
+        Create a YoutubeSearchResource object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati della risorsa di ricerca
+            data: Dictionary containing search resource data
 
         Returns:
-            Un'istanza di YoutubeSearchResource
+            A YoutubeSearchResource instance
         """
-        kind_received = data.get('kind', '')
-        if kind_received != 'youtube#searchResult':
-            raise ValueError(f"Expected kind='youtube#searchResult', got '{kind_received}'")
+        kind_received = data.get("kind", "")
+        if kind_received != "youtube#searchResult":
+            raise ValueError(
+                f"Expected kind='youtube#searchResult', got '{kind_received}'"
+            )
 
-        resource_id = SearchResourceId.from_dict(data.get('id', {}))
-        snippet = SearchResourceSnippet.from_dict(data.get('snippet', {}))
+        resource_id = SearchResourceId.from_dict(data.get("id", {}))
+        snippet = SearchResourceSnippet.from_dict(data.get("snippet", {}))
 
         return cls(
             kind=kind_received,
-            etag=data.get('etag', ''),
+            etag=data.get("etag", ""),
             id=resource_id,
-            snippet=snippet
+            snippet=snippet,
         )
 
     def to_dict(self):
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati della risorsa di ricerca.
+            A dictionary containing search resource data.
         """
         return {
-            'kind': self.kind,
-            'etag': self.etag,
-            'id': self.id.to_dict(),
-            'snippet': self.snippet.to_dict()
+            "kind": self.kind,
+            "etag": self.etag,
+            "id": self.id.to_dict(),
+            "snippet": self.snippet.to_dict(),
         }
 
 
@@ -1224,57 +1249,59 @@ class YouTubeSearchListResponse:
     items: List[SearchResource] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'YouTubeSearchListResponse':
+    def from_dict(cls, data: dict) -> "YouTubeSearchListResponse":
         """
-        Crea un oggetto YouTubeSearchListResponse da un dizionario JSON.
+        Create a YouTubeSearchListResponse object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati della risposta di ricerca di YouTube
+            data: Dictionary containing YouTube search response data
 
         Returns:
-            Un'istanza di YouTubeSearchListResponse
+            A YouTubeSearchListResponse instance
         """
 
-        kind_received = data.get('kind', '')
-        if kind_received != 'youtube#searchListResponse':
-            raise ValueError(f"Expected kind='youtube#searchListResponse', got '{kind_received}'")
+        kind_received = data.get("kind", "")
+        if kind_received != "youtube#searchListResponse":
+            raise ValueError(
+                f"Expected kind='youtube#searchListResponse', got '{kind_received}'"
+            )
 
-        # Utilizzo from_dict per PageInfo
-        page_info = PageInfo.from_dict(data.get('pageInfo', {}))
+        # Use from_dict for PageInfo
+        page_info = PageInfo.from_dict(data.get("pageInfo", {}))
 
-        # Elabora gli elementi
+        # Process items
         items = []
-        for item_data in data.get('items', []):
-            # Utilizza from_dict per YoutubeSearchResource
+        for item_data in data.get("items", []):
+            # Use from_dict for YoutubeSearchResource
             search_item = SearchResource.from_dict(item_data)
             items.append(search_item)
 
-        # Crea e restituisce l'oggetto di risposta
+        # Create and return the response object
         return cls(
             kind=kind_received,
-            etag=data.get('etag', ''),
-            nextPageToken=data.get('nextPageToken'),
-            prevPageToken=data.get('prevPageToken'),
-            regionCode=data.get('regionCode'),
+            etag=data.get("etag", ""),
+            nextPageToken=data.get("nextPageToken"),
+            prevPageToken=data.get("prevPageToken"),
+            regionCode=data.get("regionCode"),
             pageInfo=page_info,
-            items=items
+            items=items,
         )
 
     def to_dict(self):
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati della risposta di ricerca di YouTube.
+            A dictionary containing YouTube search response data.
         """
         return {
-            'kind': self.kind,
-            'etag': self.etag,
-            'nextPageToken': self.nextPageToken,
-            'prevPageToken': self.prevPageToken,
-            'regionCode': self.regionCode,
-            'pageInfo': self.pageInfo.to_dict(),
-            'items': [item.to_dict() for item in self.items]
+            "kind": self.kind,
+            "etag": self.etag,
+            "nextPageToken": self.nextPageToken,
+            "prevPageToken": self.prevPageToken,
+            "regionCode": self.regionCode,
+            "pageInfo": self.pageInfo.to_dict(),
+            "items": [item.to_dict() for item in self.items],
         }
 
 
@@ -1290,46 +1317,46 @@ class ChannelResourceSnippet:
     country: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelResourceSnippet':
+    def from_dict(cls, data: dict) -> "ChannelResourceSnippet":
         """
-        Crea un oggetto ChannelResourceSnippet da un dizionario JSON.
+        Create a ChannelResourceSnippet object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dello snippet della risorsa canale
+            data: Dictionary containing channel resource snippet data
 
         Returns:
-            Un'istanza di ChannelResourceSnippet
+            A ChannelResourceSnippet instance
         """
-        thumbnails = Thumbnails.from_dict(data.get('thumbnails', {}))
-        localized = Localized.from_dict(data.get('localized', {}))
+        thumbnails = Thumbnails.from_dict(data.get("thumbnails", {}))
+        localized = Localized.from_dict(data.get("localized", {}))
 
         return cls(
-            title=data.get('title', ''),
-            description=data.get('description', ''),
-            customUrl=data.get('customUrl', ''),
-            publishedAt=parse_iso_datetime(data.get('publishedAt', None)),
+            title=data.get("title", ""),
+            description=data.get("description", ""),
+            customUrl=data.get("customUrl", ""),
+            publishedAt=parse_iso_datetime(data.get("publishedAt", None)),
             thumbnails=thumbnails,
-            defaultLanguage=data.get('defaultLanguage', ''),
+            defaultLanguage=data.get("defaultLanguage", ""),
             localized=localized,
-            country=data.get('country', '')
+            country=data.get("country", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dello snippet della risorsa canale.
+            A dictionary containing channel resource snippet data.
         """
         return {
-            'title': self.title,
-            'description': self.description,
-            'customUrl': self.customUrl,
-            'publishedAt': self.publishedAt.isoformat() if self.publishedAt else None,
-            'thumbnails': self.thumbnails.to_dict(),
-            'defaultLanguage': self.defaultLanguage,
-            'localized': self.localized.to_dict(),
-            'country': self.country
+            "title": self.title,
+            "description": self.description,
+            "customUrl": self.customUrl,
+            "publishedAt": self.publishedAt.isoformat() if self.publishedAt else None,
+            "thumbnails": self.thumbnails.to_dict(),
+            "defaultLanguage": self.defaultLanguage,
+            "localized": self.localized.to_dict(),
+            "country": self.country,
         }
 
 
@@ -1340,33 +1367,33 @@ class RelatedPlaylists:
     uploads: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'RelatedPlaylists':
+    def from_dict(cls, data: dict) -> "RelatedPlaylists":
         """
-        Crea un oggetto RelatedPlaylists da un dizionario JSON.
+        Create a RelatedPlaylists object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati delle playlist correlate
+            data: Dictionary containing related playlists data
 
         Returns:
-            Un'istanza di RelatedPlaylists
+            A RelatedPlaylists instance
         """
         return cls(
-            likes=data.get('likes', ''),
-            favorites=data.get('favorites', ''),
-            uploads=data.get('uploads', '')
+            likes=data.get("likes", ""),
+            favorites=data.get("favorites", ""),
+            uploads=data.get("uploads", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati delle playlist correlate.
+            A dictionary containing related playlists data.
         """
         return {
-            'likes': self.likes,
-            'favorites': self.favorites,
-            'uploads': self.uploads
+            "likes": self.likes,
+            "favorites": self.favorites,
+            "uploads": self.uploads,
         }
 
 
@@ -1375,29 +1402,27 @@ class ChannelContentDetails:
     relatedPlaylists: RelatedPlaylists = field(default_factory=RelatedPlaylists)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelContentDetails':
+    def from_dict(cls, data: dict) -> "ChannelContentDetails":
         """
-        Crea un oggetto ChannelContentDetails da un dizionario JSON.
+        Create a ChannelContentDetails object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dei dettagli del contenuto del canale
+            data: Dictionary containing channel content details
 
         Returns:
-            Un'istanza di ChannelContentDetails
+            A ChannelContentDetails instance
         """
-        related_playlists = RelatedPlaylists.from_dict(data.get('relatedPlaylists', {}))
+        related_playlists = RelatedPlaylists.from_dict(data.get("relatedPlaylists", {}))
         return cls(relatedPlaylists=related_playlists)
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli del contenuto del canale.
+            A dictionary containing channel content details.
         """
-        return {
-            'relatedPlaylists': self.relatedPlaylists.to_dict()
-        }
+        return {"relatedPlaylists": self.relatedPlaylists.to_dict()}
 
 
 @dataclass
@@ -1408,35 +1433,35 @@ class ChannelStatistics:
     videoCount: int = 0
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelStatistics':
+    def from_dict(cls, data: dict) -> "ChannelStatistics":
         """
-        Crea un oggetto ChannelStatistics da un dizionario JSON.
+        Create a ChannelStatistics object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati delle statistiche del canale
+            data: Dictionary containing channel statistics data
 
         Returns:
-            Un'istanza di ChannelStatistics
+            A ChannelStatistics instance
         """
         return cls(
-            viewCount=data.get('viewCount', 0),
-            subscriberCount=data.get('subscriberCount', 0),
-            hiddenSubscriberCount=data.get('hiddenSubscriberCount', False),
-            videoCount=data.get('videoCount', 0)
+            viewCount=data.get("viewCount", 0),
+            subscriberCount=data.get("subscriberCount", 0),
+            hiddenSubscriberCount=data.get("hiddenSubscriberCount", False),
+            videoCount=data.get("videoCount", 0),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati delle statistiche del canale.
+            A dictionary containing channel statistics data.
         """
         return {
-            'viewCount': self.viewCount,
-            'subscriberCount': self.subscriberCount,
-            'hiddenSubscriberCount': self.hiddenSubscriberCount,
-            'videoCount': self.videoCount
+            "viewCount": self.viewCount,
+            "subscriberCount": self.subscriberCount,
+            "hiddenSubscriberCount": self.hiddenSubscriberCount,
+            "videoCount": self.videoCount,
         }
 
 
@@ -1446,32 +1471,29 @@ class ChannelTopicDetails:
     topicCategories: List[str] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelTopicDetails':
+    def from_dict(cls, data: dict) -> "ChannelTopicDetails":
         """
-        Crea un oggetto TopicDetails da un dizionario JSON.
+        Create a TopicDetails object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dei dettagli del topic
+            data: Dictionary containing topic details
 
         Returns:
-            Un'istanza di TopicDetails
+            A TopicDetails instance
         """
         return cls(
-            topicIds=data.get('topicIds', []),
-            topicCategories=data.get('topicCategories', [])
+            topicIds=data.get("topicIds", []),
+            topicCategories=data.get("topicCategories", []),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli del topic.
+            A dictionary containing topic details.
         """
-        return {
-            'topicIds': self.topicIds,
-            'topicCategories': self.topicCategories
-        }
+        return {"topicIds": self.topicIds, "topicCategories": self.topicCategories}
 
 
 @dataclass
@@ -1483,37 +1505,37 @@ class ChannelStatus:
     selfDeclaredMadeForKids: bool = False
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelStatus':
+    def from_dict(cls, data: dict) -> "ChannelStatus":
         """
-        Crea un oggetto ChannelStatus da un dizionario JSON.
+        Create a ChannelStatus object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dello stato del canale
+            data: Dictionary containing channel status data
 
         Returns:
-            Un'istanza di ChannelStatus
+            A ChannelStatus instance
         """
         return cls(
-            privacyStatus=data.get('privacyStatus', ''),
-            isLinked=data.get('isLinked', False),
-            longUploadsStatus=data.get('longUploadsStatus', ''),
-            madeForKids=data.get('madeForKids', False),
-            selfDeclaredMadeForKids=data.get('selfDeclaredMadeForKids', False)
+            privacyStatus=data.get("privacyStatus", ""),
+            isLinked=data.get("isLinked", False),
+            longUploadsStatus=data.get("longUploadsStatus", ""),
+            madeForKids=data.get("madeForKids", False),
+            selfDeclaredMadeForKids=data.get("selfDeclaredMadeForKids", False),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dello stato del canale.
+            A dictionary containing channel status data.
         """
         return {
-            'privacyStatus': self.privacyStatus,
-            'isLinked': self.isLinked,
-            'longUploadsStatus': self.longUploadsStatus,
-            'madeForKids': self.madeForKids,
-            'selfDeclaredMadeForKids': self.selfDeclaredMadeForKids
+            "privacyStatus": self.privacyStatus,
+            "isLinked": self.isLinked,
+            "longUploadsStatus": self.longUploadsStatus,
+            "madeForKids": self.madeForKids,
+            "selfDeclaredMadeForKids": self.selfDeclaredMadeForKids,
         }
 
 
@@ -1528,41 +1550,41 @@ class BrandingSettingsChannel:
     country: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'BrandingSettingsChannel':
+    def from_dict(cls, data: dict) -> "BrandingSettingsChannel":
         """
-        Crea un oggetto BrandingSettingsChannel da un dizionario JSON.
+        Create a BrandingSettingsChannel object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati delle impostazioni di branding del canale
+            data: Dictionary containing channel branding settings data
 
         Returns:
-            Un'istanza di BrandingSettingsChannel
+            A BrandingSettingsChannel instance
         """
         return cls(
-            title=data.get('title', ''),
-            description=data.get('description', ''),
-            keywords=data.get('keywords', ''),
-            trackingAnalyticsAccountId=data.get('trackingAnalyticsAccountId', ''),
-            unsubscribedTrailer=data.get('unsubscribedTrailer', ''),
-            defaultLanguage=data.get('defaultLanguage', ''),
-            country=data.get('country', '')
+            title=data.get("title", ""),
+            description=data.get("description", ""),
+            keywords=data.get("keywords", ""),
+            trackingAnalyticsAccountId=data.get("trackingAnalyticsAccountId", ""),
+            unsubscribedTrailer=data.get("unsubscribedTrailer", ""),
+            defaultLanguage=data.get("defaultLanguage", ""),
+            country=data.get("country", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati delle impostazioni di branding del canale.
+            A dictionary containing channel branding settings data.
         """
         return {
-            'title': self.title,
-            'description': self.description,
-            'keywords': self.keywords,
-            'trackingAnalyticsAccountId': self.trackingAnalyticsAccountId,
-            'unsubscribedTrailer': self.unsubscribedTrailer,
-            'defaultLanguage': self.defaultLanguage,
-            'country': self.country
+            "title": self.title,
+            "description": self.description,
+            "keywords": self.keywords,
+            "trackingAnalyticsAccountId": self.trackingAnalyticsAccountId,
+            "unsubscribedTrailer": self.unsubscribedTrailer,
+            "defaultLanguage": self.defaultLanguage,
+            "country": self.country,
         }
 
 
@@ -1573,33 +1595,33 @@ class BrandingSettingsWatch:
     featuredPlaylistId: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'BrandingSettingsWatch':
+    def from_dict(cls, data: dict) -> "BrandingSettingsWatch":
         """
-        Crea un oggetto BrandingSettingsWatch da un dizionario JSON.
+        Create a BrandingSettingsWatch object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati delle impostazioni di branding della visualizzazione
+            data: Dictionary containing watch branding settings data
 
         Returns:
-            Un'istanza di BrandingSettingsWatch
+            A BrandingSettingsWatch instance
         """
         return cls(
-            textColor=data.get('textColor', ''),
-            backgroundColor=data.get('backgroundColor', ''),
-            featuredPlaylistId=data.get('featuredPlaylistId', '')
+            textColor=data.get("textColor", ""),
+            backgroundColor=data.get("backgroundColor", ""),
+            featuredPlaylistId=data.get("featuredPlaylistId", ""),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati delle impostazioni di branding della visualizzazione.
+            A dictionary containing watch branding settings data.
         """
         return {
-            'textColor': self.textColor,
-            'backgroundColor': self.backgroundColor,
-            'featuredPlaylistId': self.featuredPlaylistId
+            "textColor": self.textColor,
+            "backgroundColor": self.backgroundColor,
+            "featuredPlaylistId": self.featuredPlaylistId,
         }
 
 
@@ -1609,32 +1631,29 @@ class ChannelBrandingSettings:
     watch: BrandingSettingsWatch = field(default_factory=BrandingSettingsWatch)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelBrandingSettings':
+    def from_dict(cls, data: dict) -> "ChannelBrandingSettings":
         """
-        Crea un oggetto BrandingSettings da un dizionario JSON.
+        Create a BrandingSettings object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati delle impostazioni di branding
+            data: Dictionary containing branding settings data
 
         Returns:
-            Un'istanza di BrandingSettings
+            A BrandingSettings instance
         """
-        channel = BrandingSettingsChannel.from_dict(data.get('channel', {}))
-        watch = BrandingSettingsWatch.from_dict(data.get('watch', {}))
+        channel = BrandingSettingsChannel.from_dict(data.get("channel", {}))
+        watch = BrandingSettingsWatch.from_dict(data.get("watch", {}))
 
         return cls(channel=channel, watch=watch)
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati delle impostazioni di branding.
+            A dictionary containing branding settings data.
         """
-        return {
-            'channel': self.channel.to_dict(),
-            'watch': self.watch.to_dict()
-        }
+        return {"channel": self.channel.to_dict(), "watch": self.watch.to_dict()}
 
 
 @dataclass
@@ -1645,35 +1664,39 @@ class ChannelAuditDetails:
     contentIdClaimsGoodStanding: bool = False
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelAuditDetails':
+    def from_dict(cls, data: dict) -> "ChannelAuditDetails":
         """
-        Crea un oggetto AuditDetails da un dizionario JSON.
+        Create an AuditDetails object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati degli audit
+            data: Dictionary containing audit data
 
         Returns:
-            Un'istanza di AuditDetails
+            An AuditDetails instance
         """
         return cls(
-            overallGoodStanding=data.get('overallGoodStanding', False),
-            communityGuidelinesGoodStanding=data.get('communityGuidelinesGoodStanding', False),
-            copyrightStrikesGoodStanding=data.get('copyrightStrikesGoodStanding', False),
-            contentIdClaimsGoodStanding=data.get('contentIdClaimsGoodStanding', False)
+            overallGoodStanding=data.get("overallGoodStanding", False),
+            communityGuidelinesGoodStanding=data.get(
+                "communityGuidelinesGoodStanding", False
+            ),
+            copyrightStrikesGoodStanding=data.get(
+                "copyrightStrikesGoodStanding", False
+            ),
+            contentIdClaimsGoodStanding=data.get("contentIdClaimsGoodStanding", False),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati degli audit.
+            A dictionary containing audit data.
         """
         return {
-            'overallGoodStanding': self.overallGoodStanding,
-            'communityGuidelinesGoodStanding': self.communityGuidelinesGoodStanding,
-            'copyrightStrikesGoodStanding': self.copyrightStrikesGoodStanding,
-            'contentIdClaimsGoodStanding': self.contentIdClaimsGoodStanding
+            "overallGoodStanding": self.overallGoodStanding,
+            "communityGuidelinesGoodStanding": self.communityGuidelinesGoodStanding,
+            "copyrightStrikesGoodStanding": self.copyrightStrikesGoodStanding,
+            "contentIdClaimsGoodStanding": self.contentIdClaimsGoodStanding,
         }
 
 
@@ -1683,31 +1706,31 @@ class ChannelContentOwnerDetails:
     timeLinked: Optional[datetime] = None
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelContentOwnerDetails':
+    def from_dict(cls, data: dict) -> "ChannelContentOwnerDetails":
         """
-        Crea un oggetto ContentOwnerDetails da un dizionario JSON.
+        Create a ContentOwnerDetails object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati dei dettagli del proprietario del contenuto
+            data: Dictionary containing content owner details
 
         Returns:
-            Un'istanza di ContentOwnerDetails
+            A ContentOwnerDetails instance
         """
         return cls(
-            contentOwner=data.get('contentOwner', ''),
-            timeLinked=parse_iso_datetime(data.get('timeLinked', None))
+            contentOwner=data.get("contentOwner", ""),
+            timeLinked=parse_iso_datetime(data.get("timeLinked", None)),
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati dei dettagli del proprietario del contenuto.
+            A dictionary containing content owner details.
         """
         return {
-            'contentOwner': self.contentOwner,
-            'timeLinked': self.timeLinked.isoformat() if self.timeLinked else None
+            "contentOwner": self.contentOwner,
+            "timeLinked": self.timeLinked.isoformat() if self.timeLinked else None,
         }
 
 
@@ -1721,42 +1744,54 @@ class ChannelResource:
     statistics: ChannelStatistics = field(default_factory=ChannelStatistics)
     topicDetails: ChannelTopicDetails = field(default_factory=ChannelTopicDetails)
     status: ChannelStatus = field(default_factory=ChannelStatus)
-    brandingSettings: ChannelBrandingSettings = field(default_factory=ChannelBrandingSettings)
+    brandingSettings: ChannelBrandingSettings = field(
+        default_factory=ChannelBrandingSettings
+    )
     auditDetails: ChannelAuditDetails = field(default_factory=ChannelAuditDetails)
-    contentOwnerDetails: ChannelContentOwnerDetails = field(default_factory=ChannelContentOwnerDetails)
+    contentOwnerDetails: ChannelContentOwnerDetails = field(
+        default_factory=ChannelContentOwnerDetails
+    )
     localizations: Dict[str, Localized] = field(default_factory=dict)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'ChannelResource':
+    def from_dict(cls, data: dict) -> "ChannelResource":
         """
-        Crea un oggetto ChannelResource da un dizionario JSON.
+        Create a ChannelResource object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati della risorsa canale
+            data: Dictionary containing channel resource data
 
         Returns:
-            Un'istanza di ChannelResource
+            A ChannelResource instance
         """
-        kind_received = data.get('kind', '')
-        if kind_received != 'youtube#channel':
+        kind_received = data.get("kind", "")
+        if kind_received != "youtube#channel":
             raise ValueError(f"Expected kind='youtube#channel', got '{kind_received}'")
 
-        snippet = ChannelResourceSnippet.from_dict(data.get('snippet', {}))
-        content_details = ChannelContentDetails.from_dict(data.get('contentDetails', {}))
-        statistics = ChannelStatistics.from_dict(data.get('statistics', {}))
-        topic_details = ChannelTopicDetails.from_dict(data.get('topicDetails', {}))
-        status = ChannelStatus.from_dict(data.get('status', {}))
-        branding_settings = ChannelBrandingSettings.from_dict(data.get('brandingSettings', {}))
-        audit_details = ChannelAuditDetails.from_dict(data.get('auditDetails', {}))
-        content_owner_details = ChannelContentOwnerDetails.from_dict(data.get('contentOwnerDetails', {}))
+        snippet = ChannelResourceSnippet.from_dict(data.get("snippet", {}))
+        content_details = ChannelContentDetails.from_dict(
+            data.get("contentDetails", {})
+        )
+        statistics = ChannelStatistics.from_dict(data.get("statistics", {}))
+        topic_details = ChannelTopicDetails.from_dict(data.get("topicDetails", {}))
+        status = ChannelStatus.from_dict(data.get("status", {}))
+        branding_settings = ChannelBrandingSettings.from_dict(
+            data.get("brandingSettings", {})
+        )
+        audit_details = ChannelAuditDetails.from_dict(data.get("auditDetails", {}))
+        content_owner_details = ChannelContentOwnerDetails.from_dict(
+            data.get("contentOwnerDetails", {})
+        )
 
-        localizations_data = data.get('localizations', {})
-        localizations = {lang: Localized.from_dict(loc) for lang, loc in localizations_data.items()}
+        localizations_data = data.get("localizations", {})
+        localizations = {
+            lang: Localized.from_dict(loc) for lang, loc in localizations_data.items()
+        }
 
         return cls(
             kind=kind_received,
-            etag=data.get('etag', ''),
-            id=data.get('id', ''),
+            etag=data.get("etag", ""),
+            id=data.get("id", ""),
             snippet=snippet,
             contentDetails=content_details,
             statistics=statistics,
@@ -1765,29 +1800,31 @@ class ChannelResource:
             brandingSettings=branding_settings,
             auditDetails=audit_details,
             contentOwnerDetails=content_owner_details,
-            localizations=localizations
+            localizations=localizations,
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati della risorsa canale.
+            A dictionary containing channel resource data.
         """
         return {
-            'kind': self.kind,
-            'etag': self.etag,
-            'id': self.id,
-            'snippet': self.snippet.to_dict(),
-            'contentDetails': self.contentDetails.to_dict(),
-            'statistics': self.statistics.to_dict(),
-            'topicDetails': self.topicDetails.to_dict(),
-            'status': self.status.to_dict(),
-            'brandingSettings': self.brandingSettings.to_dict(),
-            'auditDetails': self.auditDetails.to_dict(),
-            'contentOwnerDetails': self.contentOwnerDetails.to_dict(),
-            'localizations': {lang: loc.to_dict() for lang, loc in self.localizations.items()}
+            "kind": self.kind,
+            "etag": self.etag,
+            "id": self.id,
+            "snippet": self.snippet.to_dict(),
+            "contentDetails": self.contentDetails.to_dict(),
+            "statistics": self.statistics.to_dict(),
+            "topicDetails": self.topicDetails.to_dict(),
+            "status": self.status.to_dict(),
+            "brandingSettings": self.brandingSettings.to_dict(),
+            "auditDetails": self.auditDetails.to_dict(),
+            "contentOwnerDetails": self.contentOwnerDetails.to_dict(),
+            "localizations": {
+                lang: loc.to_dict() for lang, loc in self.localizations.items()
+            },
         }
 
 
@@ -1801,45 +1838,49 @@ class YouTubeChannelListResponse:
     items: List[ChannelResource] = field(default_factory=ChannelResource)
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'YouTubeChannelListResponse':
+    def from_dict(cls, data: dict) -> "YouTubeChannelListResponse":
         """
-        Crea un oggetto YouTubeChannelListResponse da un dizionario JSON.
+        Create a YouTubeChannelListResponse object from a JSON dictionary.
 
         Args:
-            data: Dizionario contenente i dati della risposta della lista canali di YouTube
+            data: Dictionary containing YouTube channel list response data
 
         Returns:
-            Un'istanza di YouTubeChannelListResponse
+            A YouTubeChannelListResponse instance
         """
-        kind_received = data.get('kind', '')
-        if kind_received != 'youtube#channelListResponse':
-            raise ValueError(f"Expected kind='youtube#channelListResponse', got '{kind_received}'")
+        kind_received = data.get("kind", "")
+        if kind_received != "youtube#channelListResponse":
+            raise ValueError(
+                f"Expected kind='youtube#channelListResponse', got '{kind_received}'"
+            )
 
-        page_info = PageInfo.from_dict(data.get('pageInfo', {}))
+        page_info = PageInfo.from_dict(data.get("pageInfo", {}))
 
-        items = [ChannelResource.from_dict(item_data) for item_data in data.get('items', [])]
+        items = [
+            ChannelResource.from_dict(item_data) for item_data in data.get("items", [])
+        ]
 
         return cls(
             kind=kind_received,
-            etag=data.get('etag', ''),
-            nextPageToken=data.get('nextPageToken'),
-            prevPageToken=data.get('prevPageToken'),
+            etag=data.get("etag", ""),
+            nextPageToken=data.get("nextPageToken"),
+            prevPageToken=data.get("prevPageToken"),
             pageInfo=page_info,
-            items=items
+            items=items,
         )
 
     def to_dict(self) -> dict:
         """
-        Converte l'istanza in un dizionario JSON.
+        Convert the instance to a JSON dictionary.
 
         Returns:
-            Un dizionario contenente i dati della risposta della lista canali di YouTube.
+            A dictionary containing YouTube channel list response data.
         """
         return {
-            'kind': self.kind,
-            'etag': self.etag,
-            'nextPageToken': self.nextPageToken,
-            'prevPageToken': self.prevPageToken,
-            'pageInfo': self.pageInfo.to_dict(),
-            'items': [item.to_dict() for item in self.items]
+            "kind": self.kind,
+            "etag": self.etag,
+            "nextPageToken": self.nextPageToken,
+            "prevPageToken": self.prevPageToken,
+            "pageInfo": self.pageInfo.to_dict(),
+            "items": [item.to_dict() for item in self.items],
         }

@@ -10,7 +10,7 @@ from lib.types.youtube_types_custom import ChannelInfo, VideoStatistics, Video, 
 
 def get_all_youtube_topic() -> dict[str, str]:
     """
-    Carica i topic di YouTube da un file JSON e restituisce un dizionario
+    Load YouTube topics from a JSON file and return a dictionary.
 
     ref: https://gist.github.com/stpe/2951130dfc8f1d0d1a2ad736bef3b703
     """
@@ -26,7 +26,7 @@ def get_all_youtube_topic() -> dict[str, str]:
 
 def get_all_youtube_categories() -> dict[str, str]:
     """
-    Carica le categorie di YouTube da un file JSON e restituisce un dizionario
+    Load YouTube categories from a JSON file and return a dictionary.
 
     ref: https://gist.github.com/stpe/2951130dfc8f1d0d1a2ad736bef3b703
     """
@@ -45,11 +45,11 @@ youtube_categories = get_all_youtube_categories()
 
 
 def initialize_youtube_api() -> Resource:
-    """Inizializza e restituisce l'oggetto API di YouTube"""
+    """Initialize and return the YouTube API object."""
     youtube_api_key = os.environ.get('YOUTUBE_API_KEY')
 
     if not youtube_api_key:
-        raise ValueError("YOUTUBE_API_KEY non è impostata")
+        raise ValueError("YOUTUBE_API_KEY is not set")
 
     return build('youtube', 'v3', developerKey=youtube_api_key)
 
@@ -57,7 +57,7 @@ def initialize_youtube_api() -> Resource:
 def search_videos(youtube: Resource, query: str, max_results=10, language='it',
                   youtube_topic_key='Knowledge') -> YouTubeSearchListResponse:
     """
-    Esegue la ricerca dei video su YouTube e restituisce i risultati grezzi
+    Run a YouTube video search and return raw results.
 
     docs: https://developers.google.com/youtube/v3/docs/search/list
     """
@@ -83,7 +83,7 @@ def search_videos(youtube: Resource, query: str, max_results=10, language='it',
 
 
 def process_search_results(search_resources: List[SearchResource]) -> tuple[List[VideoPartialData], set[str], set[str]]:
-    """Estrae informazioni dai risultati di ricerca e restituisce video temporanei e IDs"""
+    """Extract info from search results and return temporary videos and IDs."""
     temp_videos: List[VideoPartialData] = []
     channel_ids = set()
     video_ids = set()
@@ -107,7 +107,7 @@ def process_search_results(search_resources: List[SearchResource]) -> tuple[List
 
 
 def get_channel_info_batch(youtube: Resource, channel_ids: set[str]) -> dict[str, ChannelInfo]:
-    """Recupera informazioni sui canali in batch"""
+    """Fetch channel information in batch."""
     channels_data = {}
 
     if not channel_ids:
@@ -134,7 +134,7 @@ def get_channel_info_batch(youtube: Resource, channel_ids: set[str]) -> dict[str
 
 
 def get_video_statistics_batch(youtube: Resource, video_ids: set[str]) -> dict[str, VideoStatistics]:
-    """Recupera statistiche dei video in batch"""
+    """Fetch video statistics in batch."""
     videos_statistics = {}
 
     if not video_ids:
@@ -160,14 +160,14 @@ def get_video_statistics_batch(youtube: Resource, video_ids: set[str]) -> dict[s
 
 
 def calculate_engagement_score(view_count, like_count):
-    """Calcola il punteggio di engagement di un video"""
+    """Calculate a video's engagement score."""
     if view_count > 0:
         return like_count / view_count
     return 0.0
 
 
 def filter_and_create_videos(temp_videos: List[VideoPartialData], channels_data, videos_statistics, min_subscribers, min_likes, language_set: set[str]) -> List[Video]:
-    """Filtra i video in base ai criteri e crea oggetti Video"""
+    """Filter videos by criteria and create Video objects."""
     filtered_videos: List[Video] = []
 
     for v_partial_data in temp_videos:
@@ -176,7 +176,7 @@ def filter_and_create_videos(temp_videos: List[VideoPartialData], channels_data,
 
         engagement_score = calculate_engagement_score(video_stats.view_count, video_stats.like_count)
 
-        # Verifica criteri di filtro
+        # Check filter criteria
         include = channel_info.subscriber_count >= min_subscribers and (not channel_info.language or channel_info.language in language_set) and video_stats.like_count >= min_likes
         if include:
             video_complete_data = Video(
@@ -197,7 +197,7 @@ def filter_and_create_videos(temp_videos: List[VideoPartialData], channels_data,
 
 
 def normalize_engagement_scores(videos):
-    """Normalizza i punteggi di engagement su scala 0-1"""
+    """Normalize engagement scores to a 0-1 scale."""
     if not videos:
         return videos
 
@@ -211,16 +211,16 @@ def normalize_engagement_scores(videos):
 
 def search_youtube_videos(query, video_language='it', max_results=50, min_subscribers=30000, min_likes=1000,
                           verbose=False):
-    """Funzione principale per la ricerca di video su YouTube con filtri"""
+    """Main function to search YouTube videos with filters."""
     if verbose:
         logger.info(
-            f"Inizializzazione API YouTube con query: {query}, video_language: {video_language}, max_results: {max_results}, min_subscribers: {min_subscribers}, min_likes: {min_likes}, verbose: {verbose}")
+            f"Initializing YouTube API with query: {query}, video_language: {video_language}, max_results: {max_results}, min_subscribers: {min_subscribers}, min_likes: {min_likes}, verbose: {verbose}")
 
     youtube = initialize_youtube_api()
     if verbose:
         logger.info(f"API YouTube: {youtube}")
 
-    # Ricerca video
+    # Search videos
     search_response: YouTubeSearchListResponse = search_videos(youtube, query, max_results, video_language)
     if verbose:
         logger.info(f"search_response: {search_response}")
@@ -229,21 +229,21 @@ def search_youtube_videos(query, video_language='it', max_results=50, min_subscr
             with open('search_response.json', 'w') as f:
                 json.dump(search_dict, f, ensure_ascii=False, indent=2)
         except (TypeError, AttributeError) as error:
-            logger.error(f"Impossibile serializzare search_response in JSON: {error}")
+            logger.error(f"Unable to serialize search_response to JSON: {error}")
 
 
-    # Processa i risultati della ricerca
+    # Process search results
     temp_videos, channel_ids, video_ids = process_search_results(search_response.items)
 
-    # Ottieni informazioni su canali e statistiche video
+    # Fetch channel info and video stats
     channels_data = get_channel_info_batch(youtube, channel_ids)
     videos_statistics = get_video_statistics_batch(youtube, video_ids)
 
-    # Filtra e crea oggetti video
+    # Filter and create video objects
     filtered_videos = filter_and_create_videos(temp_videos, channels_data, videos_statistics, min_subscribers,
                                                min_likes, language_set={video_language, 'en'})
 
-    # Normalizza i punteggi
+    # Normalize scores
     filtered_videos = normalize_engagement_scores(filtered_videos)
 
     return filtered_videos
@@ -251,36 +251,36 @@ def search_youtube_videos(query, video_language='it', max_results=50, min_subscr
 
 if __name__ == "__main__":
     """
-    per testare dalla root del progetto:
-    
+    To test from the project root:
+
     python -m lib.youtube_interactions
     """
-    # Aggiungi il percorso della directory principale al sys.path quando esegui direttamente
+    # Add the project root to sys.path when running directly
     import sys
     import os.path
 
-    # Ottieni il percorso della directory principale del progetto
+    # Get the project root directory
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-    # Configura l'API key di YouTube per i test
+    # Configure the YouTube API key for tests
     if not os.environ.get('YOUTUBE_API_KEY'):
-        api_key = input("Inserisci la tua YOUTUBE_API_KEY: ")
+        api_key = input("Enter your YOUTUBE_API_KEY: ")
         os.environ['YOUTUBE_API_KEY'] = api_key
 
-    # Esempio di utilizzo della funzione di ricerca
-    test_query = input("Inserisci la query di ricerca (default: 'Python programming'): ") or "Python programming"
-    print(f"Ricerca in corso per: {test_query}...")
+    # Example usage of the search function
+    test_query = input("Enter the search query (default: 'Python programming'): ") or "Python programming"
+    print(f"Searching for: {test_query}...")
 
     try:
         results = search_youtube_videos(test_query, verbose=True, max_results=2)
-        print(f"\nTrovati {len(results)} video che soddisfano i criteri.")
-        for i, video in enumerate(results[:5], 1):  # Mostra solo i primi 5 risultati
+        print(f"\nFound {len(results)} videos that match the criteria.")
+        for i, video in enumerate(results[:5], 1):  # Show only the first 5 results
             print(f"\n{i}. {video.title}")
             print(f"   Engagement Score: {video.engagement_score}")
             print(f"   Views: {video.view_count}, Likes: {video.like_count}")
             print(f"   URL: {video.url}")
     except Exception as e:
-        print(f"Errore durante la ricerca: {e}")
+        print(f"Error during search: {e}")
         import traceback
 
         traceback.print_exc()
